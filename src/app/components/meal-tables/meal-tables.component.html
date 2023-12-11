@@ -1,0 +1,65 @@
+<!-- <div class="card flex justify-content-center">
+
+</div> -->
+<app-header></app-header>
+
+<div class="new-table-container">
+  <button (click)="addNewTable(tables.length + 1)" icon="pi pi-external-link" label="Show">Nova Refeição</button>
+  <p-dialog [(visible)]="visible"
+    [breakpoints]="{ '1001px': '16vw', '1000px': '26vw','846px': '26vw','840px': '26vw','737px': '50vw', '475px': '70vw' }"
+    [modal]="true" [draggable]="false" [resizable]="false" styleClass="modal">
+    <div class="modal-inputs">
+      <label for="alimento">Alimento</label>
+      <input type="text" id="alimento" name="alimento" [(ngModel)]="alimento" placeholder="ex: Arroz branco cozido">
+      <label for="peso">Peso (g)</label>
+      <input type="number" id="peso" name="peso" [(ngModel)]="peso" placeholder="ex: 120">
+      <label for="carboidratos">Carboidratos</label>
+      <input type="number" id="carboidratos" name="carboidratos" [(ngModel)]="carboidratos" placeholder="ex: 28.6">
+      <label for="proteinas">Proteínas</label>
+      <input type="number" id="proteinas" name="proteinas" [(ngModel)]="proteinas" placeholder="ex: 21">
+      <label for="gorduras">Gorduras</label>
+      <input type="number" id="gorduras" name="gorduras" [(ngModel)]="gorduras" placeholder="ex: 2.6">
+      <button class="my-3" style="height: 2rem" (click)="addNewFood()">Adicionar</button>
+    </div>
+  </p-dialog>
+</div>
+
+<div class="master">
+<div class="container">
+  <div class="table-container" *ngFor="let table of tables, let i = index" [@box]="tables">
+    <div class="card">
+      <p-table [columns]="table.cols" [value]="table.alimentos" dataKey="id" editMode="row"
+        [tableStyle]="{ 'min-width': '10rem' }">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{ col.header }}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              {{ rowData[col.field] }}
+            </td>
+            <td>
+              <button class="material-symbols-outlined edit-btn">
+                edit
+              </button>
+            </td>
+            <td>
+              <button class="material-symbols-outlined delete-btn" (click)="deleteFood(rowData.id)">
+                delete
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="flex flex justify-content-center gap-4">
+      <button class="pi pi-plus-circle plus-btn" style="font-size: 1.8rem" (click)="showDialog(table.id)"></button>
+      <button class="pi pi-trash plus-btn" style="font-size: 1.8rem" (click)="deleteTable(table.id)"></button>
+    </div>
+  </div>
+</div>
+</div>

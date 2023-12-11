@@ -1,0 +1,30 @@
+$color-1: #022026;
+$color-2: #bf7665;
+$color-3: #036873;
+$color-4: #7ed0d9;
+$color-5: #d92b04;
+$border-radius: 6px;
+
+.header {
+  height: 5rem;
+  // background-color: $color-2;
+  // border-bottom: solid 1px #fff;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.header img {
+  width: 3rem;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+.user-name {
+  margin-left: 1rem;
+  font-size: 1.2rem;
+}
+p {
+  background-color: transparent;
+}

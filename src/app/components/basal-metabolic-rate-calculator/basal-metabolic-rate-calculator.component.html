@@ -1,0 +1,40 @@
+<main id="main">
+  <div id="form" [class.form-collapsed]="result">
+    <img [src]="imgUrl" alt="foto de perfil do usuário" id="profile-image">
+    <input type="file" accept="image/png,image/jpeg" id="user-image" name="user-image">
+    <label for="first-name">Nome</label>
+    <input type="text" id="first-name" name="first-name" placeholder="ex: João" [(ngModel)]="firstName">
+    <label for="last-name">Sobrenome</label>
+    <input type="text" id="last-name" name="last-name" placeholder="ex: Pereira" [(ngModel)]="lastName">
+    <label for="age">Idade</label>
+    <input type="number" id="age" name="age" placeholder="ex: 34" [(ngModel)]="age">
+    <label for="weight">Peso</label>
+    <input type="number" id="weight" name="weight" placeholder="ex: 67" [(ngModel)]="weight">
+    <label for="age">Altura (cm)</label>
+    <input type="number" id="height" name="height" placeholder="ex: 182" [(ngModel)]="height">
+    <div class="flex flex-wrap radio-btn my-2">
+      <div class="flex align-items-center">
+        <p-radioButton name="male" value="male" [(ngModel)]="selectedGenre" inputId="male"
+          (onClick)="radioButtonGender()"></p-radioButton>
+        <label for="male" class="ml-2 label label-radio">Masculino</label>
+      </div>
+      <div class="flex align-items-center">
+        <p-radioButton name="female" value="female" (onClick)="radioButtonGender()" [(ngModel)]="selectedGenre"
+          inputId="female"></p-radioButton>
+        <label for="female" class="ml-2 label label-radio">Feminino</label>
+      </div>
+    </div>
+
+    <button class="btn my-1" (click)="calculateBasalMetabolism()">Calcular</button>
+  </div>
+
+  <div class="errorMsg" *ngIf="errorMsg" [@errorMsg]="errorMsg">
+    <p style="font-size: 1.2rem">{{errorMsg}}</p>
+  </div>
+
+  <div class="box" *ngIf="result" [@box]="result">
+    <p class="box-p1">Gasto calórico basal</p>
+    <p class="box-p2">{{result}}</p>
+  </div>
+
+  <button class="btn my-3" *ngIf="result" [@btn]="result" (click)="createDiet()">Criar Dieta</button>

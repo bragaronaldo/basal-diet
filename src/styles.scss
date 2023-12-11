@@ -1,0 +1,76 @@
+/* You can add global styles to this file, and also import other style files */
+$color-1: #022026;
+$color-2: #bf7665;
+$color-3: #036873;
+$color-4: #7ed0d9;
+$color-5: #d92b04;
+$border-radius: 6px;
+
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+* {
+  padding: 0;
+  margin: 0;
+  background-color: $color-1;
+  color: #fff;
+}
+
+button {
+  align-self: center;
+  cursor: pointer;
+  border: 0;
+  transition: all 0.4s;
+  background-color: $color-2;
+}
+
+button:hover {
+  background-color: $color-4;
+  color: #000;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  appearance: textfield;
+}
+
+input {
+  width: 100%;
+  color: #1c1c1c;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 0;
+  background-color: $color-4;
+  border-radius: 2px;
+  transition: all 0.25s;
+}
+input:hover {
+  transition: all 0.4s;
+  background-color: $color-2;
+}
+
+input:hover::placeholder {
+  transition: all 0.4s;
+  color: #424242;
+}
+
+input:focus {
+  background-color: $color-2;
+  color: #fff;
+}
+
+input:focus::placeholder {
+  transition: all 0.3s;
+  color: #000;
+}

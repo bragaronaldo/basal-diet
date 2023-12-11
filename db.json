@@ -1,0 +1,69 @@
+{
+  "users": [
+    {
+      "id": 534,
+      "name": "Ronaldo",
+      "lastName": "Braga",
+      "selectedGenre": "male",
+      "age": 29,
+      "height": 174,
+      "weight": 89,
+      "result": 2551.93
+    },
+    {
+      "id": 567,
+      "name": "Maria",
+      "lastName": "Ramos",
+      "selectedGenre": "female",
+      "age": 23,
+      "height": 159,
+      "weight": 52,
+      "result": 1321.43
+    }
+  ],
+  "tables": [
+    {
+      "cols": [
+        {
+          "field": "peso",
+          "header": "Peso (g)"
+        },
+        {
+          "field": "alimento",
+          "header": "Alimentos"
+        },
+        {
+          "field": "carboidratos",
+          "header": "Carboidratos"
+        },
+        {
+          "field": "proteinas",
+          "header": "Proteínas"
+        },
+        {
+          "field": "gorduras",
+          "header": "Gorduras"
+        },
+        {
+          "field": "calorias",
+          "header": "Calorias"
+        }
+      ],
+      "alimentos": [],
+      "id": 1850,
+      "userIndex": "567",
+      "tableIndex": 1
+    }
+  ],
+  "foods": [
+    {
+      "tableIndex": 1850,
+      "id": 45,
+      "alimento": "Banana prata",
+      "peso": 23,
+      "carboidratos": 23,
+      "proteinas": 21,
+      "gorduras": 1
+    }
+  ]
+}
