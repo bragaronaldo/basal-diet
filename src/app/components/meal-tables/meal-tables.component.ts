@@ -59,6 +59,8 @@ export class MealTablesComponent implements OnInit {
   }
 
   loadTables() {
+    console.log(this.userId);
+
     this.tableService.getTablesByUserId(this.userId).subscribe((response) => {
       this.tables = response;
       this.tables.forEach((table) => {

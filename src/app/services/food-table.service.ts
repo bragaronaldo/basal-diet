@@ -15,7 +15,7 @@ export class FoodTableService {
     return this.http.get(`${this.BASE_URL}/tables`);
   }
   getTablesByUserId(id: number): Observable<any> {
-    return this.http.get(`${this.BASE_URL}/tables?userId=${id}`);
+    return this.http.get(`${this.BASE_URL}/tables?userIndex=${id}`);
   }
   createNewTable(table: Table): Observable<any> {
     return this.http.post(`${this.BASE_URL}/tables/`, table);
