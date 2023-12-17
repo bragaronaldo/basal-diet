@@ -19,8 +19,8 @@ import { FormatTextService } from 'src/app/services/format-text.service';
     trigger('box', [
       state('true', style({ opacity: 1 })),
       state('void', style({ opacity: 0 })),
-      transition(':enter', animate('300ms ease-in-out')),
-      transition(':leave', animate('300ms ease-in-out')),
+      // transition(':enter', animate('300ms ease-in-out')),
+      // transition(':leave', animate('30ms ease-in-out')),
     ]),
   ],
 })
