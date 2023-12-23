@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BasalMetabolicRateCalculatorComponent } from './components/basal-metabolic-rate-calculator/basal-metabolic-rate-calculator.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import {provideAnimations} from '@angular/platform-browser/animations';
@@ -14,12 +14,18 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
+import { FormsTestComponent } from './components/forms-test/forms-test.component';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTestComponent } from './components/input-test/input-test.component';
 @NgModule({
   declarations: [
     AppComponent,
     BasalMetabolicRateCalculatorComponent,
     MealTablesComponent,
-    HeaderComponent
+    HeaderComponent,
+    FormsTestComponent,
+    InputTestComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +36,10 @@ import { HeaderComponent } from './components/header/header.component';
     TableModule,
     DialogModule,
     ButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    MessageModule,
+    InputTextModule
   ],
   providers: [provideAnimations()],
   bootstrap: [AppComponent]

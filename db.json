@@ -201,6 +201,38 @@
       "id": 4444,
       "userIndex": "434",
       "tableIndex": 1
+    },
+    {
+      "cols": [
+        {
+          "field": "peso",
+          "header": "Peso (g)"
+        },
+        {
+          "field": "alimento",
+          "header": "Alimentos"
+        },
+        {
+          "field": "carboidratos",
+          "header": "Carboidratos"
+        },
+        {
+          "field": "proteinas",
+          "header": "Proteínas"
+        },
+        {
+          "field": "gorduras",
+          "header": "Gorduras"
+        },
+        {
+          "field": "calorias",
+          "header": "Calorias"
+        }
+      ],
+      "alimentos": [],
+      "id": 3130,
+      "userIndex": "undefined",
+      "tableIndex": 1
     }
   ],
   "foods": [
@@ -236,6 +268,11 @@
     {
       "tableIndex": 4731,
       "id": 8,
+      "alimento": ""
+    },
+    {
+      "tableIndex": 1242,
+      "id": 97,
       "alimento": ""
     }
   ]

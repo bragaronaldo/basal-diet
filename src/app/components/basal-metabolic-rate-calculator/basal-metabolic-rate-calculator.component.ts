@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import {
   trigger,
@@ -8,9 +9,10 @@ import {
 } from '@angular/animations';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
-import { User } from 'src/app/interfaces/User';
 import { FormatTextService } from 'src/app/services/format-text.service';
 import { DataService } from 'src/app/services/data.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/interfaces/User';
 @Component({
   selector: 'app-basal-metabolic-rate-calculator',
   templateUrl: './basal-metabolic-rate-calculator.component.html',
@@ -37,72 +39,77 @@ import { DataService } from 'src/app/services/data.service';
   ],
 })
 export class BasalMetabolicRateCalculatorComponent implements OnInit {
-  firstName: string = '';
-  lastName: string = '';
-  age!: number;
-  height!: number;
-  weight!: number;
   selectedGenre: string = 'male';
   result: string = '';
 
   id!: number;
 
   errorMsg: string = '';
-  imgUrl: string =
-    'https://images.pexels.com/photos/19276436/pexels-photo-19276436/free-photo-of-elegante-sofisticado-moda-tendencia.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+
+  userForm!: FormGroup;
+  newUser = new Observable<User>();
 
   constructor(
-    private router: Router, private userService: UserService, private formatTextService: FormatTextService, private dataService: DataService) {}
+    private router: Router,
+    private userService: UserService,
+    private formatTextService: FormatTextService,
+    private dataService: DataService,
+    private formBuilder: FormBuilder
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userForm = this.formBuilder.group({
+      name: new FormControl('', Validators.required),
+      lastName: new FormControl('', [Validators.required]),
+      age: new FormControl(null, Validators.required),
+      height: new FormControl(null, Validators.required),
+      weight: new FormControl(null, Validators.required),
+      userImage: new FormControl('')
+    })
+  }
+  get formControls() {
+    return this.userForm.controls;
+  }
 
   calculateBasalMetabolism() {
-    if (
-      this.firstName == '' ||
-      this.lastName == '' ||
-      this.age == undefined ||
-      this.height == undefined ||
-      this.weight == undefined
-    ) {
-      this.errorMsg = 'Preencha todos os campos';
-
-      setTimeout(() => {
-        this.errorMsg = '';
-      }, 2000);
-
+    if(this.userForm.invalid) {
       return;
     }
+
+    const age = this.userForm.get('age')?.value;
+    const height = this.userForm.get('height')?.value;
+    const weight = this.userForm.get('weight')?.value;
 
     if (this.selectedGenre === 'female') {
       this.result = (
         447.593 +
-        9.247 * this.weight +
-        3.098 * this.height -
-        4.33 * this.age
+        9.247 * weight +
+        3.098 * height -
+        4.33 * age
       ).toFixed(2);
     } else {
       this.result = (
         1.3 *
-        (66.47 + 13.75 * this.weight + 5 * this.height - 6.8 * this.age)
+        (66.47 + 13.75 * weight + 5 * height - 6.8 * age)
       ).toFixed(2);
     }
 
-    const newUser: User = {
-      id: Math.floor(Math.random() * 1000),
-      name: this.formatTextService.capitalizeFirstLetter(this.firstName),
-      lastName: this.formatTextService.capitalizeFirstLetter(this.lastName),
-      selectedGenre: this.selectedGenre,
-      age: this.age,
-      height: this.height,
-      weight: this.weight,
-      result: parseFloat(this.result),
-    };
+    // const newUser: User = {
+    //   id: Math.floor(Math.random() * 1000),
+    //   name: this.formatTextService.capitalizeFirstLetter(this.firstName),
+    //   lastName: this.formatTextService.capitalizeFirstLetter(this.lastName),
+    //   selectedGenre: this.selectedGenre,
+    //   age: this.age,
+    //   height: this.height,
+    //   weight: this.weight,
+    //   result: parseFloat(this.result),
+    // };
 
-    this.id = newUser.id;
+    // this.id = newUser.id;
 
-    this.userService.createUserData(newUser).subscribe((response) => {
-      console.log('Response: ', response);
-    });
+    // this.userService.createUserData(newUser).subscribe((response) => {
+    //   console.log('Response: ', response);
+    // });
   }
   createDiet() {
     this.router.navigateByUrl(`refeicoes/${this.id}`);
@@ -110,11 +117,22 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
 
   radioButtonGender() {
     if (this.selectedGenre == 'female') {
-      this.imgUrl =
-        'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
       return;
     }
-    this.imgUrl =
-      'https://images.pexels.com/photos/19276436/pexels-photo-19276436/free-photo-of-elegante-sofisticado-moda-tendencia.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+  }
+
+  onImageSelect(event: any): void {
+    const selectedImage = event.target.files[0];
+
+    if (selectedImage) {
+      const reader = new FileReader();
+      reader.onloadend = (event) => {
+        const newImage = event.target?.result as string;
+        this.userForm.patchValue({
+          userImage: newImage
+        })
+      };
+      reader.readAsDataURL(selectedImage);
+    }
   }
 }

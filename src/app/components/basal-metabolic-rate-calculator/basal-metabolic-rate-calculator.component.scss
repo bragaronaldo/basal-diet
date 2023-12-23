@@ -7,19 +7,17 @@ $border-radius: 6px;
 
 #main {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  height: 100vh;
   align-items: center;
+  justify-content: center;
+  min-height: 95.7vh;
+  margin: 1rem;
 }
 
 #form {
   display: flex;
   flex-direction: column;
-  // align-items: flex-start;
   width: 17.5rem;
-  height: 37rem;
-  margin: 3rem 1rem 1rem 1rem;
+  // padding-top: 100rem;
   padding: 0.7rem 2rem 0 2rem;
   border: solid 1px #ffffff;
   border-radius: $border-radius;
@@ -32,33 +30,32 @@ $border-radius: 6px;
   }
 }
 
-@media (height < 700px) {
-  #form {
-      // margin: 2.5rem 1rem 1rem 1rem;
-      height: 34rem;
-      &.form-collapsed {
-        height: 6.65rem;
-        overflow: hidden;
-      }
-  }
-  #form input {
-    height: 1.4rem !important;
-  }
-  #profile-image {
-    width: 4rem !important;
-  }
-  #form label {
-    margin: 0.8rem 0 0.2rem -0.2rem !important;
-  }
-  .label-radio {
-    padding-left: 0.5rem;
-  }
-}
+// @media (height < 700px) {
+//   #form {
+//       height: 34rem;
+//       &.form-collapsed {
+//         height: 6.65rem;
+//         overflow: hidden;
+//       }
+//   }
+//   #form input {
+//     height: 1.4rem !important;
+//   }
+//   #profile-image {
+//     width: 4rem !important;
+//   }
+//   #form label {
+//     margin: 0.8rem 0 0.2rem -0.2rem !important;
+//   }
+//   .label-radio {
+//     padding-left: 0.5rem;
+//   }
+// }
 
 #form label {
+  // margin: 0.8rem 0 0.25rem -0.2rem;
   margin: 0.8rem 0 0.25rem -0.2rem;
 }
-
 #form input {
   width: 100%;
   background-color: $color-4;
@@ -82,6 +79,8 @@ $border-radius: 6px;
 }
 
 #form input:focus {
+  outline: solid 1px $color-4;
+  // border: solid 1px $color-4;
   background-color: $color-2;
   color: #fff;
 }
@@ -123,14 +122,15 @@ button {
   width: 6.2rem;
   border-radius: 50%;
   object-fit: cover;
-  transition: all 0.5s;
+  // transition: all 0.5s;
   align-self: center;
+  border: solid 1px transparent;
 }
 
-#profile-image:hover {
-  cursor: pointer;
-  transform: scale(1.2);
-}
+// #profile-image:hover {
+//   cursor: pointer;
+//   transform: scale(1.2);
+// }
 
 #user-image {
   display: none;
@@ -218,4 +218,33 @@ button {
   border-bottom: solid 1px #fff;
   height: 2.6rem;
   background-color: $color-2;
+}
+// .error-msg p {
+//   padding-left: 0.3rem;
+//   color: $color-5;
+//   border-left: solid 1px $color-5;
+//   margin-top: 1rem;
+// }
+.form-errorMsg {
+  margin-top: -0.2rem !important;
+}
+.upload-image-btn {
+  border: solid 2px $color-2;
+  align-self: center;
+  border-radius: 50%;
+  padding: 1.50rem;
+  position: absolute;
+  margin: 0.6rem 0 0 0.008rem !important;
+  background-color: #0220261b;
+  font-size: 3rem;
+  color: $color-2;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+.upload-image-btn:hover {
+  color: $color-4;
+  border: solid 2px $color-4;
+}
+.upload-image-btn:focus {
+  background-color: #d92b04;
 }

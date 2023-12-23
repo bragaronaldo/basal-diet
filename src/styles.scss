@@ -16,6 +16,10 @@ $border-radius: 6px;
   background-color: $color-1;
   color: #fff;
 }
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
+}
 
 button {
   align-self: center;
@@ -30,10 +34,6 @@ button:hover {
   color: #000;
 }
 
-body {
-  font-family: 'Montserrat', sans-serif;
-  font-family: 'Source Sans 3', sans-serif;
-}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

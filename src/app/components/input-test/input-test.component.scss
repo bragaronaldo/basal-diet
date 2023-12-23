@@ -1,0 +1,24 @@
+.master {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.form {
+  width: 18rem;
+  height: 24rem;
+  border: solid 1px #fff;
+  padding: 2rem;
+}
+.form div input {
+  padding: 0.3rem;
+  font-size: 1rem;
+  // width: 10rem;
+  height: 3rem;
+  border: solid 1px #ff0000;
+  transition: all 0.2s;
+}
+.form div input:focus {
+  outline: none;
+  border: solid 2px blue;
+}
