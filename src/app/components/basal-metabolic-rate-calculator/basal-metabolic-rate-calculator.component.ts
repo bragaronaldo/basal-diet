@@ -30,12 +30,6 @@ import { User } from 'src/app/interfaces/User';
       transition(':enter', animate('1400ms ease-in-out')),
       transition(':leave', animate('1400ms ease-in-out')),
     ]),
-    trigger('errorMsg', [
-      state('true', style({ opacity: 1 })),
-      state('void', style({ opacity: 0 })),
-      transition(':enter', animate('350ms ease-in-out')),
-      transition(':leave', animate('350ms ease-in-out')),
-    ]),
   ],
 })
 export class BasalMetabolicRateCalculatorComponent implements OnInit {
@@ -43,8 +37,6 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
   result: string = '';
 
   id!: number;
-
-  errorMsg: string = '';
 
   userForm!: FormGroup;
   newUser = new Observable<User>();
@@ -59,11 +51,11 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.userForm = this.formBuilder.group({
-      name: new FormControl('', Validators.required),
-      lastName: new FormControl('', [Validators.required]),
-      age: new FormControl(null, Validators.required),
-      height: new FormControl(null, Validators.required),
-      weight: new FormControl(null, Validators.required),
+      name: new FormControl('1', Validators.required),
+      lastName: new FormControl('1', [Validators.required]),
+      age: new FormControl(1, Validators.required),
+      height: new FormControl(1, Validators.required),
+      weight: new FormControl(1, Validators.required),
       userImage: new FormControl('')
     })
   }

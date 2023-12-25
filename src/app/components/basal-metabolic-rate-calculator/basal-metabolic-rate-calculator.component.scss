@@ -11,25 +11,26 @@ $border-radius: 6px;
   justify-content: center;
   min-height: 95.7vh;
   margin: 1rem;
+  flex-direction: column;
 }
 
 #form {
   display: flex;
   flex-direction: column;
   width: 17.5rem;
-  // padding-top: 100rem;
   padding: 0.7rem 2rem 0 2rem;
   border: solid 1px #ffffff;
   border-radius: $border-radius;
   background-color: $color-1;
   color: #fff;
-  transition: all 0.8s;
-  &.form-collapsed {
-    height: 9.1rem;
-    overflow: hidden;
-  }
+  border: solid 1px #fff;
+  // transition: height 1s !important;
 }
-
+.form-collapsed {
+  height: 9rem;
+  overflow: hidden;
+  // transform: translateY(-92%);
+}
 // @media (height < 700px) {
 //   #form {
 //       height: 34rem;

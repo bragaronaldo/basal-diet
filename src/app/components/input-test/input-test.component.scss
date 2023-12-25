@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 .form {
   width: 18rem;
@@ -21,4 +21,17 @@
 .form div input:focus {
   outline: none;
   border: solid 2px blue;
+}
+.master button {
+  height: 10rem;
+  width: 20rem;
+  font-size: 3rem;
+  border-radius: 12px;
+  opacity: 0;
+  transition: all 1s;
+}
+.master button:hover {
+  transform: translateY(-8rem);
+  opacity: 1;
+  background-color: rgb(255, 127, 170);
 }
