@@ -10,93 +10,100 @@ $border-radius: 6px;
   justify-content: center;
 }
 
-.container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  // border: solid 1px #fff;
-  width: 88vw;
-}
+// .container {
+//   display: flex;
+//   flex-direction: row;
+//   flex-wrap: wrap;
+//   justify-content: flex-start;
+//   // border: solid 1px #fff;
+//   width: 88vw;
+// }
 
-.btn {
-  padding: 0 0.5rem 0 0.5rem;
-  height: 3rem;
-  border-radius: $border-radius;
-}
+// .btn {
+//   padding: 0 0.5rem 0 0.5rem;
+//   height: 3rem;
+//   border-radius: $border-radius;
+// }
 
-.table-container {
-  margin: 2rem;
-  display: flex;
-  flex-direction: column;
-}
+// .table-container {
+//   margin: 2rem;
+//   display: flex;
+//   flex-direction: column;
+// }
 
-.plus-btn {
-  margin-top: 1rem;
-  background-color: transparent;
-  transition: all 0.3s;
-}
+// .plus-btn {
+//   margin-top: 1rem;
+//   background-color: transparent;
+//   transition: all 0.3s;
+// }
 
-.plus-btn:hover {
-  color: $color-4;
-  transform: scale(1.2);
-}
+// .plus-btn:hover {
+//   color: $color-4;
+//   transform: scale(1.2);
+// }
 
-.new-table-container {
-  display: flex;
-  justify-content: flex-start;
-  margin: 1rem 0 0 1rem;
-}
+// .new-table-container {
+//   display: flex;
+//   justify-content: flex-start;
+//   margin: 1rem 0 0 1rem;
+// }
 
-.new-table-container button {
-  padding: 0 0.5rem 0 0.5rem;
-  height: 2.3rem;
-  border-radius: $border-radius;
-}
-
+// .new-table-container button {
+//   padding: 0 0.5rem 0 0.5rem;
+//   height: 2.3rem;
+//   border-radius: $border-radius;
+// }
 :host ::ng-deep {
-  .modal.p-dialog {
-    input {
-      height: 1.9rem;
-    }
-
-    .p-dialog-header {
-      background-color: $color-1;
-      border: solid 1px #fff;
-    }
-
-    .p-dialog-content:last-of-type {
-      background-color: $color-1;
-      border: solid 1px #fff;
-    }
-
-    .p-dialog-header-icons {
-      background-color: transparent;
-    }
-
-    .p-dialog-header-close-icon {
-      background-color: $color-1;
-    }
-
-    .p.dialog-header-close {
-      background-color: $color-5;
-    }
+  .p-dialog .p-dialog-header {
+    background-color: $color-1;
   }
-
-  .p-datatable-table {
-    border-spacing: 1px !important;
-    border-spacing: 0px;
-    width: 100%;
-    background-color: #f8f9fa;
+  .p-dialog .p-dialog-content {
+    background-color: $color-1;
   }
+}
+// :host ::ng-deep {
+//   .modal.p-dialog {
+//     input {
+//       height: 1.9rem;
+//     }
 
-  .p-component-overlay {
-    background-color: #000000e5 !important;
-  }
+//     .p-dialog-header {
+//       background-color: $color-1;
+//       border: solid 1px #fff;
+//     }
 
-  .p-datatable .p-datatable-tbody>tr>td {
-    text-align: center;
-  }
+//     .p-dialog-content:last-of-type {
+//       background-color: $color-1;
+//       border: solid 1px #fff;
+//     }
+
+//     .p-dialog-header-icons {
+//       background-color: transparent;
+//     }
+
+//     .p-dialog-header-close-icon {
+//       background-color: $color-1;
+//     }
+
+//     .p.dialog-header-close {
+//       background-color: $color-5;
+//     }
+//   }
+
+//   .p-datatable-table {
+//     border-spacing: 1px !important;
+//     border-spacing: 0px;
+//     width: 100%;
+//     background-color: #f8f9fa;
+//   }
+
+//   .p-component-overlay {
+//     background-color: #000000e5 !important;
+//   }
+
+//   .p-datatable .p-datatable-tbody>tr>td {
+//     text-align: center;
+//   }
 
   // .modal.p-dialog .p-dialog-header-close-icon {
   //   // background-color: $color-5;
@@ -113,31 +120,135 @@ $border-radius: 6px;
   //   // background-color: $color-5;
   // }
 
-  .p-dialog .p-dialog-header .p-dialog-header-icon:last-child:hover {
-    background-color: transparent;
+//   .p-dialog .p-dialog-header .p-dialog-header-icon:last-child:hover {
+//     background-color: transparent;
 
-  }
-}
+//   }
+// }
 
-.modal-inputs {
+// .modal-inputs {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0.4rem;
+//   margin-top: 1rem;
+// }
+
+// // .modal-inputs::placeholder {
+// //   font-size: 4rem;
+// // }
+// .delete-btn,
+// .edit-btn {
+//   background-color: transparent;
+// }
+
+// .delete-btn:hover {
+//   color: $color-5;
+// }
+
+// .edit-btn:hover {
+//   color: $color-2;
+// }
+
+.table-container {
+  width: 22rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  margin-top: 1rem;
-}
+  // background-color: $color-3;
+  background-color: $color-2;
+  color: #dce0e1;
+  border: solid 1px #fff;
 
-// .modal-inputs::placeholder {
-//   font-size: 4rem;
+  .title {
+    background-color: $color-2;
+    // padding: 0.4rem 1rem 0.4rem 1rem;
+    padding: 0 0 0 1rem;
+  }
+
+  .meals {
+    display: flex;
+    justify-content: space-between;
+    background-color: $color-3;
+    padding: 1rem;
+  }
+
+  .meals div {
+    background-color: $color-3;
+  }
+
+  .meals div span {
+    background-color: $color-3;
+  }
+
+  .macronutrients-box {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.36rem;
+  }
+
+  .macro-master {
+    background-color: $color-3;
+  }
+
+  .macro-master span {
+    background-color: $color-3;
+  }
+
+  .add-btn {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0 1rem 0;
+    border-top: solid 1px #fff;
+    border-bottom: solid 1px #fff;
+    background-color: $color-1;
+  }
+
+  .total-macronutrients {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    background-color: $color-3;
+  }
+
+  .total-macronutrients div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .total-macronutrients div span {
+    text-align: center;
+    background-color: $color-3;
+  }
+
+  .add-btn button {
+    padding: 0.5rem;
+    border-radius: $border-radius;
+  }
+  .table-btns {
+    display: flex;
+    align-items: center;
+    // border: solid 1px #fff;
+    // width: 4rem;
+    gap: 1rem;
+    // justify-content: space-between;
+    padding: 1rem;
+  }
+  .table-btns button {
+
+    font-size: 1.2rem;
+  }
+}
+.btn {
+  padding: 0.6rem;
+  border-radius: $border-radius;
+}
+.tables {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+  margin: 2rem;
+}
+// .table-u {
+//   margin-top: 2rem;
 // }
-.delete-btn,
-.edit-btn {
-  background-color: transparent;
-}
-
-.delete-btn:hover {
-  color: $color-5;
-}
-
-.edit-btn:hover {
-  color: $color-2;
-}

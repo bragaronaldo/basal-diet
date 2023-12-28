@@ -1,37 +1,122 @@
+$color-1: #022026;
+$color-2: #bf7665;
+$color-3: #036873;
+$color-4: #7ed0d9;
+$color-5: #d92b04;
+$border-radius: 6px;
+
+// .master {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   min-height: 100vh;
+// }
+// .form {
+//   width: 18rem;
+//   height: 24rem;
+//   border: solid 1px #fff;
+//   padding: 2rem;
+// }
+// .form div input {
+//   padding: 0.3rem;
+//   font-size: 1rem;
+//   // width: 10rem;
+//   height: 3rem;
+//   border: solid 1px #ff0000;
+//   transition: all 0.2s;
+// }
+// .form div input:focus {
+//   outline: none;
+//   border: solid 2px blue;
+// }
+// .master button {
+//   height: 10rem;
+//   width: 20rem;
+//   font-size: 3rem;
+//   border-radius: 12px;
+//   opacity: 0;
+//   transition: all 1s;
+// }
+// .master button:hover {
+//   transform: translateY(-8rem);
+//   opacity: 1;
+//   background-color: rgb(255, 127, 170);
+// }
+
 .master {
   display: flex;
-  align-items: center;
+  min-height: 97.9vh;
   justify-content: center;
-  min-height: 100vh;
+  align-items: center;
 }
-.form {
-  width: 18rem;
-  height: 24rem;
+
+.table-container {
+  // border-radius: 8px;
+  width: 22rem;
+  display: flex;
+  flex-direction: column;
+  background-color: $color-3;
+  color: #dce0e1;
   border: solid 1px #fff;
-  padding: 2rem;
 }
-.form div input {
-  padding: 0.3rem;
-  font-size: 1rem;
-  // width: 10rem;
-  height: 3rem;
-  border: solid 1px #ff0000;
-  transition: all 0.2s;
+
+.title {
+  background-color: $color-2;
+  padding: 0.4rem 1rem 0.4rem 1rem;
 }
-.form div input:focus {
-  outline: none;
-  border: solid 2px blue;
+
+.meals {
+  display: flex;
+  justify-content: space-between;
+  // background-color: #1c2021
+  background-color: $color-3;
+  padding: 1rem;
 }
-.master button {
-  height: 10rem;
-  width: 20rem;
-  font-size: 3rem;
-  border-radius: 12px;
-  opacity: 0;
-  transition: all 1s;
+.meals div {
+  background-color: $color-3;
 }
-.master button:hover {
-  transform: translateY(-8rem);
-  opacity: 1;
-  background-color: rgb(255, 127, 170);
+.meals div span {
+  background-color: $color-3;
+}
+.macronutrients-box {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.36rem;
+}
+.macro-master {
+ background-color: $color-3;
+}
+.macro-master span {
+  background-color: $color-3;
+}
+.add-btn {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0 1rem 0;
+  background-color: #1c2021;
+  border-top: solid 1px #fff;
+  border-bottom: solid 1px #fff;
+  background-color: $color-1;
+}
+
+.total-macronutrients {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+  background-color: $color-3;
+}
+
+.total-macronutrients div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.total-macronutrients div span {
+  text-align: center;
+  background-color: $color-3;
+}
+.add-btn button {
+  padding: 0.5rem;
+  border-radius: $border-radius;
 }

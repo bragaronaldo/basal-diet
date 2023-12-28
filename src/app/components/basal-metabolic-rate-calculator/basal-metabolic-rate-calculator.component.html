@@ -1,8 +1,16 @@
 <main id="main">
+
+  <!-- <div>
+    <h1 *ngFor="let user of usersData$ | async"></h1>
+  </div> -->
+
+
   <form id="form" class="form-content" (ngSubmit)="calculateBasalMetabolism()" [formGroup]="userForm" #formDir="ngForm"
-    [class.form-collapsed]="result">
+    [class.form-collapsed]="result" *ngIf="!result" [@box]="result">
     <img [src]="userForm.get('userImage')?.value" id="profile-image">
-    <label for="imageInput" class="pi pi-image upload-image-btn"></label>
+    <label for="imageInput" class="pi pi-image upload-image-btn">
+
+    </label>
     <input type="file" accept="image/*" style="display: none;" (change)="onImageSelect($event)" id="imageInput">
     <label for="first-name">Nome</label>
     <input type="text" id="first-name" name="first-name" placeholder="ex: João" formControlName="name">

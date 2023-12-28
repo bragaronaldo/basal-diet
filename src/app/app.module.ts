@@ -18,6 +18,8 @@ import { FormsTestComponent } from './components/forms-test/forms-test.component
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTestComponent } from './components/input-test/input-test.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +41,8 @@ import { InputTestComponent } from './components/input-test/input-test.component
     HttpClientModule,
     ReactiveFormsModule,
     MessageModule,
-    InputTextModule
+    InputTextModule,
+    FontAwesomeModule,
   ],
   providers: [provideAnimations()],
   bootstrap: [AppComponent]

@@ -11,7 +11,12 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { FormatTextService } from 'src/app/services/format-text.service';
 import { DataService } from 'src/app/services/data.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { User } from 'src/app/interfaces/User';
 @Component({
   selector: 'app-basal-metabolic-rate-calculator',
@@ -39,7 +44,7 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
   id!: number;
 
   userForm!: FormGroup;
-  newUser = new Observable<User>();
+  userData!: User;
 
   constructor(
     private router: Router,
@@ -56,15 +61,23 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
       age: new FormControl(1, Validators.required),
       height: new FormControl(1, Validators.required),
       weight: new FormControl(1, Validators.required),
-      userImage: new FormControl('')
-    })
+      userImage: new FormControl(''),
+    });
+    this.loadUser();
   }
   get formControls() {
     return this.userForm.controls;
   }
 
+  loadUser() {
+    this.userService.getUserData('1').subscribe((response) => {
+      console.log("RESPONSE!", response.lastName);
+
+    })
+  }
+
   calculateBasalMetabolism() {
-    if(this.userForm.invalid) {
+    if (this.userForm.invalid) {
       return;
     }
 
@@ -86,22 +99,34 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
       ).toFixed(2);
     }
 
-    // const newUser: User = {
-    //   id: Math.floor(Math.random() * 1000),
-    //   name: this.formatTextService.capitalizeFirstLetter(this.firstName),
-    //   lastName: this.formatTextService.capitalizeFirstLetter(this.lastName),
-    //   selectedGenre: this.selectedGenre,
-    //   age: this.age,
-    //   height: this.height,
-    //   weight: this.weight,
-    //   result: parseFloat(this.result),
-    // };
+    const newUser: User = {
+      name: this.formatTextService.capitalizeFirstLetter(
+        this.userForm.get('name')?.value
+      ),
+      lastName: this.formatTextService.capitalizeFirstLetter(
+        this.userForm.get('lastName')?.value
+      ),
+      selectedGenre: this.selectedGenre,
+      age: this.userForm.get('age')?.value,
+      height: this.userForm.get('height')?.value,
+      weight: this.userForm.get('weight')?.value,
+      result: parseFloat(this.result),
+    };
+
+    // console.dir("New User", newUser);
 
     // this.id = newUser.id;
 
-    // this.userService.createUserData(newUser).subscribe((response) => {
-    //   console.log('Response: ', response);
+    // this.userService.createUserData(newUser).subscribe((response: User) => {
+    //   // this.id = response
+    //   console.log("RESPONSE: ", response.id);
+
     // });
+    this.userService.createUserData(newUser).subscribe((response) => {
+      if (response.id !== undefined) {
+        this.id = response.id;
+      }
+    });
   }
   createDiet() {
     this.router.navigateByUrl(`refeicoes/${this.id}`);
@@ -121,8 +146,8 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
       reader.onloadend = (event) => {
         const newImage = event.target?.result as string;
         this.userForm.patchValue({
-          userImage: newImage
-        })
+          userImage: newImage,
+        });
       };
       reader.readAsDataURL(selectedImage);
     }

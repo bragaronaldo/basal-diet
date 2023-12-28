@@ -8,9 +8,10 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Alimento } from 'src/app/interfaces/Alimento';
-import { Table, Tables } from 'src/app/interfaces/Table';
+import { Table, Tables, newTable } from 'src/app/interfaces/Table';
 import { FoodTableService } from 'src/app/services/food-table.service';
 import { FormatTextService } from 'src/app/services/format-text.service';
+import { HeaderService } from 'src/app/services/header.service';
 @Component({
   selector: 'app-meal-tables',
   templateUrl: './meal-tables.component.html',
@@ -26,6 +27,7 @@ import { FormatTextService } from 'src/app/services/format-text.service';
 })
 export class MealTablesComponent implements OnInit {
   tables: Tables = [];
+  newTables: newTable[] = [];
 
   alimento: string = '';
   peso?: number;
@@ -40,15 +42,17 @@ export class MealTablesComponent implements OnInit {
 
   userId!: number;
 
-  showDialog(id: number) {
-    this.tableId = id;
-    this.visible = true;
-  }
+  newMeal: string = '';
+  // showDialog(id: number) {
+  //   this.tableId = id;
+  //   this.visible = true;
+  // }
 
   constructor(
     private formatTextService: FormatTextService,
     private tableService: FoodTableService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private headerService: HeaderService
   ) {}
 
   ngOnInit(): void {
@@ -56,10 +60,15 @@ export class MealTablesComponent implements OnInit {
       this.userId = params['id'];
       this.loadTables();
     });
+    for (let i: number = 0; i < 1; i++) {
+      this.addNewTable2();
+    }
   }
-
+  ngAfterContentInit() {
+    this.headerService.onHeaderTextChanged.next('CCCC');
+  }
   loadTables() {
-    console.log(this.userId);
+    // console.log(this.userId);
 
     this.tableService.getTablesByUserId(this.userId).subscribe((response) => {
       this.tables = response;
@@ -94,9 +103,24 @@ export class MealTablesComponent implements OnInit {
 
     this.tables.push(newTable);
 
-    this.tableService.createNewTable(newTable).subscribe(() => {
-    });
+    this.tableService.createNewTable(newTable).subscribe(() => {});
   }
+
+  addNewTable2() {
+    if (this.newMeal === '') {
+      this.newMeal = 'Refeição';
+    }
+
+    const newTable: newTable = {
+      userIndex: this.userId,
+      name: this.formatTextService.capitalizeFirstLetter(this.newMeal),
+    };
+
+    this.newTables.push(newTable);
+    this.newMeal = '';
+    this.visible = false;
+  }
+
   addNewFood() {
     const newFood: Alimento = {
       tableIndex: this.tableId,
@@ -131,5 +155,8 @@ export class MealTablesComponent implements OnInit {
     }
     this.tableService.deleteTable(id).subscribe(() => {});
     this.loadTables();
+  }
+  showDialog() {
+    this.visible = true;
   }
 }

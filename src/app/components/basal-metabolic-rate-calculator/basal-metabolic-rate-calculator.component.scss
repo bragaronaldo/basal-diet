@@ -24,13 +24,18 @@ $border-radius: 6px;
   background-color: $color-1;
   color: #fff;
   border: solid 1px #fff;
-  // transition: height 1s !important;
+  opacity: 1;
+  // transition: opacity 1s;
 }
-.form-collapsed {
-  height: 9rem;
-  overflow: hidden;
-  // transform: translateY(-92%);
-}
+// .form-collapsed {
+//   transition: opacity 1s !important;
+//   // height: 9rem;
+//   overflow: hidden;
+//   opacity: 0 !important;
+//   ;
+//   // transform: translateY(-92%);
+// }
+
 // @media (height < 700px) {
 //   #form {
 //       height: 34rem;
@@ -79,12 +84,12 @@ $border-radius: 6px;
   color: #424242;
 }
 
-#form input:focus {
-  outline: solid 1px $color-4;
-  // border: solid 1px $color-4;
-  background-color: $color-2;
-  color: #fff;
-}
+// #form input:focus {
+//   outline: solid 1px $color-4;
+//   // border: solid 1px $color-4;
+//   background-color: $color-2;
+//   color: #fff;
+// }
 
 #form input:focus::placeholder {
   transition: all 0.3s;

@@ -6,21 +6,21 @@ $color-4: #7ed0d9;
 $color-5: #d92b04;
 $border-radius: 6px;
 
-@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/themes/lara-dark-teal/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
 * {
   padding: 0;
   margin: 0;
-  background-color: $color-1;
-  color: #fff;
+  // background-color: $color-1;
+  // color: #fff;
 }
 body {
   font-family: 'Montserrat', sans-serif;
   font-family: 'Source Sans 3', sans-serif;
+  background-color: $color-1;
 }
-
 button {
   align-self: center;
   cursor: pointer;
@@ -66,6 +66,7 @@ input:hover::placeholder {
 }
 
 input:focus {
+  outline: solid 1px $color-4;
   background-color: $color-2;
   color: #fff;
 }
@@ -73,4 +74,7 @@ input:focus {
 input:focus::placeholder {
   transition: all 0.3s;
   color: #000;
+}
+input::placeholder {
+  color: #424242;
 }

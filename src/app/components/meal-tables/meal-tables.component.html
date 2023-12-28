@@ -3,7 +3,7 @@
 </div> -->
 <app-header></app-header>
 
-<div class="new-table-container">
+<!-- <div class="new-table-container">
   <button (click)="addNewTable(tables.length + 1)" icon="pi pi-external-link" label="Show">Nova Refeição</button>
   <p-dialog [(visible)]="visible"
     [breakpoints]="{ '1001px': '16vw', '1000px': '26vw','846px': '26vw','840px': '26vw','737px': '50vw', '475px': '70vw' }"
@@ -22,8 +22,8 @@
       <button class="my-3" style="height: 2rem" (click)="addNewFood()">Adicionar</button>
     </div>
   </p-dialog>
-</div>
-
+</div> -->
+<!--
 <div class="master">
 <div class="container">
   <div class="table-container" *ngFor="let table of tables, let i = index" [@box]="tables">
@@ -62,4 +62,69 @@
     </div>
   </div>
 </div>
+</div> -->
+
+
+<div class="card flex justify-content-center">
+  <p-dialog header="Nova Refeição" [(visible)]="visible" [draggable]="false" [resizable]="false" [modal]="true">
+    <div class="my-1 gap-4 flex justify-content-center flex-column">
+      <input type="text" placeholder="ex: Almoço" [(ngModel)]="newMeal">
+      <button class="btn" (click)="addNewTable2()">Criar</button>
+    </div>
+  </p-dialog>
+</div>
+
+
+<div class="master tables">
+  <div class="new-table-container">
+    <button class="btn mb-3" (click)="showDialog()">Nova Refeição</button>
+  </div>
+
+  <div class="table-container table-u mb-4" *ngFor="let table of newTables">
+    <div class="flex justify-content-between align-items-center gap-2">
+      <h3 class="title">{{table.name}}</h3>
+      <div class="table-btns">
+        <button class="pi pi-pencil"></button>
+        <button class="pi pi-trash"></button>
+      </div>
+    </div>
+    <!-- <div class="meals">
+      <div>
+        <span>Banana Prata</span>
+        <div>
+          <span>120g</span>
+        </div>
+      </div>
+      <div style="text-align: end;" class="macro-master">
+        <span>120 calorias</span>
+        <div class="macronutrients-box">
+          <span>C:23</span>
+          <span>P:12</span>
+          <span>G:42</span>
+        </div>
+      </div>
+    </div> -->
+    <div class="add-btn">
+      <button>Adicionar</button>
+    </div>
+    <div class="total-macronutrients">
+      <div>
+        <span>36</span>
+        <span>Calorias</span>
+      </div>
+      <div>
+        <span>12</span>
+        <span>Carboidratos</span>
+      </div>
+      <div>
+        <span>54</span>
+        <span>Proteínas</span>
+      </div>
+      <div>
+        <span>29</span>
+        <span>Gorduras</span>
+      </div>
+    </div>
+  </div>
+
 </div>
