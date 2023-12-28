@@ -1,482 +1,109 @@
 {
-  "users": [
-    {
-      "name": "1",
-      "lastName": "1",
-      "selectedGenre": "male",
-      "age": 1,
-      "height": 1,
-      "weight": 1,
-      "result": 101.95,
-      "id": 1
-    }
-  ],
+  "users": [],
   "tables": [
     {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 4038,
-      "userIndex": "963",
-      "tableIndex": 1
+      "userIndex": "2",
+      "name": "Café da manhã",
+      "id": 1
     },
     {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 1070,
-      "userIndex": "448",
-      "tableIndex": 1
+      "userIndex": "2",
+      "name": "Almoço",
+      "id": 2
     },
     {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 3893,
-      "userIndex": "742",
-      "tableIndex": 1
-    },
-    {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 898,
-      "userIndex": "912",
-      "tableIndex": 1
-    },
-    {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 4444,
-      "userIndex": "434",
-      "tableIndex": 1
-    },
-    {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 4168,
       "userIndex": "1",
-      "tableIndex": 1
+      "name": "Café da manhã",
+      "id": 3
     },
     {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 350,
       "userIndex": "1",
-      "tableIndex": 2
+      "name": "Lanche",
+      "id": 4
     },
     {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 3373,
       "userIndex": "1",
-      "tableIndex": 3
-    },
-    {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 4778,
-      "userIndex": "1",
-      "tableIndex": 4
-    },
-    {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 1980,
-      "userIndex": "1",
-      "tableIndex": 5
-    },
-    {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 1727,
-      "userIndex": "1",
-      "tableIndex": 6
-    },
-    {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 2602,
-      "userIndex": "1",
-      "tableIndex": 7
-    },
-    {
-      "cols": [
-        {
-          "field": "peso",
-          "header": "Peso (g)"
-        },
-        {
-          "field": "alimento",
-          "header": "Alimentos"
-        },
-        {
-          "field": "carboidratos",
-          "header": "Carboidratos"
-        },
-        {
-          "field": "proteinas",
-          "header": "Proteínas"
-        },
-        {
-          "field": "gorduras",
-          "header": "Gorduras"
-        },
-        {
-          "field": "calorias",
-          "header": "Calorias"
-        }
-      ],
-      "alimentos": [],
-      "id": 2187,
-      "userIndex": "1",
-      "tableIndex": 8
+      "name": "Lanche",
+      "id": 5
     }
   ],
   "foods": [
     {
-      "tableIndex": 4038,
-      "id": 35,
-      "alimento": "Banana prata",
-      "peso": 150,
-      "carboidratos": 56,
-      "proteinas": 2,
-      "gorduras": 2.4
+      "userIndex": "2",
+      "tableIndex": 1,
+      "name": "Banana prata",
+      "amount": 120,
+      "carbohydrates": 27.6,
+      "proteins": 1.2,
+      "fats": 0,
+      "calories": 0,
+      "id": 1
     },
     {
-      "tableIndex": 1070,
-      "id": 19,
-      "alimento": "Arroz"
+      "userIndex": "2",
+      "tableIndex": 2,
+      "name": "Arroz branco cozido",
+      "amount": 200,
+      "carbohydrates": 56,
+      "proteins": 4,
+      "fats": 0,
+      "calories": 0,
+      "id": 2
     },
     {
-      "tableIndex": 3893,
-      "id": 75,
-      "alimento": "Milho"
+      "userIndex": "1",
+      "tableIndex": 3,
+      "name": "Banana",
+      "amount": 23,
+      "carbohydrates": 33,
+      "proteins": 32,
+      "fats": 42,
+      "calories": 0,
+      "id": 3
     },
     {
-      "tableIndex": 898,
-      "id": 36,
-      "alimento": "Manga"
+      "userIndex": "1",
+      "tableIndex": 4,
+      "name": "Biscoito",
+      "amount": 89,
+      "carbohydrates": 98,
+      "proteins": 98,
+      "fats": 89,
+      "calories": 0,
+      "id": 4
     },
     {
-      "tableIndex": 4444,
-      "id": 94,
-      "alimento": ""
+      "userIndex": "1",
+      "tableIndex": 4,
+      "name": "Pão",
+      "amount": 9,
+      "carbohydrates": 98,
+      "proteins": 21,
+      "fats": 1,
+      "calories": 0,
+      "id": 5
     },
     {
-      "tableIndex": 4731,
-      "id": 8,
-      "alimento": ""
+      "userIndex": "1",
+      "tableIndex": 5,
+      "name": "Casca",
+      "amount": 87,
+      "carbohydrates": 78,
+      "proteins": 78,
+      "fats": 1,
+      "calories": 0,
+      "id": 6
     },
     {
-      "tableIndex": 1242,
-      "id": 97,
-      "alimento": ""
-    },
-    {
-      "tableIndex": 4168,
-      "id": 5,
-      "alimento": "Banana prata",
-      "peso": 120,
-      "carboidratos": 21,
-      "proteinas": 2,
-      "gorduras": 32
+      "userIndex": "2",
+      "tableIndex": 1,
+      "name": "Jjh",
+      "amount": 88,
+      "carbohydrates": 8,
+      "proteins": 8,
+      "fats": 8,
+      "calories": 0,
+      "id": 7
     }
   ]
 }

@@ -10,49 +10,6 @@ $border-radius: 6px;
   justify-content: center;
 }
 
-// .container {
-//   display: flex;
-//   flex-direction: row;
-//   flex-wrap: wrap;
-//   justify-content: flex-start;
-//   // border: solid 1px #fff;
-//   width: 88vw;
-// }
-
-// .btn {
-//   padding: 0 0.5rem 0 0.5rem;
-//   height: 3rem;
-//   border-radius: $border-radius;
-// }
-
-// .table-container {
-//   margin: 2rem;
-//   display: flex;
-//   flex-direction: column;
-// }
-
-// .plus-btn {
-//   margin-top: 1rem;
-//   background-color: transparent;
-//   transition: all 0.3s;
-// }
-
-// .plus-btn:hover {
-//   color: $color-4;
-//   transform: scale(1.2);
-// }
-
-// .new-table-container {
-//   display: flex;
-//   justify-content: flex-start;
-//   margin: 1rem 0 0 1rem;
-// }
-
-// .new-table-container button {
-//   padding: 0 0.5rem 0 0.5rem;
-//   height: 2.3rem;
-//   border-radius: $border-radius;
-// }
 :host ::ng-deep {
   .p-dialog .p-dialog-header {
     background-color: $color-1;
@@ -61,106 +18,22 @@ $border-radius: 6px;
     background-color: $color-1;
   }
 }
-// :host ::ng-deep {
-//   .modal.p-dialog {
-//     input {
-//       height: 1.9rem;
-//     }
-
-//     .p-dialog-header {
-//       background-color: $color-1;
-//       border: solid 1px #fff;
-//     }
-
-//     .p-dialog-content:last-of-type {
-//       background-color: $color-1;
-//       border: solid 1px #fff;
-//     }
-
-//     .p-dialog-header-icons {
-//       background-color: transparent;
-//     }
-
-//     .p-dialog-header-close-icon {
-//       background-color: $color-1;
-//     }
-
-//     .p.dialog-header-close {
-//       background-color: $color-5;
-//     }
-//   }
-
-//   .p-datatable-table {
-//     border-spacing: 1px !important;
-//     border-spacing: 0px;
-//     width: 100%;
-//     background-color: #f8f9fa;
-//   }
-
-//   .p-component-overlay {
-//     background-color: #000000e5 !important;
-//   }
-
-//   .p-datatable .p-datatable-tbody>tr>td {
-//     text-align: center;
-//   }
-
-  // .modal.p-dialog .p-dialog-header-close-icon {
-  //   // background-color: $color-5;
-  //   transition: all 0.3s;
-  // }
-  // .modal.p-dialog .p-dialog-header-close-icon:hover {
-  //   // border: solid 1px #f8f9fa;
-  //   // border-radius: 50%;
-  //   // padding: 0.1rem;
-  //   // font-size: 2rem;
-  // }
-
-  // .p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
-  //   // background-color: $color-5;
-  // }
-
-//   .p-dialog .p-dialog-header .p-dialog-header-icon:last-child:hover {
-//     background-color: transparent;
-
-//   }
-// }
-
-// .modal-inputs {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 0.4rem;
-//   margin-top: 1rem;
-// }
-
-// // .modal-inputs::placeholder {
-// //   font-size: 4rem;
-// // }
-// .delete-btn,
-// .edit-btn {
-//   background-color: transparent;
-// }
-
-// .delete-btn:hover {
-//   color: $color-5;
-// }
-
-// .edit-btn:hover {
-//   color: $color-2;
-// }
+.modal-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
 
 .table-container {
   width: 22rem;
   display: flex;
   flex-direction: column;
-  // background-color: $color-3;
   background-color: $color-2;
   color: #dce0e1;
   border: solid 1px #fff;
 
   .title {
     background-color: $color-2;
-    // padding: 0.4rem 1rem 0.4rem 1rem;
     padding: 0 0 0 1rem;
   }
 
@@ -169,6 +42,7 @@ $border-radius: 6px;
     justify-content: space-between;
     background-color: $color-3;
     padding: 1rem;
+    border-top: solid 1px #fff;
   }
 
   .meals div {
@@ -198,7 +72,6 @@ $border-radius: 6px;
     justify-content: center;
     padding: 1rem 0 1rem 0;
     border-top: solid 1px #fff;
-    border-bottom: solid 1px #fff;
     background-color: $color-1;
   }
 
@@ -241,14 +114,13 @@ $border-radius: 6px;
 .btn {
   padding: 0.6rem;
   border-radius: $border-radius;
+  text-align: center;
+  display: flex;
+  align-items: center;
 }
 .tables {
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
   margin: 2rem;
 }
-// .table-u {
-//   margin-top: 2rem;
-// }
