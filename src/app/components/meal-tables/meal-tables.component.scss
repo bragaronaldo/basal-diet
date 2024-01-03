@@ -5,17 +5,32 @@ $color-4: #7ed0d9;
 $color-5: #d92b04;
 $border-radius: 6px;
 
-.master {
-  display: flex;
-  justify-content: center;
-}
-
 :host ::ng-deep {
   .p-dialog .p-dialog-header {
     background-color: $color-1;
   }
+
   .p-dialog .p-dialog-content {
     background-color: $color-1;
+  }
+}
+
+.master-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, auto));
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  margin: 0 2rem 2rem 2rem;
+}
+@media (max-width: 540px) {
+  .master-container {
+    grid-template-columns: repeat(auto-fit, minmax(20rem, auto));
+  }
+}
+@media (max-width: 348px) {
+  .master-container {
+    grid-template-columns: repeat(auto-fit, minmax(10rem, auto));
   }
 }
 .modal-inputs {
@@ -25,7 +40,6 @@ $border-radius: 6px;
 }
 
 .table-container {
-  width: 22rem;
   display: flex;
   flex-direction: column;
   background-color: $color-2;
@@ -97,30 +111,28 @@ $border-radius: 6px;
     padding: 0.5rem;
     border-radius: $border-radius;
   }
+
   .table-btns {
     display: flex;
     align-items: center;
-    // border: solid 1px #fff;
-    // width: 4rem;
     gap: 1rem;
-    // justify-content: space-between;
     padding: 1rem;
   }
-  .table-btns button {
 
+  .table-btns button {
     font-size: 1.2rem;
   }
+
+  .icon-btn:hover {
+    color: $color-1;
+    background-color: transparent;
+  }
 }
+
 .btn {
   padding: 0.6rem;
   border-radius: $border-radius;
   text-align: center;
   display: flex;
   align-items: center;
-}
-.tables {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 2rem;
 }

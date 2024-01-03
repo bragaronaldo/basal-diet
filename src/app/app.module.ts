@@ -27,7 +27,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MealTablesComponent,
     HeaderComponent,
     FormsTestComponent,
-    InputTestComponent
+    InputTestComponent,
   ],
   imports: [
     BrowserModule,

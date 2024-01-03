@@ -22,21 +22,22 @@
       <input type="number" id="proteinas" name="proteinas" [(ngModel)]="protein" placeholder="ex: 21">
       <label for="gorduras">Gorduras</label>
       <input type="number" id="gorduras" name="gorduras" [(ngModel)]="fat" placeholder="ex: 2.6">
-      <button class="my-4 btn" (click)="addNewFood()">Adicionar</button>
+      <button class="my-3 btn" (click)="addNewFood()">Adicionar</button>
     </div>
   </p-dialog>
 </div>
 
-<div class="master tables">
-  <div class="new-table-container">
-    <button class="btn mb-3" (click)="showDialog()">Nova Refeição</button>
-  </div>
-  <div class="table-container mb-4" *ngFor="let table of foodTables$ | async, let i = index">
+<div class="flex flex justify-content-center mb-4">
+  <button class="btn" (click)="showDialog()">Nova Refeição</button>
+</div>
+
+<div class="master-container">
+  <div class="table-container" *ngFor="let table of foodTables$ | async, let i = index">
     <div class="flex justify-content-between align-items-center gap-2">
       <h3 class="title">{{table.name}}</h3>
       <div class="table-btns">
-        <button class="pi pi-pencil"></button>
-        <button class="pi pi-trash"></button>
+        <button class="pi pi-pencil icon-btn"></button>
+        <button class="pi pi-trash icon-btn" (click)="deleteTable(table.id!)"></button>
       </div>
     </div>
     <div class="add-btn">

@@ -124,10 +124,15 @@ export class MealTablesComponent implements OnInit {
     this.visibleNewFood = true;
   }
 
-  deleteFood(id: number) {
-    this.tableService.deleteFood(id).subscribe(() => {
-      // this.loadTables();
-    });
+  // deleteFood(id: number) {
+  //   this.tableService.deleteFood(id).subscribe(() => {
+  //     // this.loadTables();
+  //   });
+  // }
+  deleteTable(id: number) {
+    this.tableService.deleteTable(id).subscribe((response) => {
+      this.loadTables();
+    })
   }
   // deleteTable(id: number) {
   //   const deleteItem = this.tables.findIndex((objeto) => objeto.id == id);

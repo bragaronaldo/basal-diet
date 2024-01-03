@@ -36,10 +36,10 @@ export class FoodTableService {
   // updateTable(table: Table): Observable<any> {
   //   return this.http.put(`${this.BASE_URL}/tables/${table.id}`, table);
   // }
-  deleteFood(id: number): Observable<any> {
-    return this.http.delete(`${this.BASE_URL}/foods/${id}`);
-  }
-  deleteTable(id: number): Observable<any> {
-    return this.http.delete(`${this.BASE_URL}/tables/${id}`);
+  // deleteFood(id: number): Observable<any> {
+    // return this.http.delete(`${this.BASE_URL}/foods/${id}`);
+  // }
+  deleteTable(id: number): Observable<FoodTable> {
+    return this.http.delete<FoodTable>(`${this.BASE_URL}/tables/${id}`);
   }
 }
