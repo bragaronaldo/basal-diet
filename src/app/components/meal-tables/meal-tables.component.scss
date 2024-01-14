@@ -72,7 +72,9 @@ $border-radius: 6px;
     flex-wrap: nowrap;
     gap: 0.36rem;
   }
-
+  .macronutrients-font {
+    color: $color-4;
+  }
   .macro-master {
     background-color: $color-3;
   }
@@ -80,7 +82,20 @@ $border-radius: 6px;
   .macro-master span {
     background-color: $color-3;
   }
-
+  .edit-delete-macros button{
+    background-color: transparent;
+    margin-left: 1rem;
+  }
+  .edit-delete-macros button:hover {
+    color: $color-5;
+    margin-left: 1rem;
+  }
+  .calories {
+    color: $color-4;
+    border: solid 1px $color-4;
+    padding: 0 0.2rem 0 0.2rem;
+    border-radius: $border-radius;
+  }
   .add-btn {
     display: flex;
     justify-content: center;
@@ -121,6 +136,13 @@ $border-radius: 6px;
 
   .table-btns button {
     font-size: 1.2rem;
+  }
+  .table-btns > div {
+    color: $color-1;
+    font-size: 1rem;
+    border: solid 1px $color-1;
+    padding: 0.1rem 0.3rem 0.1rem 0.3rem;
+    border-radius: $border-radius;
   }
 
   .icon-btn:hover {

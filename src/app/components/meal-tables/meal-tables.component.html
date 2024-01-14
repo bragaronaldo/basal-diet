@@ -1,34 +1,82 @@
 <app-header></app-header>
 
 <div class="card flex justify-content-center">
-  <p-dialog header="Nova Refeição" [(visible)]="visible" [draggable]="false" [resizable]="false" [modal]="true">
+  <p-dialog header="Nova refeição" [(visible)]="visible" [draggable]="false" [resizable]="false" [modal]="true">
     <div class="my-1 gap-4 flex justify-content-center flex-column">
       <input type="text" placeholder="ex: Almoço" [(ngModel)]="newMeal">
       <button class="btn" (click)="addNewTable()">Criar</button>
     </div>
   </p-dialog>
-</div>
 
-<div class="card flex justify-content-center">
-  <p-dialog header="Novo Alimento" [(visible)]="visibleNewFood" [draggable]="false" [resizable]="false" [modal]="true">
+  <p-dialog header="Editar refeição" [(visible)]="editMealVisible" [draggable]="false" [resizable]="false" [modal]="true" *ngIf="selectedMeal">
+    <div class="my-1 gap-4 flex justify-content-center flex-column">
+      <input type="text" placeholder="ex: Almoço" [(ngModel)]="selectedMeal.name">
+      <button class="btn" (click)="editMeal()">Salvar</button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Excluir refeição" [(visible)]="deleteMealVisible" [draggable]="false" [resizable]="false"
+    [modal]="true">
+    <div class="my-1 gap-4 flex justify-content-center flex-column">
+      <p>Tem certeza que deseja excluir?</p>
+      <button class="btn" (click)="deleteTable()">Excluir</button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Excluir alimento" [(visible)]="deleteFoodVisible" [draggable]="false" [resizable]="false"
+    [modal]="true">
+    <div class="my-1 gap-4 flex justify-content-center flex-column">
+      <p>Tem certeza que deseja excluir?</p>
+      <button class="btn" (click)="deleteFood()">Excluir</button>
+    </div>
+  </p-dialog>
+
+
+  <p-dialog header="Editar alimento" [(visible)]="editFoodVisible" [draggable]="false" [resizable]="false"
+    [modal]="true">
+    <div class="my-1 gap-4 flex justify-content-center flex-column">
+      <div class="modal-inputs" *ngIf="selectedFood">
+        <label for="alimento">Alimento</label>
+        <input type="text" id="alimento" name="alimento" [(ngModel)]="selectedFood.name"
+          placeholder="ex: Arroz branco cozido">
+        <label for="peso">Peso (g)</label>
+        <input type="number" id="peso" name="peso" [(ngModel)]="selectedFood.amount" placeholder="ex: 120">
+        <label for="carboidratos">Carboidratos</label>
+        <input type="number" id="carboidratos" name="carboidratos" [(ngModel)]="selectedFood.carbohydrates"
+          placeholder="ex: 28.6">
+        <label for="proteinas">Proteínas</label>
+        <input type="number" id="proteinas" name="proteinas" [(ngModel)]="selectedFood.proteins" placeholder="ex: 21">
+        <label for="gorduras">Gorduras</label>
+        <input type="number" id="gorduras" name="gorduras" [(ngModel)]="selectedFood.fats" placeholder="ex: 2.6">
+      </div>
+      <button class="btn" (click)="editFood()">Salvar</button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Novo alimento" [(visible)]="visibleNewFood" [draggable]="false" [resizable]="false"
+  [modal]="true">
+  <div class="my-1 gap-4 flex justify-content-center flex-column">
     <div class="modal-inputs">
       <label for="alimento">Alimento</label>
-      <input type="text" id="alimento" name="alimento" [(ngModel)]="foodName" placeholder="ex: Arroz branco cozido">
+      <input type="text" id="alimento" name="alimento" [(ngModel)]="foodName"
+        placeholder="ex: Arroz branco cozido">
       <label for="peso">Peso (g)</label>
       <input type="number" id="peso" name="peso" [(ngModel)]="amount" placeholder="ex: 120">
       <label for="carboidratos">Carboidratos</label>
-      <input type="number" id="carboidratos" name="carboidratos" [(ngModel)]="carbohydrate" placeholder="ex: 28.6">
+      <input type="number" id="carboidratos" name="carboidratos" [(ngModel)]="carbohydrate"
+        placeholder="ex: 28.6">
       <label for="proteinas">Proteínas</label>
       <input type="number" id="proteinas" name="proteinas" [(ngModel)]="protein" placeholder="ex: 21">
       <label for="gorduras">Gorduras</label>
       <input type="number" id="gorduras" name="gorduras" [(ngModel)]="fat" placeholder="ex: 2.6">
-      <button class="my-3 btn" (click)="addNewFood()">Adicionar</button>
     </div>
-  </p-dialog>
+    <button class="btn" (click)="addNewFood()">Adicionar</button>
+  </div>
+</p-dialog>
 </div>
 
 <div class="flex flex justify-content-center mb-4">
-  <button class="btn" (click)="showDialog()">Nova Refeição</button>
+  <button class="btn" (click)="showDialog()">Nova refeição</button>
 </div>
 
 <div class="master-container">
@@ -36,8 +84,9 @@
     <div class="flex justify-content-between align-items-center gap-2">
       <h3 class="title">{{table.name}}</h3>
       <div class="table-btns">
-        <button class="pi pi-pencil icon-btn"></button>
-        <button class="pi pi-trash icon-btn" (click)="deleteTable(table.id!)"></button>
+        <div *ngIf="calculateTotalCalories(table.id!)">{{ calculateTotalCalories(table.id!) }} calorias</div>
+        <button class="pi pi-pencil icon-btn" (click)="showEditMealModal(table)"></button>
+        <button class="pi pi-trash icon-btn" (click)="showDeleteMealModal(table.id!)"></button>
       </div>
     </div>
     <div class="add-btn">
@@ -52,11 +101,16 @@
           </div>
         </div>
         <div style="text-align: end;" class="macro-master">
-          <span>{{food.calories}} calorias</span>
+          <div class="edit-delete-macros">
+            <button class="pi pi-pencil" (click)="showEditFoodModal(food)"></button>
+            <button class="pi pi-trash" (click)="showDeleteFoodModal(food.id!)"></button>
+
+          </div>
           <div class="macronutrients-box">
-            <span>C:{{food.carbohydrates}}</span>
-            <span>P:{{food.proteins}}</span>
-            <span>G:{{food.fats}}</span>
+            <span>C: {{food.carbohydrates}}</span>
+            <span>P: {{food.proteins}}</span>
+            <span>G: {{food.fats}}</span>
+            <span class="calories">{{food.calories}} calorias</span>
           </div>
         </div>
       </div>

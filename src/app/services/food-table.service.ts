@@ -23,6 +23,10 @@ export class FoodTableService {
     return this.http.get<Food[]>(`${this.BASE_URL}/foods?userIndex=${userId}`);
   }
 
+  getAllFoodsPerMeal(id: number): Observable<any>{
+    return this.http.get(`${this.BASE_URL}/foods?userIndex=${id}`)
+  }
+
   getTablesByUserId(id: number): Observable<any> {
     return this.http.get(`${this.BASE_URL}/tables?userIndex=${id}`);
   }
@@ -32,13 +36,18 @@ export class FoodTableService {
   createNewFood(food: Food): Observable<Food> {
     return this.http.post<Food>(`${this.BASE_URL}/foods/`, food);
   }
-
+  editFood(food: Food): Observable<Food> {
+    return this.http.put<Food>(`${this.BASE_URL}/foods/${food.id}`, food)
+  }
+  edirMeal(meal: FoodTable): Observable<FoodTable> {
+    return this.http.put<FoodTable>(`${this.BASE_URL}/tables/${meal.id}`, meal);
+  }
   // updateTable(table: Table): Observable<any> {
   //   return this.http.put(`${this.BASE_URL}/tables/${table.id}`, table);
   // }
-  // deleteFood(id: number): Observable<any> {
-    // return this.http.delete(`${this.BASE_URL}/foods/${id}`);
-  // }
+  deleteFood(id: number): Observable<any> {
+    return this.http.delete(`${this.BASE_URL}/foods/${id}`);
+  }
   deleteTable(id: number): Observable<FoodTable> {
     return this.http.delete<FoodTable>(`${this.BASE_URL}/tables/${id}`);
   }

@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import {
   trigger,
@@ -26,14 +25,14 @@ import { User } from 'src/app/interfaces/User';
     trigger('box', [
       state('true', style({ opacity: 1 })),
       state('void', style({ opacity: 0 })),
-      transition(':enter', animate('1200ms ease-in-out')),
-      transition(':leave', animate('1200ms ease-in-out')),
+      transition(':enter', animate('500ms ease-in-out')),
+      transition(':leave', animate('500ms ease-in-out')),
     ]),
     trigger('btn', [
       state('true', style({ opacity: 1 })),
       state('void', style({ opacity: 0 })),
-      transition(':enter', animate('1400ms ease-in-out')),
-      transition(':leave', animate('1400ms ease-in-out')),
+      transition(':enter', animate('500ms ease-in-out')),
+      transition(':leave', animate('500ms ease-in-out')),
     ]),
   ],
 })
@@ -63,7 +62,7 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
       weight: new FormControl(1, Validators.required),
       userImage: new FormControl(''),
     });
-    this.loadUser();
+    // this.loadUser();
   }
   get formControls() {
     return this.userForm.controls;
@@ -113,15 +112,6 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
       result: parseFloat(this.result),
     };
 
-    // console.dir("New User", newUser);
-
-    // this.id = newUser.id;
-
-    // this.userService.createUserData(newUser).subscribe((response: User) => {
-    //   // this.id = response
-    //   console.log("RESPONSE: ", response.id);
-
-    // });
     this.userService.createUserData(newUser).subscribe((response) => {
       if (response.id !== undefined) {
         this.id = response.id;

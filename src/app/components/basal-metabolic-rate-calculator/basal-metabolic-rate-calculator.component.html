@@ -4,10 +4,11 @@
     <h1 *ngFor="let user of usersData$ | async"></h1>
   </div> -->
 
+  <!-- [class.form-collapsed]="result" *ngIf="!result" [@box]="result"> -->
 
   <form id="form" class="form-content" (ngSubmit)="calculateBasalMetabolism()" [formGroup]="userForm" #formDir="ngForm"
-    [class.form-collapsed]="result" *ngIf="!result" [@box]="result">
-    <img [src]="userForm.get('userImage')?.value" id="profile-image">
+    [class.form-collapsed]="result" *ngIf="!result">
+    <img [src]="userForm.get('userImage')?.value" class="profile-image">
     <label for="imageInput" class="pi pi-image upload-image-btn">
 
     </label>
@@ -45,12 +46,17 @@
     <div *ngIf="formControls['height'].invalid && formDir.submitted" class="error-msg my-1">
       <small id="username-help" class="p-error">Informe sua altura</small>
     </div>
-
     <button class="btn my-4">Calcular</button>
   </form>
   <div class="box my-3" *ngIf="result" [@box]="result">
-    <p class="box-p1">Gasto calórico basal</p>
-    <p class="box-p2">{{result}}</p>
+    <div>
+      <img [src]="userForm.get('userImage')?.value" class="profile-image">
+    </div>
+    <p class="box-name">{{userForm.get('name')?.value}} {{userForm.get('lastName')?.value}}</p>
+    <div class="result-box">
+      <p >Gasto calórico basal</p>
+      <p >{{result}}</p>
+      </div>
   </div>
 
   <button class="btn" *ngIf="result" [@btn]="result" (click)="createDiet()">Criar Dieta</button>
