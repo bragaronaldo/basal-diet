@@ -14,10 +14,8 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
-import { FormsTestComponent } from './components/forms-test/forms-test.component';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTestComponent } from './components/input-test/input-test.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
@@ -26,8 +24,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     BasalMetabolicRateCalculatorComponent,
     MealTablesComponent,
     HeaderComponent,
-    FormsTestComponent,
-    InputTestComponent,
   ],
   imports: [
     BrowserModule,

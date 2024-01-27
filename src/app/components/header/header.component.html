@@ -1,4 +1,11 @@
-<div class="header">
-  <img [src]="imgUrl" alt="">
-  <p class="user-name">{{name}}</p>
+<div class="header" *ngIf="userData$ | async as userData">
+  <div class="user-image">
+    <img [src]="userData.userImage" alt="user-image">
+    <p class="user-name">{{userData.name}} {{userData.lastName}}</p>
+
+  </div>
+  <div class="user-data">
+    <p>Gasto Basal: {{userData.basalMetabolicRate}}</p>
+    <p *ngIf="totalCalories">Calorias Totais: {{totalCalories}}</p>
+  </div>
 </div>

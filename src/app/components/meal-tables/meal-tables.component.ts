@@ -1,15 +1,9 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { state, style, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, map, of, tap } from 'rxjs';
-import { Food, FoodTable } from 'src/app/interfaces/FoodTable';
-import { FoodTableService } from 'src/app/services/food-table.service';
+import { Observable, map, tap } from 'rxjs';
+import { Food, Meal } from 'src/app/interfaces/MealTable';
+import { MealTableService } from 'src/app/services/meal-table.service';
 import { FormatTextService } from 'src/app/services/format-text.service';
 import { HeaderService } from 'src/app/services/header.service';
 @Component({
@@ -26,7 +20,7 @@ import { HeaderService } from 'src/app/services/header.service';
   ],
 })
 export class MealTablesComponent implements OnInit {
-  foodTable: FoodTable[] = [];
+  foodTable: Meal[] = [];
 
   foodName?: string;
   amount?: number;
@@ -46,18 +40,18 @@ export class MealTablesComponent implements OnInit {
   foodId: number = 0;
   mealId: number = 0;
 
-  foodTables$ = new Observable<FoodTable[]>();
+  mealTables$ = new Observable<Meal[]>();
   foods: Food[] = [];
 
   selectedMeal: any;
   selectedFood: any;
 
   newMeal: string = '';
-  totalCalories: number = 0;
+  allMealsCalories: number = 0;
 
   constructor(
     private formatTextService: FormatTextService,
-    private tableService: FoodTableService,
+    private mealService: MealTableService,
     private route: ActivatedRoute,
     private headerService: HeaderService
   ) {}
@@ -65,45 +59,69 @@ export class MealTablesComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.userId = params['id'];
-      this.loadTables();
+      this.loadMeals();
     });
   }
+  calculateAllMealsCalories() {
+    this.mealService.getFoodsByUserId(this.userId).subscribe((response) => {
+      this.foods = response;
 
-  calculateTotalCalories(id: number) {
+      console.log("RESPONSE: ", response);
+
+
+      response.map((data) => (this.allMealsCalories += data.calories));
+      this.headerService.totalCalories.next(this.allMealsCalories.toFixed(2));
+    });
+  }
+  calculateTotalNutrients(id: number) {
     let totalCalories = 0;
-    const allFoods = this.getFoodsForTable(id);
-    allFoods.map((data)=> totalCalories += data.calories);
-    return totalCalories
+    let totalCarbohydrates = 0;
+    let totalProteins = 0;
+    let totalFats = 0;
+    const allFoods = this.getFoodsForMeal(id);
+
+    allFoods.forEach((data) => {
+      totalCalories += data.calories;
+      totalCarbohydrates += data.carbohydrates;
+      totalProteins += data.proteins;
+      totalFats += data.fats;
+    });
+
+    const formattedTotalCarbohydrates = totalCarbohydrates.toFixed(2);
+    const formattedTotalProteins = totalProteins.toFixed(2);
+    const formattedTotalCalories = totalCalories.toFixed(2);
+    const formattedTotalFats = totalFats.toFixed(2);
+
+    return { totalCarbohydrates: formattedTotalCarbohydrates, totalProteins: formattedTotalProteins, totalCalories: formattedTotalCalories, totalFats: formattedTotalFats };
   }
 
-  loadTables() {
-    this.foodTables$ = this.tableService.getTables(this.userId);
+  getFoodsForMeal(tableId: number): Food[] {
+    if (!this.foods) return [];
+    return this.foods.filter((food) => food.mealIndex === tableId);
+  }
+  loadMeals() {
+    this.mealTables$ = this.mealService
+      .getMeals(this.userId)
+      .pipe(map((data) => data));
     this.loadFoods();
   }
   loadFoods() {
-    this.tableService.getFoodsByUserId(this.userId).subscribe((response) => {
-      this.foods = response;
-      // this.calculateTotalCalories();
-    });
-  }
-  getFoodsForTable(tableId: number): Food[] {
-    if (!this.foods) return [];
+    this.allMealsCalories = 0;
 
-    return this.foods.filter((food) => food.tableIndex === tableId);
+    this.calculateAllMealsCalories();
   }
-
   addNewTable() {
     if (this.newMeal === '') {
       this.newMeal = 'Refeição';
     }
 
-    const newTable: FoodTable = {
+    const newTable: Meal = {
       userIndex: this.userId,
       name: this.formatTextService.capitalizeFirstLetter(this.newMeal),
     };
 
-    this.tableService.createNewTable(newTable).subscribe(() => {
-      this.loadTables();
+    this.mealService.createNewMeal(newTable).subscribe(() => {
+      this.loadMeals();
     });
 
     this.newMeal = '';
@@ -112,7 +130,7 @@ export class MealTablesComponent implements OnInit {
   addNewFood() {
     const newFood: Food = {
       userIndex: this.userId,
-      tableIndex: this.newFoodId,
+      mealIndex: this.newFoodId,
       name: this.formatTextService.capitalizeFirstLetter(this.foodName!),
       amount: this.amount!,
       carbohydrates: this.carbohydrate!,
@@ -125,7 +143,7 @@ export class MealTablesComponent implements OnInit {
       ),
     };
 
-    this.tableService.createNewFood(newFood).subscribe(() => {
+    this.mealService.createNewFood(newFood).subscribe(() => {
       this.loadFoods();
     });
 
@@ -138,13 +156,19 @@ export class MealTablesComponent implements OnInit {
     this.visibleNewFood = false;
   }
   calculateCalories(carb: number, protein: number, fat: number) {
-    return carb * 4 + protein * 4 + fat * 9;
+    const calories: Number = carb * 4 + protein * 4 + fat * 9;
+    return Number(calories.toFixed(2));
   }
   editMeal() {
-    this.tableService.edirMeal(this.selectedMeal).subscribe(() => {
+    const formattedMeal = this.formatTextService.capitalizeFirstLetter(
+      this.selectedMeal.name
+    );
+    this.selectedMeal.name = formattedMeal;
+
+    this.mealService.editMeal(this.selectedMeal).subscribe(() => {
       this.editMealVisible = false;
       this.selectedMeal = null;
-      this.loadTables();
+      this.loadMeals();
     });
   }
   editFood() {
@@ -154,7 +178,12 @@ export class MealTablesComponent implements OnInit {
       this.selectedFood.fats
     );
 
-    this.tableService.editFood(this.selectedFood).subscribe(() => {
+    const formattedFood = this.formatTextService.capitalizeFirstLetter(
+      this.selectedFood.name
+    );
+    this.selectedFood.name = formattedFood;
+
+    this.mealService.editFood(this.selectedFood).subscribe(() => {
       this.loadFoods();
       this.editFoodVisible = false;
       this.selectedFood = null;
@@ -173,21 +202,21 @@ export class MealTablesComponent implements OnInit {
   }
 
   deleteFood() {
-    this.tableService.deleteFood(this.foodId).subscribe(() => {
+    this.mealService.deleteFood(this.foodId).subscribe(() => {
       this.deleteFoodVisible = false;
-      this.loadTables();
+      this.loadMeals();
     });
   }
   deleteTable() {
-    this.tableService.deleteTable(this.mealId).subscribe(() => {
+    this.mealService.deleteMeal(this.mealId).subscribe(() => {
       this.deleteMealVisible = false;
-      this.loadTables();
+      this.loadMeals();
     });
   }
   showDialog() {
     this.visible = true;
   }
-  showEditMealModal(meal: FoodTable) {
+  showEditMealModal(meal: Meal) {
     this.selectedMeal = JSON.parse(JSON.stringify(meal));
     this.editMealVisible = true;
   }

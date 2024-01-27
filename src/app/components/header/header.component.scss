@@ -6,26 +6,51 @@ $color-5: #d92b04;
 $border-radius: 6px;
 
 .header {
-  height: 5rem;
-  // background-color: $color-2;
-  // border-bottom: dotted 1px $color-3;
+  height: 6rem;
   margin-bottom: 1.6rem;
   display: flex;
   align-items: center;
-  padding: 1rem;
+  justify-content: space-evenly;
   overflow: hidden;
+  border-bottom: solid 1px #ffffffa1;
+}
+.user-data {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.user-data p {
+  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+  background-color: $color-3;
+  border-radius: $border-radius;
+}
+.user-image {
+  display: flex;
+  align-items: center;
+  // border: solid 1px #fff;
+  background-color: $color-3;
+  padding: 0.6rem;
+  border-radius: $border-radius;
+}
+
+.user-image p {
+  margin: 0 1rem 0 1rem;
 }
 
 .header img {
-  width: 3rem;
+  width: 3.3rem;
   border-radius: 50%;
+  border: solid 2px #fff;
   aspect-ratio: 1/1;
   object-fit: cover;
 }
-.user-name {
-  margin-left: 1rem;
-  font-size: 1.2rem;
-}
-p {
-  background-color: transparent;
+
+@media(width < 390px) {
+  .header {
+    display: flex;
+    flex-direction: column;
+    height: 10rem;
+  }
 }

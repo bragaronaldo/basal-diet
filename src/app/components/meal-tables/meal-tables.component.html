@@ -80,20 +80,25 @@
 </div>
 
 <div class="master-container">
-  <div class="table-container" *ngFor="let table of foodTables$ | async, let i = index">
+  <div class="table-container" *ngFor="let meal of mealTables$ | async, let i = index">
     <div class="flex justify-content-between align-items-center gap-2">
-      <h3 class="title">{{table.name}}</h3>
+      <h3 class="title">{{meal.name}}</h3>
       <div class="table-btns">
-        <div *ngIf="calculateTotalCalories(table.id!)">{{ calculateTotalCalories(table.id!) }} calorias</div>
-        <button class="pi pi-pencil icon-btn" (click)="showEditMealModal(table)"></button>
-        <button class="pi pi-trash icon-btn" (click)="showDeleteMealModal(table.id!)"></button>
+        <div class="macronutrients-header">
+          <span>C: {{calculateTotalNutrients(meal.id!).totalCarbohydrates}}</span>
+          <span>P: {{calculateTotalNutrients(meal.id!).totalProteins}}</span>
+          <span>G: {{calculateTotalNutrients(meal.id!).totalFats}}</span>
+        </div>
+        <div *ngIf="calculateTotalNutrients(meal.id!)">{{ calculateTotalNutrients(meal.id!).totalCalories }} calorias</div>
+        <button class="pi pi-pencil icon-btn" (click)="showEditMealModal(meal)"></button>
+        <button class="pi pi-trash icon-btn" (click)="showDeleteMealModal(meal.id!)"></button>
       </div>
     </div>
     <div class="add-btn">
-      <button (click)="showNewFoodDialog(table.id!)">Novo Alimento</button>
+      <button (click)="showNewFoodDialog(meal.id!)">Novo Alimento</button>
     </div>
     <ng-container *ngIf="foods && foods.length > 0">
-      <div class="meals" *ngFor="let food of getFoodsForTable(table.id!)">
+      <div class="meals" *ngFor="let food of getFoodsForMeal(meal.id!)">
         <div>
           <span>{{food.name}}</span>
           <div>

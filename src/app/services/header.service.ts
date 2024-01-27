@@ -7,6 +7,6 @@ export class HeaderService {
 
   constructor() { }
 
-  public onHeaderTextChanged: EventEmitter<string> = new EventEmitter<string>();
+  public totalCalories: EventEmitter<string> = new EventEmitter<string>();
 }
 

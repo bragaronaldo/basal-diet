@@ -9,7 +9,6 @@ import {
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { FormatTextService } from 'src/app/services/format-text.service';
-import { DataService } from 'src/app/services/data.service';
 import {
   FormBuilder,
   FormControl,
@@ -49,31 +48,29 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private formatTextService: FormatTextService,
-    private dataService: DataService,
     private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.userForm = this.formBuilder.group({
-      name: new FormControl('1', Validators.required),
-      lastName: new FormControl('1', [Validators.required]),
-      age: new FormControl(1, Validators.required),
-      height: new FormControl(1, Validators.required),
-      weight: new FormControl(1, Validators.required),
+      name: new FormControl('', Validators.required),
+      lastName: new FormControl('', [Validators.required]),
+      age: new FormControl(Validators.required),
+      height: new FormControl(Validators.required),
+      weight: new FormControl(Validators.required),
       userImage: new FormControl(''),
     });
-    // this.loadUser();
   }
   get formControls() {
     return this.userForm.controls;
   }
 
-  loadUser() {
-    this.userService.getUserData('1').subscribe((response) => {
-      console.log("RESPONSE!", response.lastName);
+  // loadUser() {
+  //   this.userService.getUserData('1').subscribe((response) => {
+  //     console.log("RESPONSE!", response.lastName);
 
-    })
-  }
+  //   })
+  // }
 
   calculateBasalMetabolism() {
     if (this.userForm.invalid) {
@@ -109,7 +106,8 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
       age: this.userForm.get('age')?.value,
       height: this.userForm.get('height')?.value,
       weight: this.userForm.get('weight')?.value,
-      result: parseFloat(this.result),
+      basalMetabolicRate: parseFloat(this.result),
+      userImage: this.userForm.get('userImage')?.value
     };
 
     this.userService.createUserData(newUser).subscribe((response) => {

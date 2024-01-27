@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from '../interfaces/User';
 
 @Injectable({
@@ -13,8 +13,7 @@ export class UserService {
   createUserData(user: User): Observable<User> {
     return this.http.post<User>(`${this.BASE_URL}/users/`, user);
   }
-
-  getUserData(id: string): Observable<User> {
-    return this.http.get<User>(`${this.BASE_URL}/users/${id}`)
+  getUserData(id: string) {
+    return this.http.get<User>(`${this.BASE_URL}/users/${id}`);
   }
 }

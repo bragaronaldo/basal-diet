@@ -6,5 +6,6 @@ export interface User {
   height: number,
   weight: number,
   selectedGenre: string,
-  result: number
+  basalMetabolicRate: number,
+  userImage: string
 }

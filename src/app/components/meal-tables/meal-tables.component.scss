@@ -17,8 +17,9 @@ $border-radius: 6px;
 
 .master-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(30rem, auto));
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 30rem));
   justify-content: center;
+  align-items: center;
   align-items: flex-start;
   gap: 2rem;
   margin: 0 2rem 2rem 2rem;
@@ -138,9 +139,10 @@ $border-radius: 6px;
     font-size: 1.2rem;
   }
   .table-btns > div {
-    color: $color-1;
+    // color: $color-1;
+    color: #fff;
     font-size: 1rem;
-    border: solid 1px $color-1;
+    // border: solid 1px $color-1;
     padding: 0.1rem 0.3rem 0.1rem 0.3rem;
     border-radius: $border-radius;
   }
@@ -157,4 +159,14 @@ $border-radius: 6px;
   text-align: center;
   display: flex;
   align-items: center;
+}
+.macronutrients-header {
+  border: 0 !important;
+  padding: 0.1rem 0.3rem 0.1rem 0.3rem;
+  border-radius: $border-radius;
+  display: flex;
+  gap: 0.3rem;
+}
+.macronutrients-header span {
+  color: white;
 }

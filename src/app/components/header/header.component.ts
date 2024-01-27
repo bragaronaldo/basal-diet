@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/interfaces/User';
 import { HeaderService } from 'src/app/services/header.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -7,16 +11,27 @@ import { HeaderService } from 'src/app/services/header.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private headerService: HeaderService) {}
+  constructor(
+    private headerService: HeaderService,
+    private userService: UserService,
+    private route: ActivatedRoute
+  ) {}
 
-  name: string = '';
-  imgUrl: string = 'https://images.pexels.com/photos/19276436/pexels-photo-19276436/free-photo-of-elegante-sofisticado-moda-tendencia.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+  userData$ = new Observable<User>();
+  id: string = '';
+  totalCalories: string = '';
+
+  caloriesValue = this.headerService.totalCalories.subscribe((response) => {
+    this.totalCalories = response;
+  });
 
   ngOnInit(): void {
-    this.headerService.onHeaderTextChanged.subscribe((newHeader: string) => {
-      console.log("VAI");
-
-      this.name = newHeader;
+    this.route.params.subscribe((params) => {
+      this.id = params['id'];
+      this.getUserData(this.id);
     });
+  }
+  getUserData(id: string) {
+    this.userData$ = this.userService.getUserData(id);
   }
 }
