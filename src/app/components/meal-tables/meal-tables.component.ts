@@ -1,7 +1,7 @@
 import { state, style, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, Subject, map, takeUntil, tap } from 'rxjs';
 import { Food, Meal } from 'src/app/interfaces/MealTable';
 import { MealTableService } from 'src/app/services/meal-table.service';
 import { FormatTextService } from 'src/app/services/format-text.service';
@@ -49,6 +49,8 @@ export class MealTablesComponent implements OnInit {
   newMeal: string = '';
   allMealsCalories: number = 0;
 
+  private unsubscribe$ = new Subject<void>();
+
   constructor(
     private formatTextService: FormatTextService,
     private mealService: MealTableService,
@@ -62,16 +64,20 @@ export class MealTablesComponent implements OnInit {
       this.loadMeals();
     });
   }
+  ngOnDestroy(): void {
+    console.log('ngUnsubscribe being called.');
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   calculateAllMealsCalories() {
-    this.mealService.getFoodsByUserId(this.userId).subscribe((response) => {
-      this.foods = response;
-
-      console.log("RESPONSE: ", response);
-
-
-      response.map((data) => (this.allMealsCalories += data.calories));
-      this.headerService.totalCalories.next(this.allMealsCalories.toFixed(2));
-    });
+    this.mealService
+      .getFoodsByUserId(this.userId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((response) => {
+        this.foods = response;
+        response.map((data) => (this.allMealsCalories += data.calories));
+        this.headerService.totalCalories.next(this.allMealsCalories.toFixed(2));
+      });
   }
   calculateTotalNutrients(id: number) {
     let totalCalories = 0;
@@ -92,7 +98,12 @@ export class MealTablesComponent implements OnInit {
     const formattedTotalCalories = totalCalories.toFixed(2);
     const formattedTotalFats = totalFats.toFixed(2);
 
-    return { totalCarbohydrates: formattedTotalCarbohydrates, totalProteins: formattedTotalProteins, totalCalories: formattedTotalCalories, totalFats: formattedTotalFats };
+    return {
+      totalCarbohydrates: formattedTotalCarbohydrates,
+      totalProteins: formattedTotalProteins,
+      totalCalories: formattedTotalCalories,
+      totalFats: formattedTotalFats,
+    };
   }
 
   getFoodsForMeal(tableId: number): Food[] {

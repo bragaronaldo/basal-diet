@@ -16,6 +16,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { User } from 'src/app/interfaces/User';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-basal-metabolic-rate-calculator',
   templateUrl: './basal-metabolic-rate-calculator.component.html',
@@ -44,6 +45,8 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
   userForm!: FormGroup;
   userData!: User;
 
+  private unsubscribe$ = new Subject<void>();
+
   constructor(
     private router: Router,
     private userService: UserService,
@@ -60,6 +63,11 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
       weight: new FormControl(Validators.required),
       userImage: new FormControl(''),
     });
+  }
+  ngOnDestroy(): void {
+    console.log('ngUnsubscribe being called.');
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
   get formControls() {
     return this.userForm.controls;
@@ -110,7 +118,9 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
       userImage: this.userForm.get('userImage')?.value
     };
 
-    this.userService.createUserData(newUser).subscribe((response) => {
+    this.userService.createUserData(newUser).pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe((response) => {
       if (response.id !== undefined) {
         this.id = response.id;
       }
