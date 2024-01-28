@@ -8,7 +8,8 @@
     </div>
   </p-dialog>
 
-  <p-dialog header="Editar refeição" [(visible)]="editMealVisible" [draggable]="false" [resizable]="false" [modal]="true" *ngIf="selectedMeal">
+  <p-dialog header="Editar refeição" [(visible)]="editMealVisible" [draggable]="false" [resizable]="false"
+    [modal]="true" *ngIf="selectedMeal">
     <div class="my-1 gap-4 flex justify-content-center flex-column">
       <input type="text" placeholder="ex: Almoço" [(ngModel)]="selectedMeal.name">
       <button class="btn" (click)="editMeal()">Salvar</button>
@@ -53,46 +54,44 @@
     </div>
   </p-dialog>
 
-  <p-dialog header="Novo alimento" [(visible)]="visibleNewFood" [draggable]="false" [resizable]="false"
-  [modal]="true">
-  <div class="my-1 gap-4 flex justify-content-center flex-column">
-    <div class="modal-inputs">
-      <label for="alimento">Alimento</label>
-      <input type="text" id="alimento" name="alimento" [(ngModel)]="foodName"
-        placeholder="ex: Arroz branco cozido">
-      <label for="peso">Peso (g)</label>
-      <input type="number" id="peso" name="peso" [(ngModel)]="amount" placeholder="ex: 120">
-      <label for="carboidratos">Carboidratos</label>
-      <input type="number" id="carboidratos" name="carboidratos" [(ngModel)]="carbohydrate"
-        placeholder="ex: 28.6">
-      <label for="proteinas">Proteínas</label>
-      <input type="number" id="proteinas" name="proteinas" [(ngModel)]="protein" placeholder="ex: 21">
-      <label for="gorduras">Gorduras</label>
-      <input type="number" id="gorduras" name="gorduras" [(ngModel)]="fat" placeholder="ex: 2.6">
+  <p-dialog header="Novo alimento" [(visible)]="visibleNewFood" [draggable]="false" [resizable]="false" [modal]="true">
+    <div class="my-1 gap-4 flex justify-content-center flex-column">
+      <div class="modal-inputs">
+        <label for="alimento">Alimento</label>
+        <input type="text" id="alimento" name="alimento" [(ngModel)]="foodName" placeholder="ex: Arroz branco cozido">
+        <label for="peso">Peso (g)</label>
+        <input type="number" id="peso" name="peso" [(ngModel)]="amount" placeholder="ex: 120">
+        <label for="carboidratos">Carboidratos</label>
+        <input type="number" id="carboidratos" name="carboidratos" [(ngModel)]="carbohydrate" placeholder="ex: 28.6">
+        <label for="proteinas">Proteínas</label>
+        <input type="number" id="proteinas" name="proteinas" [(ngModel)]="protein" placeholder="ex: 21">
+        <label for="gorduras">Gorduras</label>
+        <input type="number" id="gorduras" name="gorduras" [(ngModel)]="fat" placeholder="ex: 2.6">
+      </div>
+      <button class="btn" (click)="addNewFood()">Adicionar</button>
     </div>
-    <button class="btn" (click)="addNewFood()">Adicionar</button>
-  </div>
-</p-dialog>
+  </p-dialog>
 </div>
 
 <div class="flex flex justify-content-center mb-4">
   <button class="btn" (click)="showDialog()">Nova refeição</button>
 </div>
 
-<div class="master-container">
+<div class="main-container">
   <div class="table-container" *ngFor="let meal of mealTables$ | async, let i = index">
     <div class="flex justify-content-between align-items-center gap-2">
       <h3 class="title">{{meal.name}}</h3>
       <div class="table-btns">
-        <div class="macronutrients-header">
-          <span>C: {{calculateTotalNutrients(meal.id!).totalCarbohydrates}}</span>
-          <span>P: {{calculateTotalNutrients(meal.id!).totalProteins}}</span>
-          <span>G: {{calculateTotalNutrients(meal.id!).totalFats}}</span>
+        <div *ngIf="calculateTotalNutrients(meal.id!)">{{ calculateTotalNutrients(meal.id!).totalCalories }} calorias
         </div>
-        <div *ngIf="calculateTotalNutrients(meal.id!)">{{ calculateTotalNutrients(meal.id!).totalCalories }} calorias</div>
         <button class="pi pi-pencil icon-btn" (click)="showEditMealModal(meal)"></button>
         <button class="pi pi-trash icon-btn" (click)="showDeleteMealModal(meal.id!)"></button>
       </div>
+    </div>
+    <div class="macronutrients-box-header">
+      <span>Carboidratos: {{calculateTotalNutrients(meal.id!).totalCarbohydrates}}</span>
+      <span>Proteínas: {{calculateTotalNutrients(meal.id!).totalProteins}}</span>
+      <span >Gorduras: {{calculateTotalNutrients(meal.id!).totalFats}}</span>
     </div>
     <div class="add-btn">
       <button (click)="showNewFoodDialog(meal.id!)">Novo Alimento</button>
@@ -105,7 +104,7 @@
             <span>{{food.amount}} g</span>
           </div>
         </div>
-        <div style="text-align: end;" class="macro-master">
+        <div style="text-align: end;" class="macro-main">
           <div class="edit-delete-macros">
             <button class="pi pi-pencil" (click)="showEditFoodModal(food)"></button>
             <button class="pi pi-trash" (click)="showDeleteFoodModal(food.id!)"></button>
