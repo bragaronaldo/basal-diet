@@ -1,3 +1,5 @@
+import { FoodDTO } from './../../interfaces/foodDTO';
+import { NutritionixService } from './../../nutritionix.service';
 import { state, style, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -6,6 +8,7 @@ import { Food, Meal } from 'src/app/interfaces/MealTable';
 import { MealTableService } from 'src/app/services/meal-table.service';
 import { FormatTextService } from 'src/app/services/format-text.service';
 import { HeaderService } from 'src/app/services/header.service';
+import { FoodQuery } from 'src/app/interfaces/foodQuery';
 @Component({
   selector: 'app-meal-tables',
   templateUrl: './meal-tables.component.html',
@@ -55,7 +58,8 @@ export class MealTablesComponent implements OnInit {
     private formatTextService: FormatTextService,
     private mealService: MealTableService,
     private route: ActivatedRoute,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private nutritionixService: NutritionixService
   ) {}
 
   ngOnInit(): void {
@@ -242,5 +246,67 @@ export class MealTablesComponent implements OnInit {
   showEditFoodModal(food: Food) {
     this.selectedFood = JSON.parse(JSON.stringify(food));
     this.editFoodVisible = true;
+  }
+
+  suggestions: any[] = [];
+  foodPhoto: string = '';
+  foodPreviewName: string = '';
+  foundedFood!: FoodDTO;
+
+  responseMockUp: FoodDTO = {
+    foods: [
+      {
+        food_name: 'banana',
+        nf_protein: 2.3,
+        nf_total_carbohydrate: 18,
+        nf_total_fat: 0.4,
+        serving_weight_grams: 120,
+        photo: {
+          highres: '',
+          is_user_uploaded: false,
+          thumb:
+            'https://vallefrutas.com.br/wp-content/uploads/banana-nanica.png',
+        },
+      },
+    ],
+  };
+
+  fillNutrient() {
+    this.protein = this.responseMockUp.foods[0].nf_protein;
+    this.carbohydrate = this.responseMockUp.foods[0].nf_total_carbohydrate;
+    this.fat = this.responseMockUp.foods[0].nf_total_fat;
+    this.amount = this.responseMockUp.foods[0].serving_weight_grams;
+
+    // this.protein = this.foundedFood.foods[0].nf_protein;
+    // this.carbohydrate = this.foundedFood.foods[0].nf_total_carbohydrate;
+    // this.fat = this.foundedFood.foods[0].nf_total_fat;
+    // this.amount = this.foundedFood.foods[0].serving_weight_grams;
+  }
+
+  search(event: any) {
+    const foodQuery: FoodQuery = {
+      query: event.query,
+    };
+
+    this.foodPhoto = this.responseMockUp.foods[0].photo.thumb;
+    this.foodPreviewName = this.responseMockUp.foods[0].food_name;
+
+      this.suggestions = this.responseMockUp.foods.map(food => {
+        return foodQuery.query === food.food_name ? food.food_name : null;
+      }).filter(name => name !== null);
+
+    // this.response = this.nutritionixService
+    //   .getFoodDetails(foodQuery)
+    //   .subscribe((response) => {
+    //     this.foundedFood = response;
+
+    //     this.foodPhoto = response.foods[0].photo.thumb;
+    //     this.food_name = response.foods[0].food_name;
+    //     this.suggestions = response.foods
+    //       .map((food) => {
+    //         return foodQuery.query === food.food_name ? food.food_name : null;
+    //       })
+    //       .filter((name) => name !== null);
+    //   });
   }
 }

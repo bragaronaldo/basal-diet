@@ -103,14 +103,19 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
       ).toFixed(2);
     }
 
+    const randomNumber: number = Math.random();
+    const finalNumber = Math.floor(randomNumber * (100 - 0 + 1)) + 1;
+
     const newUser: User = {
+
+      id: finalNumber,
       name: this.formatTextService.capitalizeFirstLetter(
         this.userForm.get('name')?.value
       ),
       lastName: this.formatTextService.capitalizeFirstLetter(
         this.userForm.get('lastName')?.value
       ),
-      selectedGenre: this.selectedGenre,
+      selectedGender: this.selectedGenre,
       age: this.userForm.get('age')?.value,
       height: this.userForm.get('height')?.value,
       weight: this.userForm.get('weight')?.value,

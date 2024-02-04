@@ -17,7 +17,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { AutoCompleteModule } from 'primeng/autocomplete';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +39,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MessageModule,
     InputTextModule,
     FontAwesomeModule,
+    AutoCompleteModule
   ],
   providers: [provideAnimations()],
   bootstrap: [AppComponent]

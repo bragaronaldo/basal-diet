@@ -58,7 +58,15 @@
     <div class="my-1 gap-4 flex justify-content-center flex-column">
       <div class="modal-inputs">
         <label for="alimento">Alimento</label>
-        <input type="text" id="alimento" name="alimento" [(ngModel)]="foodName" placeholder="ex: Arroz branco cozido">
+
+        <p-autoComplete  [style]="{'width': '100%' ,'height': '38px'}" [(ngModel)]="foodName" [suggestions]="suggestions" (completeMethod)="search($event)" [delay]="600" [minLength]="3" (onSelect)="fillNutrient()" placeholder="ex: arroz..." class="auto-complete-input">
+          <ng-template let-food pTemplate="item">
+            <div class="flex align-items-center gap-2">
+                <img [src]="foodPhoto" class="food-photo"/>
+                <div class="food-preview">{{ foodPreviewName}}</div>
+            </div>
+        </ng-template>
+      </p-autoComplete>
         <label for="peso">Peso (g)</label>
         <input type="number" id="peso" name="peso" [(ngModel)]="amount" placeholder="ex: 120">
         <label for="carboidratos">Carboidratos</label>
@@ -73,8 +81,22 @@
   </p-dialog>
 </div>
 
-<div class="flex flex justify-content-center mb-4">
+<div class="flex flex justify-content-center mb-4 gap-4">
   <button class="btn" (click)="showDialog()">Nova refeição</button>
+
+
+  <div class="card flex justify-content-center">
+    <p-autoComplete [(ngModel)]="foodName" [suggestions]="suggestions" (completeMethod)="search($event)" [dropdown]="false" dropdownIcon="pi pi-search" [delay]="600" (onSelect)="fillNutrient()">
+      <ng-template let-food pTemplate="item">
+        <div class="flex align-items-center gap-2">
+            <img [src]="foodPhoto" class="food-photo"/>
+            <div class="food-preview">{{ foodPreviewName }}</div>
+        </div>
+    </ng-template>
+  </p-autoComplete>
+</div>
+
+
 </div>
 
 <div class="main-container">
