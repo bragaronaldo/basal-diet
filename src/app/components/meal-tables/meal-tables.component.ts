@@ -58,8 +58,7 @@ export class MealTablesComponent implements OnInit {
     private formatTextService: FormatTextService,
     private mealService: MealTableService,
     private route: ActivatedRoute,
-    private headerService: HeaderService,
-    private nutritionixService: NutritionixService
+    private headerService: HeaderService
   ) {}
 
   ngOnInit(): void {
@@ -187,11 +186,10 @@ export class MealTablesComponent implements OnInit {
     });
   }
   editFood() {
-    this.selectedFood.calories = this.calculateCalories(
-      this.selectedFood.carbohydrates,
-      this.selectedFood.proteins,
-      this.selectedFood.fats
-    );
+    this.selectedFood.carbohydrates = this.carbohydrate;
+    this.selectedFood.proteins = this.protein;
+    this.selectedFood.fats = this.fat;
+    this.selectedFood.name = this.foodName;
 
     const formattedFood = this.formatTextService.capitalizeFirstLetter(
       this.selectedFood.name
@@ -212,6 +210,9 @@ export class MealTablesComponent implements OnInit {
     this.protein = undefined;
     this.fat = undefined;
 
+    this.dialogHeaderName = 'Novo Alimento';
+    this.dialogButtonName = 'Adicionar';
+
     this.newFoodId = id;
     this.visibleNewFood = true;
   }
@@ -222,7 +223,7 @@ export class MealTablesComponent implements OnInit {
       this.loadMeals();
     });
   }
-  deleteTable() {
+  deleteMeal() {
     this.mealService.deleteMeal(this.mealId).subscribe(() => {
       this.deleteMealVisible = false;
       this.loadMeals();
@@ -245,7 +246,33 @@ export class MealTablesComponent implements OnInit {
   }
   showEditFoodModal(food: Food) {
     this.selectedFood = JSON.parse(JSON.stringify(food));
+    // console.log('SELECTED FOOD: ', this.selectedFood);
+
+    //
+    this.foodName = this.selectedFood.name;
+    this.amount = this.selectedFood.amount;
+    this.carbohydrate = this.selectedFood.carbohydrates;
+    this.protein = this.selectedFood.proteins;
+    this.fat = this.selectedFood.fats;
+    // console.log("THIS: ", this.carbohydrate);
+
+    //
+
+    this.dialogHeaderName = 'Editar Alimento';
+    this.dialogButtonName = 'Salvar';
+
+    this.originalWeight = this.selectedFood.amount;
+    // this.originalProteinAmount = this.selectedFood.proteins;
+    this.originalCarbohydrateAmount = this.selectedFood.carbohydrates;
+    this.originalFatAmount = this.selectedFood.fats;
+
     this.editFoodVisible = true;
+  }
+
+  updateDefaultMacronutrientValuesOnEdit() {
+    this.originalProteinAmount = this.protein!;
+    this.originalCarbohydrateAmount = this.carbohydrate!;
+    this.originalFatAmount = this.fat!;
   }
 
   suggestions: any[] = [];
@@ -265,7 +292,7 @@ export class MealTablesComponent implements OnInit {
           highres: '',
           is_user_uploaded: false,
           thumb:
-            'https://vallefrutas.com.br/wp-content/uploads/banana-nanica.png',
+            'https://static1.minhavida.com.br/ingredients/7d/a0/ab/c5/banana-cortada-em-rodelas-em-cima-de-mesa-de-madeira-orig-1.jpg',
         },
       },
     ],
@@ -277,11 +304,19 @@ export class MealTablesComponent implements OnInit {
     this.fat = this.responseMockUp.foods[0].nf_total_fat;
     this.amount = this.responseMockUp.foods[0].serving_weight_grams;
 
+    this.originalWeight = this.responseMockUp.foods[0].serving_weight_grams!;
+    this.originalProteinAmount = this.responseMockUp.foods[0].nf_protein!;
+    this.originalCarbohydrateAmount =
+      this.responseMockUp.foods[0].nf_total_carbohydrate!;
+    this.originalFatAmount = this.responseMockUp.foods[0].nf_total_fat!;
+
     // this.protein = this.foundedFood.foods[0].nf_protein;
     // this.carbohydrate = this.foundedFood.foods[0].nf_total_carbohydrate;
     // this.fat = this.foundedFood.foods[0].nf_total_fat;
     // this.amount = this.foundedFood.foods[0].serving_weight_grams;
   }
+
+  response: any;
 
   search(event: any) {
     const foodQuery: FoodQuery = {
@@ -291,9 +326,11 @@ export class MealTablesComponent implements OnInit {
     this.foodPhoto = this.responseMockUp.foods[0].photo.thumb;
     this.foodPreviewName = this.responseMockUp.foods[0].food_name;
 
-      this.suggestions = this.responseMockUp.foods.map(food => {
+    this.suggestions = this.responseMockUp.foods
+      .map((food) => {
         return foodQuery.query === food.food_name ? food.food_name : null;
-      }).filter(name => name !== null);
+      })
+      .filter((name) => name !== null);
 
     // this.response = this.nutritionixService
     //   .getFoodDetails(foodQuery)
@@ -301,7 +338,7 @@ export class MealTablesComponent implements OnInit {
     //     this.foundedFood = response;
 
     //     this.foodPhoto = response.foods[0].photo.thumb;
-    //     this.food_name = response.foods[0].food_name;
+    //     this.foodPreviewName = response.foods[0].food_name;
     //     this.suggestions = response.foods
     //       .map((food) => {
     //         return foodQuery.query === food.food_name ? food.food_name : null;
@@ -309,4 +346,56 @@ export class MealTablesComponent implements OnInit {
     //       .filter((name) => name !== null);
     //   });
   }
+
+  originalWeight: number = 0;
+  originalProteinAmount: number = 0;
+  originalCarbohydrateAmount: number = 0;
+  originalFatAmount: number = 0;
+
+  changeMacronutriensValue() {
+    console.log('MUDAR');
+
+    const newCarbohydrateAmount = this.calculateMacronutrientsByWeight(
+      this.originalWeight,
+      this.originalCarbohydrateAmount!,
+      this.amount!
+    );
+    const newProteinAmount = this.calculateMacronutrientsByWeight(
+      this.originalWeight,
+      this.originalProteinAmount!,
+      this.amount!
+    );
+    const newFatAmount = this.calculateMacronutrientsByWeight(
+      this.originalWeight,
+      this.originalFatAmount!,
+      this.amount!
+    );
+
+    this.carbohydrate = newCarbohydrateAmount;
+    this.protein = newProteinAmount;
+    this.fat = newFatAmount;
+  }
+
+  calculateMacronutrientsByWeight(
+    originalWeight: number,
+    currentValue: number,
+    newWeight: number
+  ) {
+    const result = (newWeight * currentValue) / originalWeight;
+    return parseFloat(result.toFixed(2));
+  }
+
+  dialogHeaderName: string = '';
+  dialogButtonName: string = '';
+
+  // saveFood(): void {
+  //   this.editFoodVisible = false;
+
+  //   if (this.isCreateMode) {
+  //     this.addNewFood();
+  //     return;
+  //   }
+
+  //   this.editFood();
+  // }
 }

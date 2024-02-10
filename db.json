@@ -270,6 +270,17 @@
       "fats": 1.1,
       "calories": 110.7,
       "id": 16
+    },
+    {
+      "userIndex": "2",
+      "mealIndex": 1,
+      "name": "Banana",
+      "amount": 120,
+      "carbohydrates": 18,
+      "proteins": 2.3,
+      "fats": 0.4,
+      "calories": 84.8,
+      "id": 17
     }
   ]
 }

@@ -8,6 +8,10 @@ import { FoodDTO } from './interfaces/foodDTO';
   providedIn: 'root',
 })
 export class NutritionixService {
+
+
+  private readonly jsonServer_URL = 'http://localhost:3000/foodsMockUp';
+
   private readonly BASE_URL = `${environment.nutritionixAPI}v2/natural/nutrients`;
   private readonly headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
@@ -21,5 +25,9 @@ export class NutritionixService {
 
   getFoodDetails(foodName: FoodQuery) {
     return this.http.post<FoodDTO>(`${this.BASE_URL}`, foodName, { headers: this.headers });
+  }
+
+  createFoodDetailsMockUp(food: FoodDTO) {
+    return this.http.post<FoodDTO>(`${this.jsonServer_URL}`, food);
   }
 }
