@@ -71,7 +71,6 @@ Este fluxo de criação de dietas proporciona uma jornada intuitiva, desde o pre
 Se você tiver alguma dúvida, sugestão ou relatório de problema, sinta-se à vontade de entrar em contato através do e-mail [ronaldo.tbj@gmail.com].
 
 
-## Badges
-
 [![Versão do Angular](https://img.shields.io/badge/angular-15.2.10-red)](https://angular.io/)
+[![DeepScan grade](https://deepscan.io/api/teams/23174/projects/26443/branches/842339/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23174&pid=26443&bid=842339)
 [![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)](https://shields.io/)
