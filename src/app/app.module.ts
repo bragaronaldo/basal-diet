@@ -7,7 +7,6 @@ import { BasalMetabolicRateCalculatorComponent } from './components/basal-metabo
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
-import { trigger, state, style, animate, transition } from '@angular/animations';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import { MealTablesComponent } from './components/meal-tables/meal-tables.component';
 import { DialogModule } from 'primeng/dialog';

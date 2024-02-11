@@ -5,7 +5,7 @@ export interface User {
   age: number,
   height: number,
   weight: number,
-  selectedGender: string,
+  gender: string,
   basalMetabolicRate: number,
   userImage: string
 }

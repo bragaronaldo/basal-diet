@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   trigger,
   state,
@@ -36,14 +36,15 @@ import { Subject, takeUntil } from 'rxjs';
     ]),
   ],
 })
-export class BasalMetabolicRateCalculatorComponent implements OnInit {
-  selectedGenre: string = 'male';
-  result: string = '';
-
-  id!: number;
-
+export class BasalMetabolicRateCalculatorComponent
+  implements OnInit, OnDestroy
+{
   userForm!: FormGroup;
   userData!: User;
+
+  result = '';
+  id!: number;
+  gender = '';
 
   private unsubscribe$ = new Subject<void>();
 
@@ -58,9 +59,16 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       name: new FormControl('', Validators.required),
       lastName: new FormControl('', [Validators.required]),
-      age: new FormControl(Validators.required),
-      height: new FormControl(Validators.required),
-      weight: new FormControl(Validators.required),
+      gender: new FormControl('', [Validators.required]),
+      age: new FormControl(Validators.required, Validators.pattern('^[0-9]*$')),
+      height: new FormControl(
+        Validators.required,
+        Validators.pattern('^[0-9]*$')
+      ),
+      weight: new FormControl(
+        Validators.required,
+        Validators.pattern('^[0-9]*$')
+      ),
       userImage: new FormControl(''),
     });
   }
@@ -73,13 +81,6 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
     return this.userForm.controls;
   }
 
-  // loadUser() {
-  //   this.userService.getUserData('1').subscribe((response) => {
-  //     console.log("RESPONSE!", response.lastName);
-
-  //   })
-  // }
-
   calculateBasalMetabolism() {
     if (this.userForm.invalid) {
       return;
@@ -89,59 +90,44 @@ export class BasalMetabolicRateCalculatorComponent implements OnInit {
     const height = this.userForm.get('height')?.value;
     const weight = this.userForm.get('weight')?.value;
 
-    if (this.selectedGenre === 'female') {
-      this.result = (
-        447.593 +
-        9.247 * weight +
-        3.098 * height -
-        4.33 * age
-      ).toFixed(2);
+    if (this.gender === 'female') {
+      this.result = (655 + 9.6 * weight + 1.8 * height - 4.7 * age).toFixed(2);
     } else {
-      this.result = (
-        1.3 *
-        (66.47 + 13.75 * weight + 5 * height - 6.8 * age)
-      ).toFixed(2);
+      this.result = (66 + 13.7 * weight + 5 * height - 6.8 * age).toFixed(2);
     }
 
-    const randomNumber: number = Math.random();
-    const finalNumber = Math.floor(randomNumber * (100 - 0 + 1)) + 1;
-
     const newUser: User = {
-
-      id: finalNumber,
       name: this.formatTextService.capitalizeFirstLetter(
         this.userForm.get('name')?.value
       ),
       lastName: this.formatTextService.capitalizeFirstLetter(
         this.userForm.get('lastName')?.value
       ),
-      selectedGender: this.selectedGenre,
+      gender: this.userForm.get('gender')?.value,
       age: this.userForm.get('age')?.value,
       height: this.userForm.get('height')?.value,
       weight: this.userForm.get('weight')?.value,
       basalMetabolicRate: parseFloat(this.result),
-      userImage: this.userForm.get('userImage')?.value
+      userImage: this.userForm.get('userImage')?.value,
     };
 
-    this.userService.createUserData(newUser).pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe((response) => {
-      if (response.id !== undefined) {
-        this.id = response.id;
-      }
-    });
+    this.userService
+      .createUserData(newUser)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((response) => {
+        if (response.id !== undefined) {
+          this.id = response.id;
+        }
+      });
   }
   createDiet() {
     this.router.navigateByUrl(`refeicoes/${this.id}`);
   }
 
-  radioButtonGender() {
-    if (this.selectedGenre == 'female') {
-      return;
-    }
-  }
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onImageSelect(event: any): void {
+    console.log('TYPE: ', typeof event);
+
     const selectedImage = event.target.files[0];
 
     if (selectedImage) {

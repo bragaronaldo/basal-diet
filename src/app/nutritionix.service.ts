@@ -9,10 +9,9 @@ import { FoodDTO } from './interfaces/foodDTO';
 })
 export class NutritionixService {
 
-
   private readonly jsonServer_URL = 'http://localhost:3000/foodsMockUp';
-
   private readonly BASE_URL = `${environment.nutritionixAPI}v2/natural/nutrients`;
+
   private readonly headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
     // 'x-app-id': '61adf945',

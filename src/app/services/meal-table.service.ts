@@ -7,7 +7,7 @@ import { Food, Meal } from '../interfaces/MealTable';
   providedIn: 'root',
 })
 export class MealTableService {
-  private BASE_URL: string = 'http://localhost:3000';
+  private BASE_URL = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 

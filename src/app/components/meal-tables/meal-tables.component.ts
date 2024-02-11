@@ -1,14 +1,14 @@
 import { FoodDTO } from './../../interfaces/foodDTO';
-import { NutritionixService } from './../../nutritionix.service';
 import { state, style, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject, map, takeUntil, tap } from 'rxjs';
+import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { Food, Meal } from 'src/app/interfaces/MealTable';
 import { MealTableService } from 'src/app/services/meal-table.service';
 import { FormatTextService } from 'src/app/services/format-text.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { FoodQuery } from 'src/app/interfaces/foodQuery';
+import { NutritionixService } from 'src/app/nutritionix.service';
 @Component({
   selector: 'app-meal-tables',
   templateUrl: './meal-tables.component.html',
@@ -22,7 +22,7 @@ import { FoodQuery } from 'src/app/interfaces/foodQuery';
     ]),
   ],
 })
-export class MealTablesComponent implements OnInit {
+export class MealTablesComponent implements OnInit, OnDestroy {
   foodTable: Meal[] = [];
 
   foodName?: string;
@@ -31,26 +31,26 @@ export class MealTablesComponent implements OnInit {
   protein?: number;
   fat?: number;
 
-  visible: boolean = false;
-  deleteFoodVisible: boolean = false;
-  deleteMealVisible: boolean = false;
-  editFoodVisible: boolean = false;
-  visibleNewFood: boolean = false;
-  editMealVisible: boolean = false;
+  visible = false;
+  deleteFoodVisible = false;
+  deleteMealVisible = false;
+  editFoodVisible = false;
+  visibleNewFood = false;
+  editMealVisible = false;
 
   userId!: number;
-  newFoodId: number = 0;
-  foodId: number = 0;
-  mealId: number = 0;
+  newFoodId = 0;
+  foodId = 0;
+  mealId = 0;
 
   mealTables$ = new Observable<Meal[]>();
   foods: Food[] = [];
 
-  selectedMeal: any;
-  selectedFood: any;
+  selectedMeal?: Meal | null;
+  selectedFood?: Food | null;
 
-  newMeal: string = '';
-  allMealsCalories: number = 0;
+  newMeal = '';
+  allMealsCalories = 0;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -58,7 +58,8 @@ export class MealTablesComponent implements OnInit {
     private formatTextService: FormatTextService,
     private mealService: MealTableService,
     private route: ActivatedRoute,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private nutritionixService: NutritionixService
   ) {}
 
   ngOnInit(): void {
@@ -145,15 +146,15 @@ export class MealTablesComponent implements OnInit {
     const newFood: Food = {
       userIndex: this.userId,
       mealIndex: this.newFoodId,
-      name: this.formatTextService.capitalizeFirstLetter(this.foodName!),
-      amount: this.amount!,
-      carbohydrates: this.carbohydrate!,
-      proteins: this.protein!,
-      fats: this.fat!,
+      name: this.formatTextService.capitalizeFirstLetter(this.foodName ?? ''),
+      amount: this.amount ?? 0,
+      carbohydrates: this.carbohydrate ?? 0,
+      proteins: this.protein ?? 0,
+      fats: this.fat ?? 0,
       calories: this.calculateCalories(
-        this.carbohydrate!,
-        this.protein!,
-        this.fat!
+        this.carbohydrate ?? 0,
+        this.protein ?? 0,
+        this.fat ?? 0
       ),
     };
 
@@ -170,37 +171,42 @@ export class MealTablesComponent implements OnInit {
     this.visibleNewFood = false;
   }
   calculateCalories(carb: number, protein: number, fat: number) {
-    const calories: Number = carb * 4 + protein * 4 + fat * 9;
+    const calories: number = carb * 4 + protein * 4 + fat * 9;
     return Number(calories.toFixed(2));
   }
   editMeal() {
-    const formattedMeal = this.formatTextService.capitalizeFirstLetter(
-      this.selectedMeal.name
-    );
-    this.selectedMeal.name = formattedMeal;
+    if (this.selectedMeal) {
+      const formattedMeal = this.formatTextService.capitalizeFirstLetter(
+        this.selectedMeal.name
+      );
+      this.selectedMeal.name = formattedMeal;
 
-    this.mealService.editMeal(this.selectedMeal).subscribe(() => {
-      this.editMealVisible = false;
-      this.selectedMeal = null;
-      this.loadMeals();
-    });
+      this.mealService.editMeal(this.selectedMeal).subscribe(() => {
+        this.editMealVisible = false;
+        delete this.selectedMeal;
+        this.selectedMeal = null;
+        this.loadMeals();
+      });
+    }
   }
   editFood() {
-    this.selectedFood.carbohydrates = this.carbohydrate;
-    this.selectedFood.proteins = this.protein;
-    this.selectedFood.fats = this.fat;
-    this.selectedFood.name = this.foodName;
+    if (this.selectedFood) {
+      this.selectedFood.carbohydrates = this.carbohydrate ?? 0;
+      this.selectedFood.proteins = this.protein ?? 0;
+      this.selectedFood.fats = this.fat ?? 0;
+      this.selectedFood.name = this.foodName ?? '';
 
-    const formattedFood = this.formatTextService.capitalizeFirstLetter(
-      this.selectedFood.name
-    );
-    this.selectedFood.name = formattedFood;
+      const formattedFood = this.formatTextService.capitalizeFirstLetter(
+        this.selectedFood.name
+      );
+      this.selectedFood.name = formattedFood;
 
-    this.mealService.editFood(this.selectedFood).subscribe(() => {
-      this.loadFoods();
-      this.editFoodVisible = false;
-      this.selectedFood = null;
-    });
+      this.mealService.editFood(this.selectedFood).subscribe(() => {
+        this.loadFoods();
+        this.editFoodVisible = false;
+        this.selectedFood = null;
+      });
+    }
   }
 
   showNewFoodDialog(id: number) {
@@ -210,8 +216,9 @@ export class MealTablesComponent implements OnInit {
     this.protein = undefined;
     this.fat = undefined;
 
-    this.dialogHeaderName = 'Novo Alimento';
-    this.dialogButtonName = 'Adicionar';
+    this.originalCarbohydrateAmount = null;
+    this.originalProteinAmount = null;
+    this.originalFatAmount = null;
 
     this.newFoodId = id;
     this.visibleNewFood = true;
@@ -229,7 +236,7 @@ export class MealTablesComponent implements OnInit {
       this.loadMeals();
     });
   }
-  showDialog() {
+  showNewMealDialog() {
     this.visible = true;
   }
   showEditMealModal(meal: Meal) {
@@ -246,38 +253,34 @@ export class MealTablesComponent implements OnInit {
   }
   showEditFoodModal(food: Food) {
     this.selectedFood = JSON.parse(JSON.stringify(food));
-    // console.log('SELECTED FOOD: ', this.selectedFood);
 
-    //
-    this.foodName = this.selectedFood.name;
-    this.amount = this.selectedFood.amount;
-    this.carbohydrate = this.selectedFood.carbohydrates;
-    this.protein = this.selectedFood.proteins;
-    this.fat = this.selectedFood.fats;
-    // console.log("THIS: ", this.carbohydrate);
+    if (this.selectedFood) {
+      this.foodName = this.selectedFood.name;
+      this.amount = this.selectedFood.amount;
+      this.carbohydrate = this.selectedFood.carbohydrates;
+      this.protein = this.selectedFood.proteins;
+      this.fat = this.selectedFood.fats;
 
-    //
+      this.originalWeight = this.selectedFood.amount;
+      this.originalProteinAmount = this.selectedFood.proteins;
+      this.originalCarbohydrateAmount = this.selectedFood.carbohydrates;
+      this.originalFatAmount = this.selectedFood.fats;
 
-    this.dialogHeaderName = 'Editar Alimento';
-    this.dialogButtonName = 'Salvar';
-
-    this.originalWeight = this.selectedFood.amount;
-    // this.originalProteinAmount = this.selectedFood.proteins;
-    this.originalCarbohydrateAmount = this.selectedFood.carbohydrates;
-    this.originalFatAmount = this.selectedFood.fats;
-
-    this.editFoodVisible = true;
+      this.editFoodVisible = true;
+    }
   }
 
   updateDefaultMacronutrientValuesOnEdit() {
-    this.originalProteinAmount = this.protein!;
-    this.originalCarbohydrateAmount = this.carbohydrate!;
-    this.originalFatAmount = this.fat!;
+    this.originalWeight = this.amount ?? 0;
+    this.originalProteinAmount = this.protein ?? 0;
+    this.originalCarbohydrateAmount = this.carbohydrate ?? 0;
+    this.originalFatAmount = this.fat ?? 0;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   suggestions: any[] = [];
-  foodPhoto: string = '';
-  foodPreviewName: string = '';
+  foodPhoto = '';
+  foodPreviewName = '';
   foundedFood!: FoodDTO;
 
   responseMockUp: FoodDTO = {
@@ -299,25 +302,30 @@ export class MealTablesComponent implements OnInit {
   };
 
   fillNutrient() {
-    this.protein = this.responseMockUp.foods[0].nf_protein;
-    this.carbohydrate = this.responseMockUp.foods[0].nf_total_carbohydrate;
-    this.fat = this.responseMockUp.foods[0].nf_total_fat;
-    this.amount = this.responseMockUp.foods[0].serving_weight_grams;
+    // this.protein = this.responseMockUp.foods[0].nf_protein;
+    // this.carbohydrate = this.responseMockUp.foods[0].nf_total_carbohydrate;
+    // this.fat = this.responseMockUp.foods[0].nf_total_fat;
+    // this.amount = this.responseMockUp.foods[0].serving_weight_grams;
 
-    this.originalWeight = this.responseMockUp.foods[0].serving_weight_grams!;
-    this.originalProteinAmount = this.responseMockUp.foods[0].nf_protein!;
-    this.originalCarbohydrateAmount =
-      this.responseMockUp.foods[0].nf_total_carbohydrate!;
-    this.originalFatAmount = this.responseMockUp.foods[0].nf_total_fat!;
+    // this.originalWeight =
+    //   this.responseMockUp.foods[0].serving_weight_grams ?? 0;
+    // this.originalProteinAmount = this.responseMockUp.foods[0].nf_protein ?? 0;
+    // this.originalCarbohydrateAmount =
+    //   this.responseMockUp.foods[0].nf_total_carbohydrate ?? 0;
+    // this.originalFatAmount = this.responseMockUp.foods[0].nf_total_fat ?? 0;
 
-    // this.protein = this.foundedFood.foods[0].nf_protein;
-    // this.carbohydrate = this.foundedFood.foods[0].nf_total_carbohydrate;
-    // this.fat = this.foundedFood.foods[0].nf_total_fat;
-    // this.amount = this.foundedFood.foods[0].serving_weight_grams;
+    this.protein = this.foundedFood.foods[0].nf_protein;
+    this.carbohydrate = this.foundedFood.foods[0].nf_total_carbohydrate;
+    this.fat = this.foundedFood.foods[0].nf_total_fat;
+    this.amount = this.foundedFood.foods[0].serving_weight_grams;
+
+    this.originalWeight = this.foundedFood.foods[0].serving_weight_grams ?? 0;
+    this.originalProteinAmount = this.foundedFood.foods[0].nf_protein ?? 0;
+    this.originalCarbohydrateAmount = this.foundedFood.foods[0].nf_total_carbohydrate ?? 0;
+    this.originalFatAmount = this.foundedFood.foods[0].nf_total_fat ?? 0;
   }
 
-  response: any;
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   search(event: any) {
     const foodQuery: FoodQuery = {
       query: event.query,
@@ -326,54 +334,59 @@ export class MealTablesComponent implements OnInit {
     this.foodPhoto = this.responseMockUp.foods[0].photo.thumb;
     this.foodPreviewName = this.responseMockUp.foods[0].food_name;
 
-    this.suggestions = this.responseMockUp.foods
-      .map((food) => {
-        return foodQuery.query === food.food_name ? food.food_name : null;
-      })
-      .filter((name) => name !== null);
+    // this.suggestions = this.responseMockUp.foods
+    //   .map((food) => {
+    //     return foodQuery.query === food.food_name ? food.food_name : null;
+    //   })
+    //   .filter((name) => name !== null);
 
-    // this.response = this.nutritionixService
-    //   .getFoodDetails(foodQuery)
-    //   .subscribe((response) => {
-    //     this.foundedFood = response;
+    this.nutritionixService
+      .getFoodDetails(foodQuery)
+      .subscribe((response) => {
+        this.foundedFood = response;
 
-    //     this.foodPhoto = response.foods[0].photo.thumb;
-    //     this.foodPreviewName = response.foods[0].food_name;
-    //     this.suggestions = response.foods
-    //       .map((food) => {
-    //         return foodQuery.query === food.food_name ? food.food_name : null;
-    //       })
-    //       .filter((name) => name !== null);
-    //   });
+        this.foodPhoto = response.foods[0].photo.thumb;
+        this.foodPreviewName = response.foods[0].food_name;
+        this.suggestions = response.foods
+          .map((food) => {
+            return foodQuery.query === food.food_name ? food.food_name : null;
+          })
+          .filter((name) => name !== null);
+      });
   }
 
-  originalWeight: number = 0;
-  originalProteinAmount: number = 0;
-  originalCarbohydrateAmount: number = 0;
-  originalFatAmount: number = 0;
+  originalWeight: number | null = 0;
+  originalProteinAmount: number | null = 0;
+  originalCarbohydrateAmount: number | null = 0;
+  originalFatAmount: number | null = 0;
 
   changeMacronutriensValue() {
-    console.log('MUDAR');
+    if (
+      this.originalWeight &&
+      this.originalProteinAmount &&
+      this.originalCarbohydrateAmount &&
+      this.originalFatAmount
+    ) {
+      const newCarbohydrateAmount = this.calculateMacronutrientsByWeight(
+        this.originalWeight,
+        this.originalCarbohydrateAmount,
+        this.amount ?? 0
+      );
+      const newProteinAmount = this.calculateMacronutrientsByWeight(
+        this.originalWeight,
+        this.originalProteinAmount,
+        this.amount ?? 0
+      );
+      const newFatAmount = this.calculateMacronutrientsByWeight(
+        this.originalWeight,
+        this.originalFatAmount,
+        this.amount ?? 0
+      );
 
-    const newCarbohydrateAmount = this.calculateMacronutrientsByWeight(
-      this.originalWeight,
-      this.originalCarbohydrateAmount!,
-      this.amount!
-    );
-    const newProteinAmount = this.calculateMacronutrientsByWeight(
-      this.originalWeight,
-      this.originalProteinAmount!,
-      this.amount!
-    );
-    const newFatAmount = this.calculateMacronutrientsByWeight(
-      this.originalWeight,
-      this.originalFatAmount!,
-      this.amount!
-    );
-
-    this.carbohydrate = newCarbohydrateAmount;
-    this.protein = newProteinAmount;
-    this.fat = newFatAmount;
+      this.carbohydrate = newCarbohydrateAmount;
+      this.protein = newProteinAmount;
+      this.fat = newFatAmount;
+    }
   }
 
   calculateMacronutrientsByWeight(
@@ -384,18 +397,4 @@ export class MealTablesComponent implements OnInit {
     const result = (newWeight * currentValue) / originalWeight;
     return parseFloat(result.toFixed(2));
   }
-
-  dialogHeaderName: string = '';
-  dialogButtonName: string = '';
-
-  // saveFood(): void {
-  //   this.editFoodVisible = false;
-
-  //   if (this.isCreateMode) {
-  //     this.addNewFood();
-  //     return;
-  //   }
-
-  //   this.editFood();
-  // }
 }
