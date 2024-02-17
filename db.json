@@ -1,40 +1,11 @@
 {
   "users": [
-    {
-      "name": "Ronaldo",
-      "lastName": "Braga",
-      "gender": "male",
-      "age": 29,
-      "height": 174,
-      "weight": 87,
-      "basalMetabolicRate": 1930.7,
-      "userImage": "",
-      "id": 1
-    }
+
   ],
   "meals": [
-    {
-      "userIndex": "1",
-      "name": "Café da manhã",
-      "id": 1
-    },
-    {
-      "userIndex": "1",
-      "name": "Almoço",
-      "id": 2
-    }
+
   ],
   "foods": [
-    {
-      "userIndex": "1",
-      "mealIndex": 1,
-      "name": "Banana",
-      "amount": 118,
-      "carbohydrates": 26.95,
-      "proteins": 1.29,
-      "fats": 0.39,
-      "calories": 116.47,
-      "id": 1
-    }
+
   ]
 }

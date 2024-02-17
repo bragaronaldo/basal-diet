@@ -126,8 +126,6 @@ export class BasalMetabolicRateCalculatorComponent
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onImageSelect(event: any): void {
-    console.log('TYPE: ', typeof event);
-
     const selectedImage = event.target.files[0];
 
     if (selectedImage) {

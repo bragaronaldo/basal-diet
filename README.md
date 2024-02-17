@@ -44,7 +44,13 @@ O Basal Diet é um aplicativo desenvolvido em Angular que simplifica a criação
   
 ### Utilizando o JSON Server
 
-Atualmente, as requisições estão sendo processadas utilizando o JSON Server, uma ferramenta que permite simular uma API RESTful de forma simples e eficiente. Para iniciar o JSON Server localmente, utilize o seguinte comando na pasta do projeto:
+Atualmente, as requisições estão sendo processadas utilizando o JSON Server, uma ferramenta que permite simular uma API RESTful de forma simples e eficiente. Para instalar use o comando:
+
+```bash
+npm install json-server
+```
+
+Para iniciar o JSON Server localmente, utilize o seguinte comando na pasta do projeto:
 
 ```bash
 json-server --watch db.json

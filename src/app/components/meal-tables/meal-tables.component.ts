@@ -237,6 +237,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
     });
   }
   showNewMealDialog() {
+    this.newMeal = ''
     this.visible = true;
   }
   showEditMealModal(meal: Meal) {

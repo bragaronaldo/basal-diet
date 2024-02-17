@@ -24,6 +24,7 @@ $border-radius: 6px;
 .user-data p {
   padding: 0.3rem 0.5rem 0.3rem 0.5rem;
   background-color: $color-3;
+  border: solid 2px $color-4;
   border-radius: $border-radius;
 }
 .user-image {
@@ -33,6 +34,8 @@ $border-radius: 6px;
   background-color: $color-3;
   padding: 0.6rem;
   border-radius: $border-radius;
+  border: solid 2px $color-4;
+
 }
 
 .user-image p {
@@ -42,7 +45,8 @@ $border-radius: 6px;
 .header img {
   width: 3.3rem;
   border-radius: 50%;
-  border: solid 2px #fff;
+  // border: solid 2px #fff;
+  border: solid 2px $color-4;
   aspect-ratio: 1/1;
   object-fit: cover;
 }

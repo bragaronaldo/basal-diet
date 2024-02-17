@@ -103,15 +103,18 @@ button {
   border-radius: $border-radius;
 }
 
-.btn {
+.btn, .create-btn {
   width: 5rem;
   height: 2rem;
   background-color: $color-2;
   color: #fff;
   margin: 1.2rem 0 1.5rem 0;
 }
+.create-btn {
+  margin: 0;
+}
 
-.btn:hover {
+.btn:hover, .create-btn:hover {
   background-color: $color-4;
   color: #000;
 }
