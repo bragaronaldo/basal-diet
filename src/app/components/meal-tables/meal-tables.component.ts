@@ -122,9 +122,9 @@ export class MealTablesComponent implements OnInit, OnDestroy {
   }
   loadFoods() {
     this.allMealsCalories = 0;
-
     this.calculateAllMealsCalories();
   }
+
   addNewTable() {
     if (this.newMeal === '') {
       this.newMeal = 'Refeição';
@@ -199,7 +199,16 @@ export class MealTablesComponent implements OnInit, OnDestroy {
       const formattedFood = this.formatTextService.capitalizeFirstLetter(
         this.selectedFood.name
       );
+
+      const calories = this.calculateCalories(
+        this.selectedFood.carbohydrates,
+        this.selectedFood.proteins,
+        this.selectedFood.fats
+      );
+
       this.selectedFood.name = formattedFood;
+      this.selectedFood.amount = this.amount ?? 0;
+      this.selectedFood.calories = calories;
 
       this.mealService.editFood(this.selectedFood).subscribe(() => {
         this.loadFoods();
@@ -237,7 +246,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
     });
   }
   showNewMealDialog() {
-    this.newMeal = ''
+    this.newMeal = '';
     this.visible = true;
   }
   showEditMealModal(meal: Meal) {
@@ -322,7 +331,8 @@ export class MealTablesComponent implements OnInit, OnDestroy {
 
     this.originalWeight = this.foundedFood.foods[0].serving_weight_grams ?? 0;
     this.originalProteinAmount = this.foundedFood.foods[0].nf_protein ?? 0;
-    this.originalCarbohydrateAmount = this.foundedFood.foods[0].nf_total_carbohydrate ?? 0;
+    this.originalCarbohydrateAmount =
+      this.foundedFood.foods[0].nf_total_carbohydrate ?? 0;
     this.originalFatAmount = this.foundedFood.foods[0].nf_total_fat ?? 0;
   }
 
@@ -341,19 +351,17 @@ export class MealTablesComponent implements OnInit, OnDestroy {
     //   })
     //   .filter((name) => name !== null);
 
-    this.nutritionixService
-      .getFoodDetails(foodQuery)
-      .subscribe((response) => {
-        this.foundedFood = response;
+    this.nutritionixService.getFoodDetails(foodQuery).subscribe((response) => {
+      this.foundedFood = response;
 
-        this.foodPhoto = response.foods[0].photo.thumb;
-        this.foodPreviewName = response.foods[0].food_name;
-        this.suggestions = response.foods
-          .map((food) => {
-            return foodQuery.query === food.food_name ? food.food_name : null;
-          })
-          .filter((name) => name !== null);
-      });
+      this.foodPhoto = response.foods[0].photo.thumb;
+      this.foodPreviewName = response.foods[0].food_name;
+      this.suggestions = response.foods
+        .map((food) => {
+          return foodQuery.query === food.food_name ? food.food_name : null;
+        })
+        .filter((name) => name !== null);
+    });
   }
 
   originalWeight: number | null = 0;

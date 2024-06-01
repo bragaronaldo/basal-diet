@@ -9,6 +9,7 @@ $border-radius: 6px;
   .p-dialog .p-dialog-header {
     background-color: $color-1;
   }
+
   .p-dialog .p-dialog-content {
     background-color: $color-1;
   }
@@ -20,6 +21,7 @@ $border-radius: 6px;
     border-radius: 3px;
     padding: 0.43rem;
   }
+
   .p-inputtext:enabled:focus {
     border: solid 1px $color-4 !important;
     background-color: $color-2;
@@ -41,9 +43,11 @@ $border-radius: 6px;
   .p-autocomplete-panel {
     background-color: $color-2;
   }
+
   .p-autocomplete-items {
     transition: all 0.4s;
   }
+
   .p-autocomplete-items:hover {
     background-color: $color-4;
 
@@ -51,6 +55,7 @@ $border-radius: 6px;
 
   .p-autocomplete-items:hover {
     cursor: pointer;
+
     .food-preview {
       color: #000;
     }
@@ -60,14 +65,17 @@ $border-radius: 6px;
     border-color: transparent;
   }
 }
+
 .auto-complete-input {
   border-radius: 0;
 }
+
 .food-preview {
   transition: all 0.4s;
   font-size: 1.2rem;
   color: #fff;
 }
+
 .food-photo {
   width: 30px;
   height: 30px;
@@ -110,124 +118,6 @@ $border-radius: 6px;
   gap: 0.4rem;
 }
 
-.table-container {
-  display: flex;
-  flex-direction: column;
-  background-color: $color-2;
-  color: #dce0e1;
-  border: solid 1px #fff;
-
-  .title {
-    background-color: $color-2;
-    padding: 0 0 0 1rem;
-  }
-
-  .meals {
-    display: flex;
-    justify-content: space-between;
-    background-color: $color-3;
-    padding: 1rem;
-    border-top: solid 1px #fff;
-  }
-
-  .meals div {
-    background-color: $color-3;
-  }
-
-  .meals div span {
-    background-color: $color-3;
-  }
-
-  .macronutrients-box {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.36rem;
-  }
-
-  .macronutrients-font {
-    color: $color-4;
-  }
-
-  .macro-main {
-    background-color: $color-3;
-  }
-
-  .macro-main span {
-    background-color: $color-3;
-  }
-
-  .edit-delete-macros button {
-    background-color: transparent;
-    margin-left: 1rem;
-  }
-
-  .edit-delete-macros button:hover {
-    color: $color-5;
-    margin-left: 1rem;
-  }
-
-  .calories {
-    color: $color-4;
-    border: solid 1px $color-4;
-    padding: 0 0.2rem 0 0.2rem;
-    border-radius: $border-radius;
-  }
-
-  .add-btn {
-    display: flex;
-    justify-content: center;
-    padding: 1rem 0 1rem 0;
-    border-top: solid 1px #fff;
-    background-color: $color-1;
-  }
-
-  .total-macronutrients {
-    display: flex;
-    justify-content: space-around;
-    padding: 1rem;
-    background-color: $color-3;
-  }
-
-  .total-macronutrients div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .total-macronutrients div span {
-    text-align: center;
-    background-color: $color-3;
-  }
-
-  .add-btn button {
-    padding: 0.5rem;
-    border-radius: $border-radius;
-  }
-
-  .table-btns {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-  }
-
-  .table-btns button {
-    font-size: 1.2rem;
-  }
-
-  .table-btns>div {
-    color: #fff;
-    font-size: 1rem;
-    padding: 0.1rem 0.3rem 0.1rem 0.3rem;
-    border-radius: $border-radius;
-  }
-
-  .icon-btn:hover {
-    color: $color-1;
-    background-color: transparent;
-  }
-}
-
 .btn {
   padding: 0.6rem;
   border-radius: $border-radius;
@@ -236,32 +126,71 @@ $border-radius: 6px;
   align-items: center;
 }
 
-.macronutrients-box-header {
-  border-top: solid 1px #fff;
-  padding: 0.4rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-items: center;
+.table-border {
+  border: solid 2px $color-3;
+  padding: 21px;
+  border-radius: 20px;
 }
 
-.macronutrients-box-header span {
+.table-box {
+  display: flex;
+  justify-content: center;
+  padding: 3px;
+  text-align: center;
+  align-items: center;
+  width: 80px;
+  height: 50px;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: "Poppins", sans-serif;
+  border-radius: $border-radius;
+  background-color: #bf7665;
   color: #fff;
 }
-
-@media (width < 468px) {
-  .macronutrients-box-header span {
-    font-size: 0.9rem;
-  }
+.add-newFood-btn {
+  background-color: $color-2;
+  padding: 6px;
+  margin-top: 18px;
+  border-radius: 50%;
+  font-family: "Poppins", sans-serif;
+  border-radius: $border-radius;
 }
-
-@media (width < 429px) {
-  .macronutrients-box-header span {
-    font-size: 0.8rem;
-  }
+.add-newFood-btn:hover {
+  background-color: $color-4;
 }
-
-@media (width < 390px) {
-  .macronutrients-box-header span {
-    font-size: 0.7rem;
-  }
+.circle-btn {
+  color: #000;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 50%;
+  margin: auto;
+  font-family: "Poppins", sans-serif;;
+  font-size: 14px;
+}
+.table-header {
+  display: flex;
+  justify-content: space-between;
+}
+.table-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-3;
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: $border-radius;
+}
+.icon-btn {
+  background-color: transparent;
+}
+.weight-row {
+  text-align: center;
+  background-color: $color-2;
+  border-radius: $border-radius;
 }
