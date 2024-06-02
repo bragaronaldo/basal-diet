@@ -370,32 +370,25 @@ export class MealTablesComponent implements OnInit, OnDestroy {
   originalFatAmount: number | null = 0;
 
   changeMacronutriensValue() {
-    if (
-      this.originalWeight &&
-      this.originalProteinAmount &&
-      this.originalCarbohydrateAmount &&
-      this.originalFatAmount
-    ) {
-      const newCarbohydrateAmount = this.calculateMacronutrientsByWeight(
-        this.originalWeight,
-        this.originalCarbohydrateAmount,
-        this.amount ?? 0
-      );
-      const newProteinAmount = this.calculateMacronutrientsByWeight(
-        this.originalWeight,
-        this.originalProteinAmount,
-        this.amount ?? 0
-      );
-      const newFatAmount = this.calculateMacronutrientsByWeight(
-        this.originalWeight,
-        this.originalFatAmount,
-        this.amount ?? 0
-      );
+    const newCarbohydrateAmount = this.calculateMacronutrientsByWeight(
+      this.originalWeight ?? 0,
+      this.originalCarbohydrateAmount ?? 0,
+      this.amount ?? 0
+    );
+    const newProteinAmount = this.calculateMacronutrientsByWeight(
+      this.originalWeight ?? 0,
+      this.originalProteinAmount ?? 0,
+      this.amount ?? 0
+    );
+    const newFatAmount = this.calculateMacronutrientsByWeight(
+      this.originalWeight ?? 0,
+      this.originalFatAmount ?? 0,
+      this.amount ?? 0
+    );
 
-      this.carbohydrate = newCarbohydrateAmount;
-      this.protein = newProteinAmount;
-      this.fat = newFatAmount;
-    }
+    this.carbohydrate = newCarbohydrateAmount;
+    this.protein = newProteinAmount;
+    this.fat = newFatAmount;
   }
 
   calculateMacronutrientsByWeight(

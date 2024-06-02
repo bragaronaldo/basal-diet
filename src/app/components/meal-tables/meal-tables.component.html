@@ -77,7 +77,7 @@
           <ng-template let-food pTemplate="item">
             <div class="flex align-items-center gap-2">
               <img [src]="foodPhoto" class="food-photo" />
-              <div class="food-preview">{{ foodPreviewName}}</div>
+              <div class="food-preview">{{ foodPreviewName }}</div>
             </div>
           </ng-template>
         </p-autoComplete>
@@ -121,7 +121,7 @@
     </div>
 
     <ng-container *ngIf="foods && foods.length > 0">
-      <div class="meals" *ngFor="let food of getFoodsForMeal(meal.id!)">
+      <div *ngFor="let food of getFoodsForMeal(meal.id!)">
         <div class="table-row">
           <div class="align-items-center flex-column">
             <div class="table-box mb-2">{{food.name}}</div>

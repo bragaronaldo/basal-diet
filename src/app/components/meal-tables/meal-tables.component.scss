@@ -97,6 +97,8 @@ $border-radius: 6px;
   .main-container {
     grid-template-columns: repeat(auto-fit, minmax(20rem, auto));
   }
+
+
 }
 
 @media (max-width: 348px) {
@@ -144,7 +146,7 @@ $border-radius: 6px;
   font-size: 12px;
   font-family: "Poppins", sans-serif;
   border-radius: $border-radius;
-  background-color: #bf7665;
+  background-color: $color-2;
   color: #fff;
 }
 .add-newFood-btn {
@@ -188,6 +190,9 @@ $border-radius: 6px;
 }
 .icon-btn {
   background-color: transparent;
+}
+.icon-btn:hover {
+  color: $color-4;
 }
 .weight-row {
   text-align: center;
