@@ -38,7 +38,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     MessageModule,
     InputTextModule,
     FontAwesomeModule,
-    AutoCompleteModule
+    AutoCompleteModule,
   ],
   providers: [provideAnimations()],
   bootstrap: [AppComponent]

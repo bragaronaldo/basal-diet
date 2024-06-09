@@ -7,9 +7,9 @@ import { User } from '../interfaces/User';
   providedIn: 'root',
 })
 export class UserService {
-  private BASE_URL: string = 'http://localhost:3000';
+  private BASE_URL = 'http://localhost:3000';
 
-  private DJANGO_URL: string = 'http://127.0.0.1:8000/api/';
+  private DJANGO_URL = 'http://127.0.0.1:8000/api/';
 
   constructor(private http: HttpClient) {}
 

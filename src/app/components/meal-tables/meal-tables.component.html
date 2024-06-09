@@ -44,7 +44,7 @@
           <ng-template let-food pTemplate="item">
             <div class="flex align-items-center gap-2">
               <img [src]="foodPhoto" class="food-photo" />
-              <div class="food-preview">{{ foodPreviewName}}</div>
+              <div class="food-preview">{{ foodPreviewName }}</div>
             </div>
           </ng-template>
         </p-autoComplete>
@@ -99,7 +99,7 @@
   </p-dialog>
 </div>
 
-<div class="flex flex justify-content-center mb-4 gap-4">
+<div class="flex flex justify-content-center mb-4 gap-4 my-4">
   <button class="btn" (click)="showNewMealDialog()">Nova refeição</button>
 </div>
 

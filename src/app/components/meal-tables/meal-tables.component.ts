@@ -50,7 +50,13 @@ export class MealTablesComponent implements OnInit, OnDestroy {
   selectedFood?: Food | null;
 
   newMeal = '';
+
   allMealsCalories = 0;
+  allMealsProteins = 0;
+  allMealsCarbohydrates = 0;
+  allMealsFats = 0;
+
+  allTest = []
 
   private unsubscribe$ = new Subject<void>();
 
@@ -74,13 +80,30 @@ export class MealTablesComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
   calculateAllMealsCalories() {
+    this.allMealsCarbohydrates = 0;
+    this.allMealsProteins = 0;
+    this.allMealsFats = 0;
+
     this.mealService
       .getFoodsByUserId(this.userId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((response) => {
         this.foods = response;
-        response.map((data) => (this.allMealsCalories += data.calories));
+        response.map(
+          (data) => (
+            (this.allMealsCalories += data.calories),
+            (this.allMealsProteins += data.proteins),
+            (this.allMealsCarbohydrates += data.carbohydrates),
+            (this.allMealsFats += data.fats)
+          )
+        );
+
         this.headerService.totalCalories.next(this.allMealsCalories.toFixed(2));
+        this.headerService.totalProteins.next(this.allMealsProteins.toFixed(2));
+        this.headerService.totalCarbohydrates.next(
+          this.allMealsCarbohydrates.toFixed(2)
+        );
+        this.headerService.totalFats.next(this.allMealsFats.toFixed(2));
       });
   }
   calculateTotalNutrients(id: number) {
@@ -174,6 +197,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
     const calories: number = carb * 4 + protein * 4 + fat * 9;
     return Number(calories.toFixed(2));
   }
+
   editMeal() {
     if (this.selectedMeal) {
       const formattedMeal = this.formatTextService.capitalizeFirstLetter(

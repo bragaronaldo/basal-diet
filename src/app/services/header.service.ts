@@ -4,9 +4,12 @@ import { EventEmitter, Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class HeaderService {
-
-  constructor() { }
-
   public totalCalories: EventEmitter<string> = new EventEmitter<string>();
+  public totalProteins: EventEmitter<string> = new EventEmitter<string>();
+  public totalCarbohydrates: EventEmitter<string> = new EventEmitter<string>();
+  public totalFats: EventEmitter<string> = new EventEmitter<string>();
+
+  public allTest: EventEmitter<string[]> = new EventEmitter<string[]>();
+
 }
 
