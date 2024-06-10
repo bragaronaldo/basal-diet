@@ -70,13 +70,13 @@ Preencha um formulário simples com seu nome, peso, altura e idade para realizar
 
 Ao clicar em "Criar Dieta", você será direcionado para uma nova página que exibirá as calorias totais somando todas as refeições.
 
-![ezgif-3-9e001f44d9](https://github.com/bragaronaldo/basal-diet/assets/88466880/d10396ab-bdf8-4d71-adcc-77c5864c236c)
+![1](https://github.com/bragaronaldo/basal-diet/assets/88466880/fd73dfe4-2ca1-4461-a5b5-0bdc2195e2a9)
 
 ### Gestão de Refeições
 
 Inicie a criação da sua dieta clicando no botão "Nova Refeição". Dentro da tabela de refeição, você pode adicionar, editar e excluir alimentos.
 
-![ezgif-3-e458e5d4c3](https://github.com/bragaronaldo/basal-diet/assets/88466880/a89dd413-fdf8-467b-9770-a59cc8d4fe66)
+![2](https://github.com/bragaronaldo/basal-diet/assets/88466880/50a15abc-3654-4d23-9ac1-81c0240e8644)
 
 ### Informações Detalhadas
 
@@ -86,7 +86,11 @@ Cada tabela de refeição exibe o total de macronutrientes e calorias específic
 
 Adicione quantas tabelas de refeição forem necessárias. Além disso, você pode editar e excluir o nome das tabelas de refeição para uma experiência personalizada.
 
-![ezgif-3-ac1ff80f7d](https://github.com/bragaronaldo/basal-diet/assets/88466880/a8b1c5d3-4f45-4482-9c85-17553bc70fb6)
+![3](https://github.com/bragaronaldo/basal-diet/assets/88466880/b3bff6d7-51db-4398-ac69-c46a9faa20a9)
+
+Quando você passa o mouse sobre o valor total de um macronutriente, o valor em gramas por quilo é exibido. Por exemplo, a recomendação diária de consumo de proteína é de 1,6 g/kg a 2 g/kg.
+
+![4](https://github.com/bragaronaldo/basal-diet/assets/88466880/7504a447-48c0-4c79-a674-5834f76b1cae)
 
 Este fluxo de criação de dietas proporciona uma jornada intuitiva, desde o preenchimento do formulário até a gestão detalhada das refeições, garantindo controle total sobre as calorias e macronutrientes consumidos.
 
