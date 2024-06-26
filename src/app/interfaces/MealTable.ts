@@ -1,11 +1,11 @@
 export interface Meal {
-  userIndex: number;
+  user_id: number;
   id?: number;
   name: string;
 }
 export interface Food {
-  userIndex: number;
-  mealIndex: number;
+  user_id: number;
+  meal_id: number;
   id?: number;
   name: string;
   amount: number;

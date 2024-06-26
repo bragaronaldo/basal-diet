@@ -56,8 +56,6 @@ export class MealTablesComponent implements OnInit, OnDestroy {
   allMealsCarbohydrates = 0;
   allMealsFats = 0;
 
-  allTest = []
-
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -135,7 +133,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
 
   getFoodsForMeal(tableId: number): Food[] {
     if (!this.foods) return [];
-    return this.foods.filter((food) => food.mealIndex === tableId);
+    return this.foods.filter((food) => food.meal_id === tableId);
   }
   loadMeals() {
     this.mealTables$ = this.mealService
@@ -154,7 +152,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
     }
 
     const newTable: Meal = {
-      userIndex: this.userId,
+      user_id: this.userId,
       name: this.formatTextService.capitalizeFirstLetter(this.newMeal),
     };
 
@@ -167,8 +165,8 @@ export class MealTablesComponent implements OnInit, OnDestroy {
   }
   addNewFood() {
     const newFood: Food = {
-      userIndex: this.userId,
-      mealIndex: this.newFoodId,
+      user_id: this.userId,
+      meal_id: this.newFoodId,
       name: this.formatTextService.capitalizeFirstLetter(this.foodName ?? ''),
       amount: this.amount ?? 0,
       carbohydrates: this.carbohydrate ?? 0,

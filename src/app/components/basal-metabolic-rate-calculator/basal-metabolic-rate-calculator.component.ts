@@ -58,7 +58,7 @@ export class BasalMetabolicRateCalculatorComponent
   ngOnInit(): void {
     this.userForm = this.formBuilder.group({
       name: new FormControl('', Validators.required),
-      lastName: new FormControl('', [Validators.required]),
+      last_name: new FormControl('', [Validators.required]),
       gender: new FormControl('', [Validators.required]),
       age: new FormControl(Validators.required, Validators.pattern('^[0-9]*$')),
       height: new FormControl(
@@ -69,7 +69,7 @@ export class BasalMetabolicRateCalculatorComponent
         Validators.required,
         Validators.pattern('^[0-9]*$')
       ),
-      userImage: new FormControl(''),
+      // userImage: new FormControl(''),
     });
   }
   ngOnDestroy(): void {
@@ -100,15 +100,15 @@ export class BasalMetabolicRateCalculatorComponent
       name: this.formatTextService.capitalizeFirstLetter(
         this.userForm.get('name')?.value
       ),
-      lastName: this.formatTextService.capitalizeFirstLetter(
-        this.userForm.get('lastName')?.value
+      last_name: this.formatTextService.capitalizeFirstLetter(
+        this.userForm.get('last_name')?.value
       ),
       gender: this.userForm.get('gender')?.value,
       age: this.userForm.get('age')?.value,
       height: this.userForm.get('height')?.value,
       weight: this.userForm.get('weight')?.value,
       basalMetabolicRate: parseFloat(this.result),
-      userImage: this.userForm.get('userImage')?.value,
+      // userImage: this.userForm.get('userImage')?.value,
     };
 
     this.userService

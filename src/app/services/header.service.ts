@@ -8,8 +8,5 @@ export class HeaderService {
   public totalProteins: EventEmitter<string> = new EventEmitter<string>();
   public totalCarbohydrates: EventEmitter<string> = new EventEmitter<string>();
   public totalFats: EventEmitter<string> = new EventEmitter<string>();
-
-  public allTest: EventEmitter<string[]> = new EventEmitter<string[]>();
-
 }
 
