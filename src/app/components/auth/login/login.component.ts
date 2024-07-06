@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
+import { CookieService } from 'ngx-cookie-service';
 import { User } from 'src/app/interfaces/User';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -19,15 +20,16 @@ export class LoginComponent implements OnInit {
   userData!: User;
   userForm!: FormGroup;
 
+  isLoading = false;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService, private cookieService: CookieService
   ) {}
   ngOnInit(): void {
     this.userForm = this.formBuilder.group({
       username: new FormControl('', Validators.required),
-      // email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     });
   }
@@ -39,25 +41,24 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.userForm.invalid) return;
 
+    this.isLoading = true;
+
     const username = this.userForm.get('username')?.value;
-    // const email = this.userForm.get('email')?.value;
-    const raw_password = this.userForm.get('password')?.value;
-
-    // if (raw_password !== raw_password_confirm) {
-      // return;
-    // }
-
-    const password = this.hashPassword(raw_password);
+    const password = this.userForm.get('password')?.value;
 
     const user: User = {
       username,
-      // email,
       password,
     };
 
-    this.authService.login(user).subscribe((response) => {
-      console.log('User registration!');
-    });
+    this.authService.login(user);
+    this.authService.loginMessageEvent.subscribe((response) => {
+      this.isLoading = false;
+      this.router.navigate(['/refeicoes/1']);
+    })
+      // console.log('User registration!');
+      // this.cookieService.set('token', this.authService.)
+      // this.isLoading = false;
   }
   hashPassword(password: string): string {
     return CryptoJS.SHA256(password).toString();
