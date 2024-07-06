@@ -82,9 +82,7 @@ export class BasalMetabolicRateCalculatorComponent
   }
 
   calculateBasalMetabolism() {
-    if (this.userForm.invalid) {
-      return;
-    }
+    if (this.userForm.invalid) return;
 
     const age = this.userForm.get('age')?.value;
     const height = this.userForm.get('height')?.value;

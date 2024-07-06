@@ -5,17 +5,17 @@
     <p class="macro">Calorias<br>{{totalCalories}}</p>
     <p class="macro" (mouseenter)="toggleNutrientValue('showCarbohydrateAmount', true);"
       (mouseleave)="toggleNutrientValue('showCarbohydrateAmount', false)">
-      Carbo<br>{{showCarbohydrateAmount ? calculateGramKilogram(totalCarbohydrates, userData.weight) + "g/kg" :
+      Carbo<br>{{showCarbohydrateAmount ? calculateGramKilogram(totalCarbohydrates, userData.weight!) + "g/kg" :
       totalCarbohydrates}}
     </p>
     <p class="macro" (mouseenter)="toggleNutrientValue('showProteinAmount', true);"
       (mouseleave)="toggleNutrientValue('showProteinAmount', false)">
-      Proteína<br>{{showProteinAmount ? calculateGramKilogram(totalProteins, userData.weight) + "g/kg" :
+      Proteína<br>{{showProteinAmount ? calculateGramKilogram(totalProteins, userData.weight!) + "g/kg" :
       totalProteins}}
     </p>
     <p class="macro" (mouseenter)="toggleNutrientValue('showFatAmount', true);"
       (mouseleave)="toggleNutrientValue('showFatAmount', false)">
-      Gordura<br>{{showFatAmount ? calculateGramKilogram(totalFats, userData.weight) + "g/kg" :
+      Gordura<br>{{showFatAmount ? calculateGramKilogram(totalFats, userData.weight!) + "g/kg" :
       totalFats}}
     </p>
   </div>

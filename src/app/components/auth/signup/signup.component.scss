@@ -1,0 +1,36 @@
+$color-1: #022026;
+$color-2: #bf7665;
+$color-3: #036873;
+$color-4: #7ed0d9;
+$color-5: #d92b04;
+$border-radius: 6px;
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+}
+.form-content {
+  border: solid 2px #fff;
+  width: 16rem;
+  padding: 1rem 1.3rem 0 1.3rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.error-msg {
+  color: $color-5;
+}
+.btn {
+  width: 5rem;
+  height: 2rem;
+  background-color: $color-2;
+  border-radius: 6px;
+  color: #fff;
+  // margin: 1.2rem 0 0rem 0;
+}
+.btn:hover {
+  background-color: $color-4;
+  color: #000;
+}

@@ -1,0 +1,31 @@
+<div class="main-content">
+  <form class="form-content" (ngSubmit)="login()" [formGroup]="userForm" #formDir="ngForm">
+
+    <div class="my-1">
+      <label for="username">Nome de usuário</label>
+      <input type="text" id="username" name="username" placeholder="ex: joao_silva10" formControlName="username" class="my-1">
+      <div *ngIf="formControls['username'].invalid && formDir.submitted">
+        <small id="username-help" class="error-msg">Informe seu nome de usuário</small>
+      </div>
+    </div>
+
+    <!-- <div class="my-1">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" placeholder="ex: user@example.com" formControlName="email">
+      <div *ngIf="formControls['email'].invalid && formDir.submitted" class="mb-1">
+        <small class="error-msg">Informe seu e-mail</small>
+      </div>
+    </div> -->
+
+    <div>
+      <label for="password">Senha</label>
+      <input type="password" id="password" name="password" placeholder="Mínimo de 8 caracteres"
+        formControlName="password" class="my-1">
+      <div *ngIf="formControls['password'].invalid && formDir.submitted">
+        <small class="error-msg">Informe sua senha</small>
+      </div>
+    </div>
+
+    <button class="btn my-3">Entrar</button>
+  </form>
+</div>
