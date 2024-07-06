@@ -1,0 +1,176 @@
+$color-1: #022026;
+$color-2: #bf7665;
+$color-3: #036873;
+$color-4: #7ed0d9;
+$color-5: #d92b04;
+$border-radius: 6px;
+$font: "Poppins", sans-serif;
+
+$shadow-1: #02202666 0px 15px 30px, #02202666 0px 5px 10px;
+$shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgba(0, 0, 0, 0.07) 0px 6px 6px, rgba(0, 0, 0, 0.07) 0px 10px 10px, rgba(0, 0, 0, 0.07) 0px 18px 18px;
+
+.form {
+  border: solid 2px #fff;
+  border-radius: 12px;
+  padding: 1rem 1rem 0 1rem;
+}
+
+.btn {
+  padding: 0.6rem;
+  border-radius: $border-radius;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  box-shadow: $shadow-2;
+}
+
+.input_div {
+  margin-top: 0.6rem;
+  // box-shadow: $shadow-2;
+}
+
+.error-msg {
+  color: $color-5;
+}
+
+.table-row {
+  // width: 26rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-3;
+  padding: 10px;
+  border-radius: $border-radius;
+  box-shadow: $shadow-2;
+}
+
+.table-box {
+  display: flex;
+  justify-content: center;
+  padding: 1px;
+  text-align: center;
+  align-items: center;
+  width: 80px;
+  height: 50px;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: $font;
+  border-radius: $border-radius;
+  background-color: $color-2;
+  color: #fff;
+  box-shadow: $shadow-1;
+}
+
+.weight-row {
+  text-align: center;
+  background-color: $color-2;
+  border-radius: $border-radius;
+  box-shadow: $shadow-1;
+}
+
+.circle-btn {
+  color: #000;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 50%;
+  margin: auto;
+  font-family: $font;
+  font-size: 14px;
+  box-shadow: $shadow-1;
+  // margin: 0 0.3rem 0.3rem;
+}
+
+.icon-btn {
+  background-color: transparent;
+}
+
+.food_container {
+  gap: 1rem;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 26rem 26rem 26rem
+}
+
+@media screen and (max-width: 1300px) {
+  .food_container {
+    grid-template-columns: 26rem 26rem
+  }
+}
+@media screen and (max-width: 880px) {
+  .food_container {
+    grid-template-columns: 26rem
+  }
+}
+
+
+:host ::ng-deep {
+  .p-dialog {
+    border: solid 1px $color-1;
+  }
+
+  .p-dialog .p-dialog-header {
+    background-color: $color-1;
+    }
+
+  .p-dialog .p-dialog-content {
+    background-color: $color-1;
+
+  }
+
+  .p-inputtext {
+    background-color: $color-4;
+    color: #000;
+    transition: all 0.4s;
+    border-radius: 3px;
+    padding: 0.43rem;
+  }
+
+  .p-inputtext:enabled:focus {
+    border: solid 1px $color-4 !important;
+    background-color: $color-2;
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .p-inputtext:hover {
+    box-shadow: none;
+    background-color: $color-2;
+    color: #fff;
+  }
+
+  .p-autocomplete-dd .p-autocomplete-input:focus {
+    background-color: $color-1;
+    border: none;
+  }
+
+  .p-autocomplete-panel {
+    background-color: $color-2;
+  }
+
+  .p-autocomplete-items {
+    transition: all 0.4s;
+  }
+
+  .p-autocomplete-items:hover {
+    background-color: $color-4;
+
+  }
+
+  .p-autocomplete-items:hover {
+    cursor: pointer;
+
+    .food-preview {
+      color: #000;
+    }
+  }
+
+  .p-inputtext:enabled:hover {
+    border-color: transparent;
+  }
+}

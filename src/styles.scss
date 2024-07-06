@@ -76,3 +76,64 @@ input[type=text]:focus::placeholder, input[type=number]:focus::placeholder {
 input[type=text]::placeholder, input[type=number]::placeholder {
   color: #424242;
 }
+
+:host ::ng-deep {
+  .p-dialog .p-dialog-header {
+    background-color: $color-1;
+  }
+
+  .p-dialog .p-dialog-content {
+    background-color: $color-1;
+  }
+
+  .p-inputtext {
+    background-color: $color-4;
+    color: #000;
+    transition: all 0.4s;
+    border-radius: 3px;
+    padding: 0.43rem;
+  }
+
+  .p-inputtext:enabled:focus {
+    border: solid 1px $color-4 !important;
+    background-color: $color-2;
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .p-inputtext:hover {
+    box-shadow: none;
+    background-color: $color-2;
+    color: #fff;
+  }
+
+  .p-autocomplete-dd .p-autocomplete-input:focus {
+    background-color: $color-1;
+    border: none;
+  }
+
+  .p-autocomplete-panel {
+    background-color: $color-2;
+  }
+
+  .p-autocomplete-items {
+    transition: all 0.4s;
+  }
+
+  .p-autocomplete-items:hover {
+    background-color: $color-4;
+
+  }
+
+  .p-autocomplete-items:hover {
+    cursor: pointer;
+
+    .food-preview {
+      color: #000;
+    }
+  }
+
+  .p-inputtext:enabled:hover {
+    border-color: transparent;
+  }
+}

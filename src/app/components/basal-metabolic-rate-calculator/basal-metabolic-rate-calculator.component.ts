@@ -45,6 +45,7 @@ export class BasalMetabolicRateCalculatorComponent
   result = '';
   id!: number;
   gender = '';
+  isLoading = false;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -82,9 +83,9 @@ export class BasalMetabolicRateCalculatorComponent
   }
 
   calculateBasalMetabolism() {
-    if (this.userForm.invalid) {
-      return;
-    }
+    if (this.userForm.invalid) return;
+
+    this.isLoading = true;
 
     const age = this.userForm.get('age')?.value;
     const height = this.userForm.get('height')?.value;
@@ -117,6 +118,7 @@ export class BasalMetabolicRateCalculatorComponent
       .subscribe((response) => {
         if (response.id !== undefined) {
           this.id = response.id;
+          this.isLoading = false;
         }
       });
   }

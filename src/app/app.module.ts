@@ -17,12 +17,15 @@ import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { FoodAdditionComponent } from './components/food-addition/food-addition.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @NgModule({
   declarations: [
     AppComponent,
     BasalMetabolicRateCalculatorComponent,
     MealTablesComponent,
     HeaderComponent,
+    FoodAdditionComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     InputTextModule,
     FontAwesomeModule,
     AutoCompleteModule,
+    ProgressSpinnerModule,
   ],
   providers: [provideAnimations()],
   bootstrap: [AppComponent]
