@@ -1,0 +1,97 @@
+<!-- <div class="flex justify-content-center align-items-center" style="height: 100dvh;">
+  <form class="flex flex-column form" [formGroup]="foodForm" #formDir="ngForm" (ngSubmit)="addFood()">
+    <div class="input_div">
+      <label for="food_name">Alimento</label>
+      <input type="text" id="food_name" name="food_name" placeholder="ex: arroz branco..." formControlName="name">
+      <div *ngIf="formControls['name'].invalid && formDir.submitted">
+        <small class="error-msg">Informe o alimento</small>
+      </div>
+    </div>
+    <div class="input_div">
+      <label for="food_weight">Peso(g)</label>
+      <input type="number" id="food_weight" name="food_weight" placeholder="ex: 130" formControlName="weight">
+      <div *ngIf="formControls['weight'].invalid && formDir.submitted">
+        <small class="error-msg">Informe o peso</small>
+      </div>
+    </div>
+    <div class="input_div">
+      <label for="food_carbohydrate">Carboidratos</label>
+      <input type="number" id="food_carbohydrate" name="food_carbohydrate" placeholder="ex: 23.5" formControlName="carbohydrates">
+      <div *ngIf="formControls['carbohydrates'].invalid && formDir.submitted">
+        <small class="error-msg">Informe a quantidade de carboidrato</small>
+      </div>
+    </div>
+    <div class="input_div">
+      <label for="food_proteins">Proteínas</label>
+      <input type="number" id="food_protein" name="food_protein" placeholder="ex: 12.3" formControlName="proteins">
+      <div *ngIf="formControls['proteins'].invalid && formDir.submitted">
+        <small class="error-msg">Informe a quantidade de proteína</small>
+      </div>
+    </div>
+    <div class="input_div">
+      <label for="food_fat">Gorduras</label>
+      <input type="number" id="food_fat" name="food_fat" placeholder="ex: 2.6" formControlName="fats">
+      <div *ngIf="formControls['fats'].invalid && formDir.submitted">
+        <small class="error-msg">Informe a quantidade de gordura</small>
+      </div>
+    </div>
+    <button type="submit" class="btn my-3">Adicionar</button>
+  </form>
+</div> -->
+
+
+<p-dialog header="Novo alimento" [(visible)]="visible" [draggable]="false" [resizable]="false" [modal]="true">
+  <div class="my-1 gap-4 flex justify-content-center flex-column">
+    <div class="modal-inputs">
+      <label for="alimento">Alimento</label>
+
+      <p-autoComplete [style]="{'width': '100%' ,'height': '38px'}"
+         [delay]="600" [minLength]="3"
+        placeholder="ex: arroz..." class="auto-complete-input">
+        <ng-template let-food pTemplate="item">
+          <div class="flex align-items-center gap-2">
+            <!-- <img [src]="foodPhoto" class="food-photo" /> -->
+            <!-- <div class="food-preview">{{ foodPreviewName }}</div> -->
+          </div>
+        </ng-template>
+      </p-autoComplete>
+      <label for="peso">Peso (g)</label>
+      <input type="number" id="peso" name="peso"  placeholder="ex: 120"
+        >
+      <label for="carboidratos">Carboidratos</label>
+      <input type="number" id="carboidratos" name="carboidratos"  placeholder="ex: 28.6"
+        >
+      <label for="proteinas">Proteínas</label>
+      <input type="number" id="proteinas" name="proteinas"  placeholder="ex: 21"
+        >
+      <label for="gorduras">Gorduras</label>
+      <input type="number" id="gorduras" name="gorduras"  placeholder="ex: 2.6"
+        >
+    </div>
+    <button class="btn" >Adicionar</button>
+  </div>
+</p-dialog>
+
+<div class="flex flex-column align-items-center justify-content-center mb-4">
+
+    <button class="btn my-4" (click)="openFoodModal()">Adicionar Alimento</button>
+
+  <div class="food_container">
+    <div *ngFor="let food of foods">
+      <div class="table-row">
+        <div class="align-items-center flex-column">
+          <div class="table-box mb-2">{{food.name}}</div>
+          <div class="weight-row">{{food.amount}}g</div>
+        </div>
+        <div class="circle-btn">{{food.calories}}<br>Cal</div>
+        <div class="circle-btn">{{food.carbohydrates}}<br>Carbo</div>
+        <div class="circle-btn">{{food.proteins}}<br>Prot</div>
+        <div class="circle-btn">{{food.fats}}<br>Gord</div>
+        <div class="flex flex-column gap-3">
+          <button class="pi pi-pencil icon-btn"></button>
+          <button class="pi pi-trash icon-btn"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,7 @@ import { User } from '../interfaces/User';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
 

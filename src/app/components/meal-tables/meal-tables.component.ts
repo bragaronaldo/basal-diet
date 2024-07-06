@@ -56,6 +56,8 @@ export class MealTablesComponent implements OnInit, OnDestroy {
   allMealsCarbohydrates = 0;
   allMealsFats = 0;
 
+  isLoading = false;
+
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -147,6 +149,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
   }
 
   addNewTable() {
+    this.isLoading = true;
     if (this.newMeal === '') {
       this.newMeal = 'Refeição';
     }
@@ -158,12 +161,13 @@ export class MealTablesComponent implements OnInit, OnDestroy {
 
     this.mealService.createNewMeal(newTable).subscribe(() => {
       this.loadMeals();
+      this.newMeal = '';
+      this.visible = false;
     });
-
-    this.newMeal = '';
-    this.visible = false;
   }
+
   addNewFood() {
+    this.isLoading = true;
     const newFood: Food = {
       user_id: this.userId,
       meal_id: this.newFoodId,
@@ -181,15 +185,14 @@ export class MealTablesComponent implements OnInit, OnDestroy {
 
     this.mealService.createNewFood(newFood).subscribe(() => {
       this.loadFoods();
+      this.foodName = undefined;
+      this.amount = undefined;
+      this.carbohydrate = undefined;
+      this.protein = undefined;
+      this.fat = undefined;
+
+      this.visibleNewFood = false;
     });
-
-    this.foodName = undefined;
-    this.amount = undefined;
-    this.carbohydrate = undefined;
-    this.protein = undefined;
-    this.fat = undefined;
-
-    this.visibleNewFood = false;
   }
   calculateCalories(carb: number, protein: number, fat: number) {
     const calories: number = carb * 4 + protein * 4 + fat * 9;
@@ -197,6 +200,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
   }
 
   editMeal() {
+    this.isLoading = true;
     if (this.selectedMeal) {
       const formattedMeal = this.formatTextService.capitalizeFirstLetter(
         this.selectedMeal.name
@@ -212,6 +216,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
     }
   }
   editFood() {
+    this.isLoading = true;
     if (this.selectedFood) {
       this.selectedFood.carbohydrates = this.carbohydrate ?? 0;
       this.selectedFood.proteins = this.protein ?? 0;
@@ -241,6 +246,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
   }
 
   showNewFoodDialog(id: number) {
+    this.isLoading = false;
     this.foodName = undefined;
     this.amount = undefined;
     this.carbohydrate = undefined;
@@ -256,34 +262,41 @@ export class MealTablesComponent implements OnInit, OnDestroy {
   }
 
   deleteFood() {
+    this.isLoading = true;
     this.mealService.deleteFood(this.foodId).subscribe(() => {
       this.deleteFoodVisible = false;
       this.loadMeals();
     });
   }
   deleteMeal() {
+    this.isLoading = true;
     this.mealService.deleteMeal(this.mealId).subscribe(() => {
       this.deleteMealVisible = false;
       this.loadMeals();
     });
   }
   showNewMealDialog() {
+    this.isLoading = false;
     this.newMeal = '';
     this.visible = true;
   }
   showEditMealModal(meal: Meal) {
+    this.isLoading = false;
     this.selectedMeal = JSON.parse(JSON.stringify(meal));
     this.editMealVisible = true;
   }
   showDeleteFoodModal(id: number) {
+    this.isLoading = false;
     this.foodId = id;
     this.deleteFoodVisible = true;
   }
   showDeleteMealModal(id: number) {
+    this.isLoading = false;
     this.mealId = id;
     this.deleteMealVisible = true;
   }
   showEditFoodModal(food: Food) {
+    this.isLoading = false;
     this.selectedFood = JSON.parse(JSON.stringify(food));
 
     if (this.selectedFood) {

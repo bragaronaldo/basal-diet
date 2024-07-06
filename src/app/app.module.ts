@@ -17,6 +17,8 @@ import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { FoodAdditionComponent } from './components/food-addition/food-addition.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 @NgModule({
@@ -25,6 +27,7 @@ import { SignupComponent } from './components/auth/signup/signup.component';
     BasalMetabolicRateCalculatorComponent,
     MealTablesComponent,
     HeaderComponent,
+    FoodAdditionComponent,
     LoginComponent,
     SignupComponent
   ],
@@ -43,6 +46,7 @@ import { SignupComponent } from './components/auth/signup/signup.component';
     InputTextModule,
     FontAwesomeModule,
     AutoCompleteModule,
+    ProgressSpinnerModule,
   ],
   providers: [provideAnimations()],
   bootstrap: [AppComponent]

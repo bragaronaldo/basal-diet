@@ -69,5 +69,6 @@
     </div>
   </div>
 
-  <button class="create-btn" *ngIf="result" [@btn]="result" (click)="createDiet()">Criar Dieta</button>
+  <button class="create-btn" *ngIf="result && !isLoading" [@btn]="result" (click)="createDiet()">Criar Dieta</button>
+  <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
 </main>

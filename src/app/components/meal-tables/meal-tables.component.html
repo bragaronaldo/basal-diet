@@ -4,15 +4,18 @@
   <p-dialog header="Nova refeição" [(visible)]="visible" [draggable]="false" [resizable]="false" [modal]="true">
     <div class="my-1 gap-4 flex justify-content-center flex-column">
       <input type="text" placeholder="ex: Almoço" [(ngModel)]="newMeal">
-      <button class="btn" (click)="addNewTable()">Criar</button>
+      <button class="btn" (click)="addNewTable()" *ngIf="!isLoading">Criar</button>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
     </div>
+
   </p-dialog>
 
   <p-dialog header="Editar refeição" [(visible)]="editMealVisible" [draggable]="false" [resizable]="false"
     [modal]="true" *ngIf="selectedMeal">
-    <div class="my-1 gap-4 flex justify-content-center flex-column">
-      <input type="text" placeholder="ex: Almoço" [(ngModel)]="selectedMeal.name">
-      <button class="btn" (click)="editMeal()">Salvar</button>
+    <div class=" flex justify-content-center flex-column">
+      <input type="text" placeholder="ex: Almoço" [(ngModel)]="selectedMeal.name" class="mb-4">
+      <button class="btn" (click)="editMeal()" *ngIf="!isLoading">Salvar</button>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
     </div>
   </p-dialog>
 
@@ -20,7 +23,8 @@
     [modal]="true">
     <div class="my-1 gap-4 flex justify-content-center flex-column">
       <p>Tem certeza que deseja excluir?</p>
-      <button class="btn" (click)="deleteMeal()">Excluir</button>
+      <button class="btn" (click)="deleteMeal()" *ngIf="!isLoading">Excluir</button>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
     </div>
   </p-dialog>
 
@@ -28,7 +32,8 @@
     [modal]="true">
     <div class="my-1 gap-4 flex justify-content-center flex-column">
       <p>Tem certeza que deseja excluir?</p>
-      <button class="btn" (click)="deleteFood()">Excluir</button>
+      <button class="btn" (click)="deleteFood()" *ngIf="!isLoading">Excluir</button>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
     </div>
   </p-dialog>
 
@@ -62,7 +67,8 @@
         <input type="number" id="gorduras" name="gorduras" [(ngModel)]="fat" placeholder="ex: 2.6"
           (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
       </div>
-      <button class="btn" (click)="editFood()">Salvar</button>
+      <button class="btn" (click)="editFood()" *ngIf="!isLoading">Salvar</button>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
     </div>
   </p-dialog>
 
@@ -94,12 +100,13 @@
         <input type="number" id="gorduras" name="gorduras" [(ngModel)]="fat" placeholder="ex: 2.6"
           (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
       </div>
-      <button class="btn" (click)="addNewFood()">Adicionar</button>
+      <button class="btn" (click)="addNewFood()" *ngIf="!isLoading">Adicionar</button>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
     </div>
   </p-dialog>
 </div>
 
-<div class="flex flex justify-content-center mb-4 gap-4 my-4">
+<div class="flex flex justify-content-center my-4">
   <button class="btn" (click)="showNewMealDialog()">Nova refeição</button>
 </div>
 
