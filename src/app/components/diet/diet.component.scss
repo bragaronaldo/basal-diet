@@ -99,9 +99,28 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   margin: 0 2rem 2rem 2rem;
 }
 
+.modal-table-size {
+  width: 32rem;
+}
+
+@media (max-width: 768px) {
+  .modal-table-size {
+    width: 27rem;
+  }
+}
+
 @media (max-width: 540px) {
   .main-container {
     grid-template-columns: repeat(auto-fit, minmax(20rem, auto));
+  }
+  .modal-table-size {
+    width: 22rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .modal-table-size {
+    width: 18rem;
   }
 }
 
@@ -207,3 +226,5 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   border-radius: $border-radius;
   box-shadow: $shadow-1;
 }
+
+

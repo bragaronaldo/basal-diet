@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
-import { UserDTO, UserAuth } from '../interfaces/User';
+import { UserDTO, UserAuth } from '../../interfaces/User';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { AuthValidation } from '../interfaces/AuthValidation';
+import { AuthValidation } from '../../interfaces/AuthValidation';
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +45,7 @@ export class AuthService {
         }
 
         const authValidation: AuthValidation = {
-          message: '',
+          message: 'Erro ao se comunicar com o servidor',
           success: false,
         };
         this.authValidationEvent.next(authValidation);
@@ -70,7 +70,7 @@ export class AuthService {
       (error) => {
         console.log('Error:', error);
         const authValidation: AuthValidation = {
-          message: 'Usuário ou senha incorretos',
+          message: 'Usuário ou senha inválidos',
           success: false,
         };
         this.authValidationEvent.next(authValidation);

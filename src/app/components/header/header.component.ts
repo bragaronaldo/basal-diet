@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { OpacityAnimation } from 'src/app/animations/opacity.animation';
 import { UserProfile } from 'src/app/interfaces/UserProfile';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { UserService } from 'src/app/services/user.service';
 

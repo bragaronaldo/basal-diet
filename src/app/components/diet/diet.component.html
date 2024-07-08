@@ -5,9 +5,9 @@
     <div class="my-1 gap-4 flex justify-content-center flex-column">
       <input type="text" placeholder="ex: Almoço" [(ngModel)]="newMeal">
       <button class="btn" (click)="addNewTable()" *ngIf="!isLoading">Criar</button>
-      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
+        *ngIf="isLoading"></p-progressSpinner>
     </div>
-
   </p-dialog>
 
   <p-dialog header="Editar refeição" [(visible)]="editMealVisible" [draggable]="false" [resizable]="false"
@@ -15,7 +15,8 @@
     <div class=" flex justify-content-center flex-column">
       <input type="text" placeholder="ex: Almoço" [(ngModel)]="selectedMeal.name" class="mb-4">
       <button class="btn" (click)="editMeal()" *ngIf="!isLoading">Salvar</button>
-      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
+        *ngIf="isLoading"></p-progressSpinner>
     </div>
   </p-dialog>
 
@@ -24,7 +25,8 @@
     <div class="my-1 gap-4 flex justify-content-center flex-column">
       <p>Tem certeza que deseja excluir?</p>
       <button class="btn" (click)="deleteMeal()" *ngIf="!isLoading">Excluir</button>
-      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
+        *ngIf="isLoading"></p-progressSpinner>
     </div>
   </p-dialog>
 
@@ -33,76 +35,119 @@
     <div class="my-1 gap-4 flex justify-content-center flex-column">
       <p>Tem certeza que deseja excluir?</p>
       <button class="btn" (click)="deleteFood()" *ngIf="!isLoading">Excluir</button>
-      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
+        *ngIf="isLoading"></p-progressSpinner>
     </div>
   </p-dialog>
 
   <p-dialog header="Editar alimento" [(visible)]="editFoodVisible" [draggable]="false" [resizable]="false"
     [modal]="true">
-    <div class="my-1 gap-4 flex justify-content-center flex-column">
-      <div class="modal-inputs" *ngIf="selectedFood">
-        <label for="alimento">Alimento</label>
+    <div class="my-1 gap-4 flex justify-content-center flex-column modal-table-size">
+      <div class="modal-inputs">
+        <div class="grid">
 
-        <p-autoComplete [style]="{'width': '100%' ,'height': '38px'}" [(ngModel)]="foodName" [suggestions]="suggestions"
-          (completeMethod)="search($event)" [delay]="600" [minLength]="3" (onSelect)="fillNutrient()"
-          placeholder="ex: arroz..." class="auto-complete-input">
-          <ng-template let-food pTemplate="item">
-            <div class="flex align-items-center gap-2">
-              <img [src]="foodPhoto" class="food-photo" />
-              <div class="food-preview">{{ foodPreviewName }}</div>
-            </div>
-          </ng-template>
-        </p-autoComplete>
+          <div class="col-8">
+            <label for="alimento">Alimento</label>
+            <p-autoComplete [style]="{'width': '100%' ,'height': '2.125rem'}" [(ngModel)]="foodName"
+              [suggestions]="suggestions" (completeMethod)="search($event)" [delay]="600" [minLength]="3"
+              (onSelect)="fillNutrient()" placeholder="ex: arroz..." class="auto-complete-input">
+              <ng-template let-food pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                  <img [src]="foodPhoto" class="food-photo" />
+                  <div class="food-preview">{{ foodPreviewName }}</div>
+                </div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
 
-        <label for="peso">Peso (g)</label>
-        <input type="number" id="peso" name="peso" [(ngModel)]="amount" placeholder="ex: 120"
-          (input)="changeMacronutriensValue()">
-        <label for="carboidratos">Carboidratos</label>
-        <input type="number" id="carboidratos" name="carboidratos" [(ngModel)]="carbohydrate" placeholder="ex: 28.6"
-          (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
-        <label for="proteinas">Proteínas</label>
-        <input type="number" id="proteinas" name="proteinas" [(ngModel)]="protein" placeholder="ex: 21"
-          (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
-        <label for="gorduras">Gorduras</label>
-        <input type="number" id="gorduras" name="gorduras" [(ngModel)]="fat" placeholder="ex: 2.6"
-          (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
+          <div class="col-4">
+            <label for="peso">Peso (g)</label>
+            <input type="number" id="peso" name="peso" [(ngModel)]="amount" placeholder="ex: 120"
+              (input)="changeMacronutriensValue()">
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="col-4">
+            <label for="carboidratos">Carboidratos</label>
+            <input type="number" id="carboidratos" name="carboidratos" [(ngModel)]="carbohydrate" placeholder="ex: 28.6"
+              (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
+          </div>
+
+          <div class="col-4">
+            <label for="proteinas">Proteínas</label>
+            <input type="number" id="proteinas" name="proteinas" [(ngModel)]="protein" placeholder="ex: 21"
+              (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
+          </div>
+
+          <div class="col-4">
+            <label for="gorduras">Gorduras</label>
+            <input type="number" id="gorduras" name="gorduras" [(ngModel)]="fat" placeholder="ex: 2.6"
+              (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
+
+          </div>
+        </div>
+
       </div>
       <button class="btn" (click)="editFood()" *ngIf="!isLoading">Salvar</button>
-      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
+        *ngIf="isLoading"></p-progressSpinner>
     </div>
   </p-dialog>
 
   <p-dialog header="Novo alimento" [(visible)]="visibleNewFood" [draggable]="false" [resizable]="false" [modal]="true">
-    <div class="my-1 gap-4 flex justify-content-center flex-column">
+    <div class="my-1 gap-4 flex justify-content-center flex-column modal-table-size">
       <div class="modal-inputs">
-        <label for="alimento">Alimento</label>
+        <div class="grid">
 
-        <p-autoComplete [style]="{'width': '100%' ,'height': '38px'}" [(ngModel)]="foodName" [suggestions]="suggestions"
-          (completeMethod)="search($event)" [delay]="600" [minLength]="3" (onSelect)="fillNutrient()"
-          placeholder="ex: arroz..." class="auto-complete-input">
-          <ng-template let-food pTemplate="item">
-            <div class="flex align-items-center gap-2">
-              <img [src]="foodPhoto" class="food-photo" />
-              <div class="food-preview">{{ foodPreviewName }}</div>
-            </div>
-          </ng-template>
-        </p-autoComplete>
-        <label for="peso">Peso (g)</label>
-        <input type="number" id="peso" name="peso" [(ngModel)]="amount" placeholder="ex: 120"
-          (input)="changeMacronutriensValue()">
-        <label for="carboidratos">Carboidratos</label>
-        <input type="number" id="carboidratos" name="carboidratos" [(ngModel)]="carbohydrate" placeholder="ex: 28.6"
-          (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
-        <label for="proteinas">Proteínas</label>
-        <input type="number" id="proteinas" name="proteinas" [(ngModel)]="protein" placeholder="ex: 21"
-          (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
-        <label for="gorduras">Gorduras</label>
-        <input type="number" id="gorduras" name="gorduras" [(ngModel)]="fat" placeholder="ex: 2.6"
-          (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
+          <div class="col-8">
+            <label for="alimento">Alimento</label>
+            <p-autoComplete [style]="{'width': '100%' ,'height': '2.125rem'}" [(ngModel)]="foodName"
+              [suggestions]="suggestions" (completeMethod)="search($event)" [delay]="600" [minLength]="3"
+              (onSelect)="fillNutrient()" placeholder="ex: arroz..." class="auto-complete-input">
+              <ng-template let-food pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                  <img [src]="foodPhoto" class="food-photo" />
+                  <div class="food-preview">{{ foodPreviewName }}</div>
+                </div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+
+          <div class="col-4">
+            <label for="peso">Peso (g)</label>
+            <input type="number" id="peso" name="peso" [(ngModel)]="amount" placeholder="ex: 120"
+              (input)="changeMacronutriensValue()">
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="col-4">
+            <label for="carboidratos">Carboidratos</label>
+            <input type="number" id="carboidratos" name="carboidratos" [(ngModel)]="carbohydrate" placeholder="ex: 28.6"
+              (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
+          </div>
+
+          <div class="col-4">
+            <label for="proteinas">Proteínas</label>
+            <input type="number" id="proteinas" name="proteinas" [(ngModel)]="protein" placeholder="ex: 21"
+              (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
+          </div>
+
+          <div class="col-4">
+            <label for="gorduras">Gorduras</label>
+            <input type="number" id="gorduras" name="gorduras" [(ngModel)]="fat" placeholder="ex: 2.6"
+              (ngModelChange)="updateDefaultMacronutrientValuesOnEdit()">
+
+          </div>
+        </div>
+
       </div>
       <button class="btn" (click)="addNewFood()" *ngIf="!isLoading">Adicionar</button>
-      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s" *ngIf="isLoading"></p-progressSpinner>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
+        *ngIf="isLoading"></p-progressSpinner>
     </div>
+
   </p-dialog>
 </div>
 
