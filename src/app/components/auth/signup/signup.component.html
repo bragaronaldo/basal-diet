@@ -26,14 +26,22 @@
       </div>
     </div>
 
-    <div class="">
+    <div>
       <label for="password_confirm">Repita a senha</label>
-      <input type="password" id="password_confirm" name="password_confirm">
+      <input type="password" id="password_confirm" name="password_confirm" formControlName="password_confirm" (ngModelChange)="errorMessage = ''">
       <div *ngIf="formControls['password_confirm'].invalid && formDir.submitted">
         <small class="error-msg">Repita a senha</small>
       </div>
+      <div *ngIf="errorMessage">
+        <small class="error-msg">{{errorMessage}}</small>
+      </div>
     </div>
 
-    <button class="btn my-3">Cadastrar</button>
+    <div class="my-4" *ngIf="isLoading">
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
+        ></p-progressSpinner>
+    </div>
+
+    <button class="btn" style="margin-top: 1rem; margin-bottom: 1rem;" *ngIf="!isLoading">Cadastrar</button>
   </form>
 </div>

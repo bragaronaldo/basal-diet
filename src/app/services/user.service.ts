@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../interfaces/User';
 import { environment } from 'src/environments/environment.development';
+import { UserProfile } from '../interfaces/UserProfile';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +13,13 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  createUserData(user: User): Observable<User> {
-    return this.http.post<User>(`${this.BASE_URL}/users/`, user);
+  createUserProfile(user: UserProfile): Observable<UserProfile> {
+    return this.http.post<UserProfile>(`${this.BASE_URL}/user_profiles/`, user);
   }
-  getUserData(id: string) {
-    return this.http.get<User>(`${this.BASE_URL}/users/?id=${id}`);
+  getUserProfile(id: string) {
+    return this.http.get<UserProfile>(`${this.BASE_URL}/user_profiles/?id=${id}`);
+  }
+  getUserProfileByUserId(user_id: string) {
+    return this.http.get<UserProfile[]>(`${this.BASE_URL}/user_profiles_by_user_id/?user_id=${user_id}`);
   }
 }

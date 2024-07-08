@@ -1,33 +1,37 @@
-<div class="main-content">
+<div class="flex justify-content-center align-items-center flex-column" style="height: 100dvh;">
+  <h2 class="mb-2 title">Basal Diet</h2>
   <form class="form-content" (ngSubmit)="login()" [formGroup]="userForm" #formDir="ngForm">
 
     <div class="my-2">
       <label for="username">Nome de usuário</label>
-      <input type="text" id="username" name="username" formControlName="username"
-        >
+      <input type="text" id="username" name="username" formControlName="username" (ngModelChange)="errorMessage = ''">
       <div *ngIf="formControls['username'].invalid && formDir.submitted">
         <small id="username-help" class="error-msg">Informe seu nome de usuário</small>
       </div>
     </div>
 
-    <div class="mb-2">
+    <div class="">
       <label for="password">Senha</label>
-      <input type="password" id="password" name="password"
-        formControlName="password">
+      <input type="password" id="password" name="password" formControlName="password" (ngModelChange)="errorMessage = ''">
       <div *ngIf="formControls['password'].invalid && formDir.submitted">
         <small class="error-msg">Informe sua senha</small>
       </div>
     </div>
 
-    <button class="btn my-2" *ngIf="!isLoading">Entrar</button>
-    <div style="margin-bottom: 1rem; margin-top: 0.3rem;" *ngIf="!isLoading">
+    <div *ngIf="errorMessage">
+      <small class="error-msg">{{errorMessage}}</small>
+    </div>
+
+    <button class="btn" style="margin-top: 1.2rem; margin-bottom: 1rem;" *ngIf="!isLoading">Entrar</button>
+
+    <div style="margin-bottom: 1rem" *ngIf="!isLoading">
       <p class="text-center">
         Não possui uma conta? <a routerLink="/signup">Cadastre-se</a>
       </p>
     </div>
     <div class="my-4" *ngIf="isLoading">
-      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
-        ></p-progressSpinner>
+      <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8"
+        animationDuration="1.5s"></p-progressSpinner>
     </div>
 
   </form>

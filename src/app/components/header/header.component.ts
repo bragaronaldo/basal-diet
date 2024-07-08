@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { OpacityAnimation } from 'src/app/animations/opacity.animation';
-import { User } from 'src/app/interfaces/User';
+import { UserProfile } from 'src/app/interfaces/UserProfile';
+import { AuthService } from 'src/app/services/auth.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -16,10 +17,11 @@ export class HeaderComponent implements OnInit {
   constructor(
     private headerService: HeaderService,
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
-  userData$ = new Observable<User>();
+  userData$ = new Observable<UserProfile>();
   id = '';
   totalCalories = '';
   totalProteins = '';
@@ -54,7 +56,10 @@ export class HeaderComponent implements OnInit {
     });
   }
   getUserData(id: string) {
-    this.userData$ = this.userService.getUserData(id);
+    this.userData$ = this.userService.getUserProfile(id).pipe(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      map((userData: any) => userData[0])
+    );
   }
   calculateGramKilogram(macro: string , weight: number) {
     const macroValue = Number(macro);
@@ -63,6 +68,9 @@ export class HeaderComponent implements OnInit {
   }
   toggleNutrientValue(nutrient: 'showCarbohydrateAmount' | 'showProteinAmount' | 'showFatAmount', value: boolean) {
     this[nutrient] = value;
+  }
+  logout() {
+    this.authService.logout();
   }
 }
 

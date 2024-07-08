@@ -1,14 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Food, Meal } from '../interfaces/MealTable';
 import { environment } from 'src/environments/environment.development';
+import { Food, Meal } from '../interfaces/MealTable';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class MealTableService {
-
+export class DietService {
   private BASE_URL = environment.apiUrl;
 
   constructor(private http: HttpClient) {}

@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { FoodDB } from 'src/app/interfaces/foodDB';
 import { Food } from 'src/app/interfaces/MealTable';
-import { MealTableService } from 'src/app/services/meal-table.service';
+import { DietService } from 'src/app/services/diet.service';
 
 @Component({
   selector: 'app-food-addition',
@@ -20,7 +20,7 @@ export class FoodAdditionComponent implements OnInit {
 
   visible = false;
 
-  constructor(private formBuilder: FormBuilder, private mealService: MealTableService) {}
+  constructor(private formBuilder: FormBuilder, private dietService: DietService) {}
   ngOnInit(): void {
     this.foodForm = this.formBuilder.group({
       name: new FormControl('', Validators.required),
@@ -61,7 +61,7 @@ export class FoodAdditionComponent implements OnInit {
   foods: Food[] = []
 
   getFood() {
-    this.mealService.getFoodsByUserId(1).subscribe((response) => {
+    this.dietService.getFoodsByUserId(1).subscribe((response) => {
       this.foods = response;
       console.log("FOODS!: ", this.foods);
 

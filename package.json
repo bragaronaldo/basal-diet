@@ -24,7 +24,6 @@
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
-    "crypto-js": "^4.2.0",
     "json-server": "^1.0.0-beta.0",
     "ngx-cookie-service": "^15.0.0",
     "primeflex": "^3.3.1",

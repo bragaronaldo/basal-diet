@@ -4,15 +4,15 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { Food, Meal } from 'src/app/interfaces/MealTable';
-import { MealTableService } from 'src/app/services/meal-table.service';
 import { FormatTextService } from 'src/app/services/format-text.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { FoodQuery } from 'src/app/interfaces/foodQuery';
 import { NutritionixService } from 'src/app/nutritionix.service';
+import { DietService } from 'src/app/services/diet.service';
 @Component({
-  selector: 'app-meal-tables',
-  templateUrl: './meal-tables.component.html',
-  styleUrls: ['./meal-tables.component.scss'],
+  selector: 'app-diet',
+  templateUrl: './diet.component.html',
+  styleUrls: ['./diet.component.scss'],
   animations: [
     trigger('box', [
       state('true', style({ opacity: 1 })),
@@ -22,7 +22,7 @@ import { NutritionixService } from 'src/app/nutritionix.service';
     ]),
   ],
 })
-export class MealTablesComponent implements OnInit, OnDestroy {
+export class DietComponent implements OnInit, OnDestroy {
   foodTable: Meal[] = [];
 
   foodName?: string;
@@ -62,7 +62,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
 
   constructor(
     private formatTextService: FormatTextService,
-    private mealService: MealTableService,
+    private dietService: DietService,
     private route: ActivatedRoute,
     private headerService: HeaderService,
     private nutritionixService: NutritionixService
@@ -84,7 +84,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
     this.allMealsProteins = 0;
     this.allMealsFats = 0;
 
-    this.mealService
+    this.dietService
       .getFoodsByUserId(this.userId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((response) => {
@@ -138,9 +138,10 @@ export class MealTablesComponent implements OnInit, OnDestroy {
     return this.foods.filter((food) => food.meal_id === tableId);
   }
   loadMeals() {
-    this.mealTables$ = this.mealService
+    this.mealTables$ = this.dietService
       .getMeals(this.userId)
-      .pipe(map((data) => data));
+      .pipe(map((data) => data)
+    );
     this.loadFoods();
   }
   loadFoods() {
@@ -159,7 +160,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
       name: this.formatTextService.capitalizeFirstLetter(this.newMeal),
     };
 
-    this.mealService.createNewMeal(newTable).subscribe(() => {
+    this.dietService.createNewMeal(newTable).subscribe(() => {
       this.loadMeals();
       this.newMeal = '';
       this.visible = false;
@@ -183,7 +184,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
       ),
     };
 
-    this.mealService.createNewFood(newFood).subscribe(() => {
+    this.dietService.createNewFood(newFood).subscribe(() => {
       this.loadFoods();
       this.foodName = undefined;
       this.amount = undefined;
@@ -207,7 +208,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
       );
       this.selectedMeal.name = formattedMeal;
 
-      this.mealService.editMeal(this.selectedMeal).subscribe(() => {
+      this.dietService.editMeal(this.selectedMeal).subscribe(() => {
         this.editMealVisible = false;
         delete this.selectedMeal;
         this.selectedMeal = null;
@@ -237,7 +238,7 @@ export class MealTablesComponent implements OnInit, OnDestroy {
       this.selectedFood.amount = this.amount ?? 0;
       this.selectedFood.calories = calories;
 
-      this.mealService.editFood(this.selectedFood).subscribe(() => {
+      this.dietService.editFood(this.selectedFood).subscribe(() => {
         this.loadFoods();
         this.editFoodVisible = false;
         this.selectedFood = null;
@@ -263,14 +264,14 @@ export class MealTablesComponent implements OnInit, OnDestroy {
 
   deleteFood() {
     this.isLoading = true;
-    this.mealService.deleteFood(this.foodId).subscribe(() => {
+    this.dietService.deleteFood(this.foodId).subscribe(() => {
       this.deleteFoodVisible = false;
       this.loadMeals();
     });
   }
   deleteMeal() {
     this.isLoading = true;
-    this.mealService.deleteMeal(this.mealId).subscribe(() => {
+    this.dietService.deleteMeal(this.mealId).subscribe(() => {
       this.deleteMealVisible = false;
       this.loadMeals();
     });

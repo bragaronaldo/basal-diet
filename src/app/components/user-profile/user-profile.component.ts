@@ -6,7 +6,7 @@ import {
   transition,
   style,
 } from '@angular/animations';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { FormatTextService } from 'src/app/services/format-text.service';
 import {
@@ -15,12 +15,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { User } from 'src/app/interfaces/User';
 import { Subject, takeUntil } from 'rxjs';
+import { UserProfile } from 'src/app/interfaces/UserProfile';
 @Component({
-  selector: 'app-basal-metabolic-rate-calculator',
-  templateUrl: './basal-metabolic-rate-calculator.component.html',
-  styleUrls: ['./basal-metabolic-rate-calculator.component.scss'],
+  selector: 'app-user-profile',
+  templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.scss'],
   animations: [
     trigger('box', [
       state('true', style({ opacity: 1 })),
@@ -36,11 +36,12 @@ import { Subject, takeUntil } from 'rxjs';
     ]),
   ],
 })
-export class BasalMetabolicRateCalculatorComponent
+export class UserProfileComponent
   implements OnInit, OnDestroy
 {
   userForm!: FormGroup;
-  userData!: User;
+  userData!: UserProfile;
+  userId = 0;
 
   result = '';
   id!: number;
@@ -53,10 +54,15 @@ export class BasalMetabolicRateCalculatorComponent
     private router: Router,
     private userService: UserService,
     private formatTextService: FormatTextService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.userId = params['id'];
+    })
+
     this.userForm = this.formBuilder.group({
       name: new FormControl('', Validators.required),
       last_name: new FormControl('', [Validators.required]),
@@ -97,7 +103,8 @@ export class BasalMetabolicRateCalculatorComponent
       this.result = (66 + 13.7 * weight + 5 * height - 6.8 * age).toFixed(2);
     }
 
-    const newUser: User = {
+    const newUser: UserProfile = {
+      user_id: this.userId,
       name: this.formatTextService.capitalizeFirstLetter(
         this.userForm.get('name')?.value
       ),
@@ -113,7 +120,7 @@ export class BasalMetabolicRateCalculatorComponent
     };
 
     this.userService
-      .createUserData(newUser)
+      .createUserProfile(newUser)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((response) => {
         if (response.id !== undefined) {
@@ -123,7 +130,7 @@ export class BasalMetabolicRateCalculatorComponent
       });
   }
   createDiet() {
-    this.router.navigateByUrl(`refeicoes/${this.id}`);
+    this.router.navigateByUrl(`diet/${this.id}`);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

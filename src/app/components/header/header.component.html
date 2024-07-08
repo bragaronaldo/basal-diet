@@ -1,5 +1,11 @@
-<div class="header" *ngIf="userData$ | async as userData">
+<div class="flex justify-content-end">
+  <!-- <button class="p-2 my-2 mr-2" style="border-radius: 4px;">Editar Perfil</button> -->
+  <button class="p-2 my-2 mr-2" style="border-radius: 4px;" (click)="logout()">Sair</button>
+</div>
+
+<div class="header flex justify-content-center" *ngIf="userData$ | async as userData">
   <div class="header-box">
+
     <p class="macro" style="background-color: #036873; color: #fff;">{{userData.name}}<br>{{userData.last_name}}</p>
     <p class="macro">G. Basal<br>{{userData.basalMetabolicRate}}</p>
     <p class="macro">Calorias<br>{{totalCalories}}</p>
@@ -19,4 +25,7 @@
       totalFats}}
     </p>
   </div>
+  <div>
+  </div>
 </div>
+

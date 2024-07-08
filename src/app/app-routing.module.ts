@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MealTablesComponent } from './components/meal-tables/meal-tables.component';
-import { BasalMetabolicRateCalculatorComponent } from './components/basal-metabolic-rate-calculator/basal-metabolic-rate-calculator.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { FoodAdditionComponent } from './components/food-addition/food-addition.component';
+import { AuthGuard } from './guards/auth.guard';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { DietComponent } from './components/diet/diet.component';
+// import { LoggedGuard } from './guards/logged.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: BasalMetabolicRateCalculatorComponent },
-  { path: 'refeicoes/:id', component: MealTablesComponent },
-  { path: 'adicionar-alimento', component: FoodAdditionComponent },
+  { path: 'profile/:id', component: UserProfileComponent, canActivate: [AuthGuard] },
+  { path: 'diet/:id', component: DietComponent, canActivate: [AuthGuard] },
+  { path: 'adicionar-alimento', component: FoodAdditionComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

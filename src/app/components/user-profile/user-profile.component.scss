@@ -9,9 +9,10 @@ $border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 95.7vh;
-  margin: 1rem;
-  flex-direction: column;
+  // min-height: 95.7vh;
+  height: 100dvh;
+  // margin: 1rem;
+  // flex-direction: column;
 }
 
 #form {

@@ -6,18 +6,19 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import * as CryptoJS from 'crypto-js';
-import { User } from 'src/app/interfaces/User';
+import { UserDTO, UserAuth } from 'src/app/interfaces/User';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
-  userData!: User;
+  userData!: UserDTO;
   userForm!: FormGroup;
+  errorMessage = '';
+  isLoading = false;
 
   constructor(
     private router: Router,
@@ -40,28 +41,36 @@ export class SignupComponent implements OnInit {
   signup() {
     if (this.userForm.invalid) return;
 
+    this.isLoading = true;
+
     const username = this.userForm.get('username')?.value;
     const email = this.userForm.get('email')?.value;
-    const raw_password = this.userForm.get('password')?.value;
-    const raw_password_confirm = this.userForm.get('password_confirm')?.value;
+    const password = this.userForm.get('password')?.value;
+    const password2 = this.userForm.get('password_confirm')?.value;
 
-    if (raw_password !== raw_password_confirm) {
+    if (password !== password2) {
+      this.errorMessage = 'As senhas não coincidem';
+      this.isLoading = false;
       return;
     }
 
-    const password = this.hashPassword(raw_password);
-
-    const user: User = {
+    const user: UserAuth = {
       username,
       email,
       password,
     };
 
-    this.authService.signup(user).subscribe((response) => {
-      console.log('User registration!');
+    this.authService.signup(user);
+
+    this.authService.authValidationEvent.subscribe((response) => {
+      if (!response.success) {
+        this.errorMessage = response.message;
+        this.isLoading = false;
+        return;
+      }
+
+      const user_id = response.user_id;
+      this.router.navigate(['profile', user_id]);
     });
-  }
-  hashPassword(password: string): string {
-    return CryptoJS.SHA256(password).toString();
   }
 }
