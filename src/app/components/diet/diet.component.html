@@ -4,13 +4,13 @@
   <p-dialog header="Nova refeição" [(visible)]="visible" [draggable]="false" [resizable]="false" [modal]="true">
     <div class="my-1 gap-4 flex justify-content-center flex-column">
       <input type="text" placeholder="ex: Almoço" [(ngModel)]="newMeal">
-      <button class="btn" (click)="addNewTable()" *ngIf="!isLoading">Criar</button>
+      <button class="btn" (click)="addNewMeal()" *ngIf="!isLoading">Criar</button>
       <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
         *ngIf="isLoading"></p-progressSpinner>
     </div>
   </p-dialog>
 
-  <p-dialog header="Editar refeição" [(visible)]="editMealVisible" [draggable]="false" [resizable]="false"
+   <p-dialog header="Editar refeição" [(visible)]="editMealVisible" [draggable]="false" [resizable]="false"
     [modal]="true" *ngIf="selectedMeal">
     <div class=" flex justify-content-center flex-column">
       <input type="text" placeholder="ex: Almoço" [(ngModel)]="selectedMeal.name" class="mb-4">
@@ -95,6 +95,8 @@
     </div>
   </p-dialog>
 
+
+
   <p-dialog header="Novo alimento" [(visible)]="visibleNewFood" [draggable]="false" [resizable]="false" [modal]="true">
     <div class="my-1 gap-4 flex justify-content-center flex-column modal-table-size">
       <div class="modal-inputs">
@@ -155,10 +157,16 @@
   <button class="btn" (click)="showNewMealDialog()">Nova refeição</button>
 </div>
 
+<p-progressSpinner styleClass="w-3rem h-3rem mb-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
+  *ngIf="isMealsLoading"></p-progressSpinner>
+
 <div class="main-container">
-  <div class="table-border" *ngFor="let meal of mealTables$ | async, let i = index">
+  <!-- <div class="table-border" *ngFor="let meal of mealTables$ | async, let i = index"> -->
+  <div class="table-border" *ngFor="let meal of mealTables">
     <div class="table-header gap-3">
-      <p class="table-box" style="background-color: #036873;">{{meal.name}}</p>
+      <p class="table-box" style="background-color: #036873;" *ngIf="!meal.isEditing">{{meal.name}}</p>
+      <p-progressSpinner styleClass="w-3rem h-3rem flex align-items-center" strokeWidth="8" animationDuration="1.5s"
+    *ngIf="meal.isEditing"></p-progressSpinner>
       <p class="table-box" *ngIf="calculateTotalNutrients(meal.id!)">{{ calculateTotalNutrients(meal.id!).totalCalories
         }}
         <br> Cal
@@ -173,23 +181,27 @@
     </div>
 
     <ng-container *ngIf="foods && foods.length > 0">
-      <div *ngFor="let food of getFoodsForMeal(meal.id!)">
+      <div *ngFor="let food of foodsPerMeal">
         <div class="table-row">
           <div class="align-items-center flex-column">
-            <div class="table-box mb-2">{{food.name}}</div>
-            <div class="weight-row">{{food.amount}}g</div>
+            <div class="table-box mb-2" *ngIf="!food.isLoading">{{food.name}}</div>
+            <p-progressSpinner styleClass="w-3rem h-3rem m-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
+            *ngIf="food.isLoading"></p-progressSpinner>
+            <div class="weight-row" *ngIf="!food.isLoading">{{food.amount}}g</div>
           </div>
-          <div class="circle-btn">{{food.calories}}<br>Cal</div>
-          <div class="circle-btn">{{food.carbohydrates}}<br>Carbo</div>
-          <div class="circle-btn">{{food.proteins}}<br>Prot</div>
-          <div class="circle-btn">{{food.fats}}<br>Gord</div>
-          <div class="flex flex-column gap-3">
+          <div class="circle-btn" *ngIf="!food.isLoading">{{food.calories}}<br>Cal</div>
+          <div class="circle-btn" *ngIf="!food.isLoading">{{food.carbohydrates}}<br>Carbo</div>
+          <div class="circle-btn" *ngIf="!food.isLoading">{{food.proteins}}<br>Prot</div>
+          <div class="circle-btn" *ngIf="!food.isLoading">{{food.fats}}<br>Gord</div>
+          <div class="flex flex-column gap-3" *ngIf="!food.isLoading">
             <button class="pi pi-pencil icon-btn" (click)="showEditFoodModal(food)"></button>
-            <button class="pi pi-trash icon-btn" (click)="showDeleteFoodModal(food.id!)"></button>
+            <button class="pi pi-trash icon-btn" (click)="showDeleteFoodModal(food.id!, meal.id!)"></button>
           </div>
         </div>
       </div>
     </ng-container>
-    <button class="add-newFood-btn" (click)="showNewFoodDialog(meal.id!)">Novo Alimento</button>
+    <p-progressSpinner styleClass="w-3rem h-3rem my-4 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
+    *ngIf="meal.isLoading"></p-progressSpinner>
+    <button class="add-newFood-btn" (click)="showNewFoodDialog(meal.id!)" *ngIf="!meal.isLoading">Novo Alimento</button>
   </div>
 </div>

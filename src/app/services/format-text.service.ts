@@ -4,9 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class FormatTextService {
-
-  constructor() { }
-
   capitalizeFirstLetter(inputString: string): string {
     if (inputString.length === 0) {
       return inputString;

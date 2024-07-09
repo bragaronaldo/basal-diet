@@ -5,6 +5,7 @@ import { UserDTO, UserAuth } from '../../interfaces/User';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AuthValidation } from '../../interfaces/AuthValidation';
+import { LocalStorageService } from '../local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {}
   signup(userData: UserAuth) {
     this.clearCredentials();
@@ -58,7 +60,6 @@ export class AuthService {
       (success) => {
         this.setSession(success);
         this.cookieService.set(this.isAuthenticatedKey, 'true', 5, '/');
-
         const authValidation: AuthValidation = {
           message: 'Login efetuado com sucesso!',
           success: true,
@@ -98,6 +99,7 @@ export class AuthService {
       ? true
       : false;
 
+    this.localStorageService.clear()
     this.cookieService.delete('token', '/');
     this.cookieService.delete('isAuthenticated', '/');
 

@@ -2,7 +2,7 @@ import { FoodDTO } from './../../interfaces/foodDTO';
 import { state, style, trigger } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject, map, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Food, Meal } from 'src/app/interfaces/MealTable';
 import { FormatTextService } from 'src/app/services/format-text.service';
 import { HeaderService } from 'src/app/services/header.service';
@@ -23,7 +23,6 @@ import { DietService } from 'src/app/services/diet.service';
   ],
 })
 export class DietComponent implements OnInit, OnDestroy {
-  foodTable: Meal[] = [];
 
   foodName?: string;
   amount?: number;
@@ -43,8 +42,10 @@ export class DietComponent implements OnInit, OnDestroy {
   foodId = 0;
   mealId = 0;
 
-  mealTables$ = new Observable<Meal[]>();
+  // mealTables$ = new Observable<Meal[]>();
+  mealTables: Meal[] = [];
   foods: Food[] = [];
+  foodsPerMeal: Food[] = [];
 
   selectedMeal?: Meal | null;
   selectedFood?: Food | null;
@@ -56,7 +57,13 @@ export class DietComponent implements OnInit, OnDestroy {
   allMealsCarbohydrates = 0;
   allMealsFats = 0;
 
+  originalWeight: number | null = 0;
+  originalProteinAmount: number | null = 0;
+  originalCarbohydrateAmount: number | null = 0;
+  originalFatAmount: number | null = 0;
+
   isLoading = false;
+  isMealsLoading = true;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -69,104 +76,98 @@ export class DietComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
+    this.route.params.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
       this.userId = params['id'];
       this.loadMeals();
-    });
+    })
   }
   ngOnDestroy(): void {
-    console.log('ngUnsubscribe being called.');
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    console.log('ngUnsubscribe being called.');
   }
-  calculateAllMealsCalories() {
-    this.allMealsCarbohydrates = 0;
-    this.allMealsProteins = 0;
-    this.allMealsFats = 0;
 
+  loadMeals(isEditing = false) {
     this.dietService
-      .getFoodsByUserId(this.userId)
+      .getMeals(this.userId)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((response) => {
-        this.foods = response;
-        response.map(
-          (data) => (
-            (this.allMealsCalories += data.calories),
-            (this.allMealsProteins += data.proteins),
-            (this.allMealsCarbohydrates += data.carbohydrates),
-            (this.allMealsFats += data.fats)
-          )
-        );
+      .subscribe((data) => {
+        const mealsWithLoading: Meal[] = data.map((meal) => ({
+          ...meal,
+          isLoading: true,
+          isEditing: false,
+        }));
 
-        this.headerService.totalCalories.next(this.allMealsCalories.toFixed(2));
-        this.headerService.totalProteins.next(this.allMealsProteins.toFixed(2));
-        this.headerService.totalCarbohydrates.next(
-          this.allMealsCarbohydrates.toFixed(2)
-        );
-        this.headerService.totalFats.next(this.allMealsFats.toFixed(2));
+        if (isEditing) {
+          mealsWithLoading.forEach((meal) => {
+            meal.isLoading = false;
+          });
+        }
+
+        this.mealTables = mealsWithLoading;
+        this.isLoading = false;
+        this.isMealsLoading = false;
+        this.loadFoods();
       });
   }
-  calculateTotalNutrients(id: number) {
-    let totalCalories = 0;
-    let totalCarbohydrates = 0;
-    let totalProteins = 0;
-    let totalFats = 0;
-    const allFoods = this.getFoodsForMeal(id);
-
-    allFoods.forEach((data) => {
-      totalCalories += data.calories;
-      totalCarbohydrates += data.carbohydrates;
-      totalProteins += data.proteins;
-      totalFats += data.fats;
-    });
-
-    const formattedTotalCarbohydrates = totalCarbohydrates.toFixed(2);
-    const formattedTotalProteins = totalProteins.toFixed(2);
-    const formattedTotalCalories = totalCalories.toFixed(2);
-    const formattedTotalFats = totalFats.toFixed(2);
-
-    return {
-      totalCarbohydrates: formattedTotalCarbohydrates,
-      totalProteins: formattedTotalProteins,
-      totalCalories: formattedTotalCalories,
-      totalFats: formattedTotalFats,
-    };
-  }
-
-  getFoodsForMeal(tableId: number): Food[] {
-    if (!this.foods) return [];
-    return this.foods.filter((food) => food.meal_id === tableId);
-  }
-  loadMeals() {
-    this.mealTables$ = this.dietService
-      .getMeals(this.userId)
-      .pipe(map((data) => data)
-    );
-    this.loadFoods();
-  }
-  loadFoods() {
-    this.allMealsCalories = 0;
-    this.calculateAllMealsCalories();
-  }
-
-  addNewTable() {
+  addNewMeal() {
     this.isLoading = true;
     if (this.newMeal === '') {
       this.newMeal = 'Refeição';
     }
 
-    const newTable: Meal = {
+    const newMeal: Meal = {
       user_id: this.userId,
       name: this.formatTextService.capitalizeFirstLetter(this.newMeal),
     };
 
-    this.dietService.createNewMeal(newTable).subscribe(() => {
+    this.dietService.createNewMeal(newMeal).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+        this.loadMeals();
+        this.newMeal = '';
+        this.visible = false;
+        this.isMealsLoading = true;
+      });
+  }
+  editMeal() {
+    this.isLoading = true;
+    if (this.selectedMeal) {
+      const formattedMeal = this.formatTextService.capitalizeFirstLetter(
+        this.selectedMeal.name
+      );
+      this.selectedMeal.name = formattedMeal;
+
+      this.dietService.editMeal(this.selectedMeal).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+        this.editMealVisible = false;
+        delete this.selectedMeal;
+        this.selectedMeal = null;
+        this.setMealTableLoading(this.mealId, true, true);
+        this.loadMeals(true);
+      });
+    }
+  }
+  deleteMeal() {
+    this.isLoading = true;
+    this.dietService.deleteMeal(this.mealId).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+      this.deleteMealVisible = false;
+      this.isMealsLoading = true;
       this.loadMeals();
-      this.newMeal = '';
-      this.visible = false;
     });
   }
 
+  loadFoods() {
+    this.allMealsCalories = 0;
+    this.calculateAllMealsCalories();
+  }
+  getFoodsPerMeal(mealId: number): Food[] {
+    if (!this.foods) return [];
+    const foods = this.foods.filter((food) => food.meal_id === mealId);
+
+    this.foodsPerMeal = foods.map((food) => ({
+      ...food,
+      isLoading: food.isLoading || false,
+    }));
+    return this.foodsPerMeal;
+  }
   addNewFood() {
     this.isLoading = true;
     const newFood: Food = {
@@ -184,7 +185,7 @@ export class DietComponent implements OnInit, OnDestroy {
       ),
     };
 
-    this.dietService.createNewFood(newFood).subscribe(() => {
+    this.dietService.createNewFood(newFood).pipe(takeUntil(this.unsubscribe$)).subscribe((response) => {
       this.loadFoods();
       this.foodName = undefined;
       this.amount = undefined;
@@ -192,29 +193,10 @@ export class DietComponent implements OnInit, OnDestroy {
       this.protein = undefined;
       this.fat = undefined;
 
+      this.setMealTableLoading(response.meal_id, true);
+
       this.visibleNewFood = false;
     });
-  }
-  calculateCalories(carb: number, protein: number, fat: number) {
-    const calories: number = carb * 4 + protein * 4 + fat * 9;
-    return Number(calories.toFixed(2));
-  }
-
-  editMeal() {
-    this.isLoading = true;
-    if (this.selectedMeal) {
-      const formattedMeal = this.formatTextService.capitalizeFirstLetter(
-        this.selectedMeal.name
-      );
-      this.selectedMeal.name = formattedMeal;
-
-      this.dietService.editMeal(this.selectedMeal).subscribe(() => {
-        this.editMealVisible = false;
-        delete this.selectedMeal;
-        this.selectedMeal = null;
-        this.loadMeals();
-      });
-    }
   }
   editFood() {
     this.isLoading = true;
@@ -238,12 +220,81 @@ export class DietComponent implements OnInit, OnDestroy {
       this.selectedFood.amount = this.amount ?? 0;
       this.selectedFood.calories = calories;
 
-      this.dietService.editFood(this.selectedFood).subscribe(() => {
+      this.dietService.editFood(this.selectedFood).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
         this.loadFoods();
         this.editFoodVisible = false;
+        this.setFoodLoading(this.mealId, this.foodId, true);
         this.selectedFood = null;
       });
     }
+  }
+  deleteFood() {
+    this.isLoading = true;
+    this.dietService.deleteFood(this.foodId).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+      this.deleteFoodVisible = false;
+      this.setFoodLoading(this.mealId, this.foodId, true);
+      this.loadFoods();
+    })
+  }
+  calculateCalories(carb: number, protein: number, fat: number) {
+    const calories: number = carb * 4 + protein * 4 + fat * 9;
+    return Number(calories.toFixed(2));
+  }
+  calculateAllMealsCalories() {
+    this.allMealsCarbohydrates = 0;
+    this.allMealsProteins = 0;
+    this.allMealsFats = 0;
+
+    this.dietService
+      .getFoodsByUserId(this.userId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((response) => {
+        this.foods = response;
+        this.mealTables.forEach((meal) => {
+          meal.isLoading = false;
+        });
+        response.map(
+          (data) => (
+            (this.allMealsCalories += data.calories),
+            (this.allMealsProteins += data.proteins),
+            (this.allMealsCarbohydrates += data.carbohydrates),
+            (this.allMealsFats += data.fats)
+          )
+        );
+
+        this.headerService.totalCalories.next(this.allMealsCalories.toFixed(2));
+        this.headerService.totalProteins.next(this.allMealsProteins.toFixed(2));
+        this.headerService.totalCarbohydrates.next(
+          this.allMealsCarbohydrates.toFixed(2)
+        );
+        this.headerService.totalFats.next(this.allMealsFats.toFixed(2));
+      });
+  }
+  calculateTotalNutrients(id: number) {
+    let totalCalories = 0;
+    let totalCarbohydrates = 0;
+    let totalProteins = 0;
+    let totalFats = 0;
+    const allFoods = this.getFoodsPerMeal(id);
+
+    allFoods.forEach((data) => {
+      totalCalories += data.calories;
+      totalCarbohydrates += data.carbohydrates;
+      totalProteins += data.proteins;
+      totalFats += data.fats;
+    });
+
+    const formattedTotalCarbohydrates = totalCarbohydrates.toFixed(2);
+    const formattedTotalProteins = totalProteins.toFixed(2);
+    const formattedTotalCalories = totalCalories.toFixed(2);
+    const formattedTotalFats = totalFats.toFixed(2);
+
+    return {
+      totalCarbohydrates: formattedTotalCarbohydrates,
+      totalProteins: formattedTotalProteins,
+      totalCalories: formattedTotalCalories,
+      totalFats: formattedTotalFats,
+    };
   }
 
   showNewFoodDialog(id: number) {
@@ -262,20 +313,6 @@ export class DietComponent implements OnInit, OnDestroy {
     this.visibleNewFood = true;
   }
 
-  deleteFood() {
-    this.isLoading = true;
-    this.dietService.deleteFood(this.foodId).subscribe(() => {
-      this.deleteFoodVisible = false;
-      this.loadMeals();
-    });
-  }
-  deleteMeal() {
-    this.isLoading = true;
-    this.dietService.deleteMeal(this.mealId).subscribe(() => {
-      this.deleteMealVisible = false;
-      this.loadMeals();
-    });
-  }
   showNewMealDialog() {
     this.isLoading = false;
     this.newMeal = '';
@@ -283,12 +320,18 @@ export class DietComponent implements OnInit, OnDestroy {
   }
   showEditMealModal(meal: Meal) {
     this.isLoading = false;
+    if (meal.id !== undefined) this.mealId = meal.id;
     this.selectedMeal = JSON.parse(JSON.stringify(meal));
     this.editMealVisible = true;
   }
-  showDeleteFoodModal(id: number) {
+  showDeleteFoodModal(id: number, meal_id: number) {
     this.isLoading = false;
+
     this.foodId = id;
+    this.mealId = meal_id;
+
+    this.foodId = id;
+    this.mealId = meal_id;
     this.deleteFoodVisible = true;
   }
   showDeleteMealModal(id: number) {
@@ -296,8 +339,13 @@ export class DietComponent implements OnInit, OnDestroy {
     this.mealId = id;
     this.deleteMealVisible = true;
   }
+
   showEditFoodModal(food: Food) {
     this.isLoading = false;
+
+    if (food.id) this.foodId = food.id;
+    if (food.meal_id) this.mealId = food.meal_id;
+
     this.selectedFood = JSON.parse(JSON.stringify(food));
 
     if (this.selectedFood) {
@@ -321,6 +369,61 @@ export class DietComponent implements OnInit, OnDestroy {
     this.originalProteinAmount = this.protein ?? 0;
     this.originalCarbohydrateAmount = this.carbohydrate ?? 0;
     this.originalFatAmount = this.fat ?? 0;
+  }
+  changeMacronutriensValue() {
+    const newCarbohydrateAmount = this.calculateMacronutrientsByWeight(
+      this.originalWeight ?? 0,
+      this.originalCarbohydrateAmount ?? 0,
+      this.amount ?? 0
+    );
+    const newProteinAmount = this.calculateMacronutrientsByWeight(
+      this.originalWeight ?? 0,
+      this.originalProteinAmount ?? 0,
+      this.amount ?? 0
+    );
+    const newFatAmount = this.calculateMacronutrientsByWeight(
+      this.originalWeight ?? 0,
+      this.originalFatAmount ?? 0,
+      this.amount ?? 0
+    );
+
+    this.carbohydrate = newCarbohydrateAmount;
+    this.protein = newProteinAmount;
+    this.fat = newFatAmount;
+  }
+
+  calculateMacronutrientsByWeight(
+    originalWeight: number,
+    currentValue: number,
+    newWeight: number
+  ) {
+    const result = (newWeight * currentValue) / originalWeight;
+    return parseFloat(result.toFixed(2));
+  }
+  setMealTableLoading(id: number, isLoading: boolean, isEditing = false) {
+    const meal = this.mealTables.find((m) => m.id === id);
+    if (isEditing) {
+      if (meal) meal.isEditing = isLoading;
+      return;
+    }
+
+    if (meal) meal.isLoading = isLoading;
+  }
+  setFoodLoading(meal_id: number, food_id: number, isLoading: boolean) {
+    const meal = this.mealTables.find((m) => m.id === meal_id);
+    if (!meal) return;
+
+    const foodIndex = this.foods.findIndex((f) => f.id === food_id);
+    if (foodIndex === -1) return;
+
+    this.foods[foodIndex].isLoading = isLoading;
+
+    const foodPerMealIndex = this.foodsPerMeal.findIndex(
+      (f) => f.id === food_id
+    );
+    if (foodPerMealIndex !== -1) {
+      this.foodsPerMeal[foodPerMealIndex].isLoading = isLoading;
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -398,41 +501,5 @@ export class DietComponent implements OnInit, OnDestroy {
         })
         .filter((name) => name !== null);
     });
-  }
-
-  originalWeight: number | null = 0;
-  originalProteinAmount: number | null = 0;
-  originalCarbohydrateAmount: number | null = 0;
-  originalFatAmount: number | null = 0;
-
-  changeMacronutriensValue() {
-    const newCarbohydrateAmount = this.calculateMacronutrientsByWeight(
-      this.originalWeight ?? 0,
-      this.originalCarbohydrateAmount ?? 0,
-      this.amount ?? 0
-    );
-    const newProteinAmount = this.calculateMacronutrientsByWeight(
-      this.originalWeight ?? 0,
-      this.originalProteinAmount ?? 0,
-      this.amount ?? 0
-    );
-    const newFatAmount = this.calculateMacronutrientsByWeight(
-      this.originalWeight ?? 0,
-      this.originalFatAmount ?? 0,
-      this.amount ?? 0
-    );
-
-    this.carbohydrate = newCarbohydrateAmount;
-    this.protein = newProteinAmount;
-    this.fat = newFatAmount;
-  }
-
-  calculateMacronutrientsByWeight(
-    originalWeight: number,
-    currentValue: number,
-    newWeight: number
-  ) {
-    const result = (newWeight * currentValue) / originalWeight;
-    return parseFloat(result.toFixed(2));
   }
 }

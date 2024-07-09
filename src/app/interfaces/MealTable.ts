@@ -2,6 +2,8 @@ export interface Meal {
   user_id: number;
   id?: number;
   name: string;
+  isLoading?: boolean;
+  isEditing?: boolean;
 }
 export interface Food {
   user_id: number;
@@ -13,4 +15,5 @@ export interface Food {
   proteins: number;
   fats: number;
   calories: number;
+  isLoading?: boolean;
 }

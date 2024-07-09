@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { UserDTO, UserAuth } from 'src/app/interfaces/User';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -26,7 +27,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private localStorageService: LocalStorageService
   ) {}
   ngOnInit(): void {
     this.userForm = this.formBuilder.group({
@@ -67,6 +69,7 @@ export class LoginComponent implements OnInit {
         this.userService
           .getUserProfileByUserId(userData.user.id.toString())
           .subscribe((response) => {
+            this.localStorageService.setItem('id', response[0].id);
             if (response.length > 0) {
               this.router.navigate(['diet', response[0].id]);
               return;

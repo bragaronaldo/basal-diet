@@ -68,7 +68,6 @@ export class SignupComponent implements OnInit {
         this.isLoading = false;
         return;
       }
-
       const user_id = response.user_id;
       this.router.navigate(['profile', user_id]);
     });

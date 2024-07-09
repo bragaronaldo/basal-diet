@@ -6,12 +6,12 @@ import { FoodAdditionComponent } from './components/food-addition/food-addition.
 import { AuthGuard } from './guards/auth.guard';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { DietComponent } from './components/diet/diet.component';
-// import { LoggedGuard } from './guards/logged.guard';
+import { LoggedGuard } from './guards/logged.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'signup', component: SignupComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent, canActivate: [LoggedGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [LoggedGuard] },
   { path: 'profile/:id', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: 'diet/:id', component: DietComponent, canActivate: [AuthGuard] },
   { path: 'adicionar-alimento', component: FoodAdditionComponent, canActivate: [AuthGuard] },

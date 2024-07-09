@@ -17,6 +17,7 @@ import {
 } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { UserProfile } from 'src/app/interfaces/UserProfile';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -55,7 +56,8 @@ export class UserProfileComponent
     private userService: UserService,
     private formatTextService: FormatTextService,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
@@ -124,6 +126,7 @@ export class UserProfileComponent
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((response) => {
         if (response.id !== undefined) {
+          this.localStorageService.setItem('id', response.id);
           this.id = response.id;
           this.isLoading = false;
         }
