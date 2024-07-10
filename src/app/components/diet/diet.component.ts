@@ -88,7 +88,9 @@ export class DietComponent implements OnInit, OnDestroy {
   }
 
   loadMeals(isEditing = false) {
-    this.dietService
+
+    // setTimeout(() => {
+      this.dietService
       .getMeals(this.userId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data) => {
@@ -108,7 +110,10 @@ export class DietComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.isMealsLoading = false;
         this.loadFoods();
-      });
+      // });
+    // }, 1200);
+      })
+
   }
   addNewMeal() {
     this.isLoading = true;
@@ -149,7 +154,7 @@ export class DietComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.dietService.deleteMeal(this.mealId).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.deleteMealVisible = false;
-      this.isMealsLoading = true;
+      this.setMealTableLoading(this.mealId, true);
       this.loadMeals();
     });
   }
@@ -194,6 +199,8 @@ export class DietComponent implements OnInit, OnDestroy {
       this.fat = undefined;
 
       this.setMealTableLoading(response.meal_id, true);
+      // if(response.meal_id && response.id) this.setFoodLoading(response.meal_id, response.id, true);
+
 
       this.visibleNewFood = false;
     });
