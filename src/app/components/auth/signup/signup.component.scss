@@ -6,11 +6,9 @@ $color-5: #d92b04;
 $border-radius: 6px;
 $font:"Poppins", sans-serif;
 
-.main-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100dvh;
+.title {
+  font-family: $font;
+  font-weight: 400;
 }
 .form-content {
   border: solid 2px #fff;
@@ -34,4 +32,12 @@ $font:"Poppins", sans-serif;
 .btn:hover {
   background-color: $color-4;
   color: #000;
+}
+a {
+  color: $color-5;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+a:hover {
+  color: $color-4;
 }
