@@ -23,7 +23,6 @@ import { DietService } from 'src/app/services/diet.service';
   ],
 })
 export class DietComponent implements OnInit, OnDestroy {
-
   foodName?: string;
   amount?: number;
   carbohydrate?: number;
@@ -64,6 +63,7 @@ export class DietComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   isMealsLoading = true;
+  isAdding = false;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -79,7 +79,7 @@ export class DietComponent implements OnInit, OnDestroy {
     this.route.params.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
       this.userId = params['id'];
       this.loadMeals();
-    })
+    });
   }
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -88,9 +88,7 @@ export class DietComponent implements OnInit, OnDestroy {
   }
 
   loadMeals(isEditing = false) {
-
-    // setTimeout(() => {
-      this.dietService
+    this.dietService
       .getMeals(this.userId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data) => {
@@ -106,14 +104,12 @@ export class DietComponent implements OnInit, OnDestroy {
           });
         }
 
+        this.deleteMealVisible = false;
         this.mealTables = mealsWithLoading;
-        this.isLoading = false;
         this.isMealsLoading = false;
-        this.loadFoods();
-      // });
-    // }, 1200);
-      })
 
+        this.loadFoods();
+      });
   }
   addNewMeal() {
     this.isLoading = true;
@@ -126,8 +122,11 @@ export class DietComponent implements OnInit, OnDestroy {
       name: this.formatTextService.capitalizeFirstLetter(this.newMeal),
     };
 
-    this.dietService.createNewMeal(newMeal).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
-        this.loadMeals();
+    this.dietService
+      .createNewMeal(newMeal)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this.loadMeals(true);
         this.newMeal = '';
         this.visible = false;
         this.isMealsLoading = true;
@@ -141,22 +140,28 @@ export class DietComponent implements OnInit, OnDestroy {
       );
       this.selectedMeal.name = formattedMeal;
 
-      this.dietService.editMeal(this.selectedMeal).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
-        this.editMealVisible = false;
-        delete this.selectedMeal;
-        this.selectedMeal = null;
-        this.setMealTableLoading(this.mealId, true, true);
-        this.loadMeals(true);
-      });
+      this.dietService
+        .editMeal(this.selectedMeal)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(() => {
+          this.editMealVisible = false;
+          delete this.selectedMeal;
+          this.selectedMeal = null;
+          this.setMealTableLoading(this.mealId, true, true);
+          this.loadMeals(true);
+        });
     }
   }
   deleteMeal() {
     this.isLoading = true;
-    this.dietService.deleteMeal(this.mealId).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
-      this.deleteMealVisible = false;
-      this.setMealTableLoading(this.mealId, true);
-      this.loadMeals();
-    });
+    this.dietService
+      .deleteMeal(this.mealId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        // this.deleteMealVisible = false;
+        // this.setMealTableLoading(this.mealId, true);
+        this.loadMeals(true);
+      });
   }
 
   loadFoods() {
@@ -190,20 +195,21 @@ export class DietComponent implements OnInit, OnDestroy {
       ),
     };
 
-    this.dietService.createNewFood(newFood).pipe(takeUntil(this.unsubscribe$)).subscribe((response) => {
-      this.loadFoods();
-      this.foodName = undefined;
-      this.amount = undefined;
-      this.carbohydrate = undefined;
-      this.protein = undefined;
-      this.fat = undefined;
+    this.dietService
+      .createNewFood(newFood)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((response) => {
+        this.loadFoods();
+        this.foodName = undefined;
+        this.amount = undefined;
+        this.carbohydrate = undefined;
+        this.protein = undefined;
+        this.fat = undefined;
 
-      this.setMealTableLoading(response.meal_id, true);
-      // if(response.meal_id && response.id) this.setFoodLoading(response.meal_id, response.id, true);
-
-
-      this.visibleNewFood = false;
-    });
+        this.setMealTableLoading(response.meal_id, true);
+        // if(response.meal_id && response.id) this.setFoodLoading(response.meal_id, response.id, true);
+        this.visibleNewFood = false;
+      });
   }
   editFood() {
     this.isLoading = true;
@@ -227,21 +233,27 @@ export class DietComponent implements OnInit, OnDestroy {
       this.selectedFood.amount = this.amount ?? 0;
       this.selectedFood.calories = calories;
 
-      this.dietService.editFood(this.selectedFood).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
-        this.loadFoods();
-        this.editFoodVisible = false;
-        this.setFoodLoading(this.mealId, this.foodId, true);
-        this.selectedFood = null;
-      });
+      this.dietService
+        .editFood(this.selectedFood)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(() => {
+          this.loadFoods();
+          // this.editFoodVisible = false;
+          // this.setFoodLoading(this.mealId, this.foodId, true);
+          this.selectedFood = null;
+        });
     }
   }
   deleteFood() {
     this.isLoading = true;
-    this.dietService.deleteFood(this.foodId).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
-      this.deleteFoodVisible = false;
-      this.setFoodLoading(this.mealId, this.foodId, true);
-      this.loadFoods();
-    })
+    this.dietService
+      .deleteFood(this.foodId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        // this.deleteFoodVisible = false;
+        // this.setFoodLoading(this.mealId, this.foodId, true);
+        this.loadFoods();
+      });
   }
   calculateCalories(carb: number, protein: number, fat: number) {
     const calories: number = carb * 4 + protein * 4 + fat * 9;
@@ -260,6 +272,10 @@ export class DietComponent implements OnInit, OnDestroy {
         this.mealTables.forEach((meal) => {
           meal.isLoading = false;
         });
+
+        this.deleteFoodVisible = false;
+        this.editFoodVisible = false;
+
         response.map(
           (data) => (
             (this.allMealsCalories += data.calories),

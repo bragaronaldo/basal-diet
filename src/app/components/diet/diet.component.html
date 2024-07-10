@@ -97,8 +97,6 @@
     </div>
   </p-dialog>
 
-
-
   <p-dialog header="Novo alimento" [(visible)]="visibleNewFood" [draggable]="false" [resizable]="false" [modal]="true">
     <div class="my-1 gap-4 flex justify-content-center flex-column modal-table-size">
       <div class="modal-inputs">
@@ -168,7 +166,7 @@
     <div class="table-border">
     <!-- <div class="table-border" *ngIf="!meal.isLoading"> -->
       <div class="table-header gap-3">
-        <p class="table-box" style="background-color: #036873;" *ngIf="!meal.isEditing">{{meal.name}}</p>
+        <p class="table-box table-box-meal-name" *ngIf="!meal.isEditing">{{meal.name}}</p>
         <p-progressSpinner styleClass="w-3rem h-3rem flex align-items-center" strokeWidth="8" animationDuration="1.5s"
           *ngIf="meal.isEditing"></p-progressSpinner>
         <p class="table-box" *ngIf="calculateTotalNutrients(meal.id!)">{{
