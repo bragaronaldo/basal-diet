@@ -28,6 +28,7 @@ $border-radius: 6px;
   opacity: 1;
   // transition: opacity 1s;
 }
+
 // .form-collapsed {
 //   transition: opacity 1s !important;
 //   // height: 9rem;
@@ -63,6 +64,7 @@ $border-radius: 6px;
   // margin: 0.8rem 0 0.25rem -0.2rem;
   margin: 0.8rem 0 0.25rem -0.2rem;
 }
+
 #form input {
   width: 100%;
   background-color: $color-4;
@@ -104,18 +106,21 @@ button {
   border-radius: $border-radius;
 }
 
-.btn, .create-btn {
+.btn,
+.create-btn {
   width: 5rem;
   height: 2rem;
   background-color: $color-2;
   color: #fff;
-  margin: 1.2rem 0 1.5rem 0;
+  margin-top: 1.2rem;
 }
+
 .create-btn {
   margin: 0;
 }
 
-.btn:hover, .create-btn:hover {
+.btn:hover,
+.create-btn:hover {
   background-color: $color-4;
   color: #000;
 }
@@ -185,21 +190,25 @@ button {
   padding-top: 2rem;
   transition: all 0.2s;
 }
+
 .label {
   font-size: 0.92rem;
 }
 
-.box {
-  border: solid 1px #fff;
+.basal-diet-box {
+  border: solid 2px #fff;
+  border-radius: 6px;
   width: 12rem;
   text-align: center;
   transition: all 1s;
 }
+
 .result-box {
-  border-top: solid 1px #fff;
-  background-color: $color-2;
+  // border-top: solid 1px #fff;
+  background-color: transparent;
   padding: 0.6rem 0 0.6rem 0;
 }
+
 .box-p1 {
   display: flex;
   justify-content: center;
@@ -208,6 +217,7 @@ button {
   height: 2.6rem;
   background-color: $color-2;
 }
+
 .box-p2 {
   display: flex;
   justify-content: center;
@@ -216,6 +226,7 @@ button {
   height: 2.6rem;
   background-color: $color-2;
 }
+
 .box-name {
   display: flex;
   justify-content: center;
@@ -223,9 +234,11 @@ button {
   height: 2.6rem;
   border-top: solid 1px #fff;
 }
+
 .form-errorMsg {
   margin-top: -0.2rem !important;
 }
+
 // .upload-image-btn {
 //   border: solid 2px $color-2;
 //   align-self: center;
@@ -253,13 +266,16 @@ button {
   cursor: pointer;
   transition: all 0.4s;
 }
+
 .upload-image-btn:hover {
   color: $color-4;
   border: solid 2px $color-4;
 }
+
 .upload-image-btn:focus {
   background-color: #d92b04;
 }
+
 .radio-box {
   margin-top: 0.6rem;
   border-radius: 6px;
@@ -267,13 +283,10 @@ button {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: center;
+  gap: 0.5rem;
   // margin-bottom: 1rem;
 }
-.radio-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 .radio-btn input[type=radio] {
   display: none;
 }
@@ -282,18 +295,69 @@ button {
   display: inline-block;
   padding: 0.1rem 0.8rem;
   border: 2px solid #ccc;
-  border-radius: $border-radius;
+  border-radius: 3px;
   cursor: pointer;
   transition: all 0.3s;
 }
 
-.radio-btn input[type="radio"]:checked + label {
+.radio-btn input[type="radio"]:checked+label {
   background-color: $color-2;
 }
 
 .radio-btn label:hover {
   background-color: $color-3;
 }
+
 .error-msg {
   color: $color-5;
+}
+
+.main_container {
+  width: 22rem;
+  padding: 1.2rem;
+  border: solid 2px #fff;
+  border-radius: 12px;
+}
+
+.basal {
+  // border: solid 1px #fff;
+  width: 6rem;
+  padding: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.basal p {
+  color: $color-5;
+  text-align: center;
+}
+:host ::ng-deep {
+  .p-inputtext {
+    background-color: $color-4;
+    border-radius: 3px;
+    transition: all 0.3s;
+    border: solid 1px $color-4;
+    color: #000;
+    height: 2.3rem;
+  }
+
+  .p-inputtext:enabled:focus {
+    border: solid 1px $color-4 !important;
+    background-color: $color-2;
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .p-inputtext:hover {
+    box-shadow: none;
+    border: solid 1px $color-2;
+    background-color: $color-2;
+    color: #fff;
+  }
+  .p-inputtext:hover::placeholder {
+    color: #000;
+    transition: all 0.3s;
+  }
+  .p-inputtext::placeholder {
+  color: #424242;
+  }
 }

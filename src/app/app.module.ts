@@ -23,6 +23,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { InterceptorService } from './interceptor/interceptor.service';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { DietComponent } from './components/diet/diet.component';
+import { KeyFilterModule } from 'primeng/keyfilter';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +50,7 @@ import { DietComponent } from './components/diet/diet.component';
     FontAwesomeModule,
     AutoCompleteModule,
     ProgressSpinnerModule,
+    KeyFilterModule,
   ],
   providers: [
     provideAnimations(),

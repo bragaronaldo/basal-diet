@@ -26,28 +26,29 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
     trigger('box', [
       state('true', style({ opacity: 1 })),
       state('void', style({ opacity: 0 })),
-      transition(':enter', animate('500ms ease-in-out')),
-      transition(':leave', animate('500ms ease-in-out')),
+      transition(':enter', animate('250ms ease-in-out')),
+      transition(':leave', animate('250ms ease-in-out')),
     ]),
     trigger('btn', [
       state('true', style({ opacity: 1 })),
       state('void', style({ opacity: 0 })),
-      transition(':enter', animate('500ms ease-in-out')),
-      transition(':leave', animate('500ms ease-in-out')),
+      transition(':enter', animate('250ms ease-in-out')),
+      transition(':leave', animate('250ms ease-in-out')),
     ]),
   ],
 })
-export class UserProfileComponent
-  implements OnInit, OnDestroy
-{
+export class UserProfileComponent implements OnInit, OnDestroy {
   userForm!: FormGroup;
   userData!: UserProfile;
+  newUser!: UserProfile;
   userId = 0;
 
   result = '';
-  id!: number;
   gender = '';
   isLoading = false;
+  errorMessage = '';
+
+  test = false;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -61,23 +62,17 @@ export class UserProfileComponent
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.userId = params['id'];
-    })
+    });
 
     this.userForm = this.formBuilder.group({
       name: new FormControl('', Validators.required),
       last_name: new FormControl('', [Validators.required]),
       gender: new FormControl('', [Validators.required]),
-      age: new FormControl(Validators.required, Validators.pattern('^[0-9]*$')),
-      height: new FormControl(
-        Validators.required,
-        Validators.pattern('^[0-9]*$')
-      ),
-      weight: new FormControl(
-        Validators.required,
-        Validators.pattern('^[0-9]*$')
-      ),
+      age: new FormControl('', [Validators.required]),
+      height: new FormControl('', [Validators.required]),
+      weight: new FormControl('', [Validators.required]),
       // userImage: new FormControl(''),
     });
   }
@@ -93,8 +88,6 @@ export class UserProfileComponent
   calculateBasalMetabolism() {
     if (this.userForm.invalid) return;
 
-    this.isLoading = true;
-
     const age = this.userForm.get('age')?.value;
     const height = this.userForm.get('height')?.value;
     const weight = this.userForm.get('weight')?.value;
@@ -105,7 +98,7 @@ export class UserProfileComponent
       this.result = (66 + 13.7 * weight + 5 * height - 6.8 * age).toFixed(2);
     }
 
-    const newUser: UserProfile = {
+    this.newUser = {
       user_id: this.userId,
       name: this.formatTextService.capitalizeFirstLetter(
         this.userForm.get('name')?.value
@@ -120,20 +113,28 @@ export class UserProfileComponent
       basalMetabolicRate: parseFloat(this.result),
       // userImage: this.userForm.get('userImage')?.value,
     };
+  }
+  createDiet() {
+    if (this.result === '') {
+      this.errorMessage = 'Calcule o gasto basal';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000);
+      return;
+    }
+
+    this.isLoading = true;
 
     this.userService
-      .createUserProfile(newUser)
+      .createUserProfile(this.newUser)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((response) => {
         if (response.id !== undefined) {
-          this.localStorageService.setItem('id', response.id);
-          this.id = response.id;
-          this.isLoading = false;
+          const id = response.id;
+          this.localStorageService.setItem('id', id);
+          this.router.navigateByUrl(`diet/${id}`);
         }
       });
-  }
-  createDiet() {
-    this.router.navigateByUrl(`diet/${this.id}`);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
