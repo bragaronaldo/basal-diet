@@ -48,8 +48,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isLoading = false;
   errorMessage = '';
 
-  test = false;
-
   private unsubscribe$ = new Subject<void>();
 
   constructor(
