@@ -1,5 +1,9 @@
 <main class="flex justify-content-center flex-column align-items-center" style="height: 100dvh;">
-  <form (ngSubmit)="calculateBasalMetabolism()" [formGroup]="userForm" #formDir="ngForm">
+  <div *ngIf="isProfileLoading">
+    <p-progressSpinner styleClass="w-3rem h-3rem p-3 flex align-items-center" strokeWidth="8"
+      animationDuration="1.5s"></p-progressSpinner>
+  </div>
+  <form (ngSubmit)="calculateBasalMetabolism()" [formGroup]="userForm" #formDir="ngForm" *ngIf="!isProfileLoading" [@box]="isProfileLoading">
     <div class="main_container flex justify-content-center flex-column align-items-center">
       <div class="grid">
         <div class="col-6">
@@ -61,7 +65,7 @@
   </form>
 
   <!-- <div class="flex flex-column justify-content-center align-items-center" *ngIf="!isLoading"> -->
-  <div class="flex flex-column justify-content-center align-items-center">
+  <div class="flex flex-column justify-content-center align-items-center" *ngIf="!isProfileLoading" [@box]="isProfileLoading">
     <div class="basal-diet-box my-3">
       <!-- <div> -->
       <!-- <img [src]="userForm.get('userImage')?.value" class="profile-image"> -->

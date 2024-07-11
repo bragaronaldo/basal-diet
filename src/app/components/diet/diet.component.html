@@ -166,7 +166,7 @@
     <div class="table-border">
     <!-- <div class="table-border" *ngIf="!meal.isLoading"> -->
       <div class="table-header gap-3">
-        <p class="table-box table-box-meal-name" *ngIf="!meal.isEditing">{{meal.name}}</p>
+        <p class="table-box" *ngIf="!meal.isEditing">{{meal.name}}</p>
         <p-progressSpinner styleClass="w-3rem h-3rem flex align-items-center" strokeWidth="8" animationDuration="1.5s"
           *ngIf="meal.isEditing"></p-progressSpinner>
         <p class="table-box" *ngIf="calculateTotalNutrients(meal.id!)">{{
@@ -187,7 +187,7 @@
         <div *ngFor="let food of foodsPerMeal">
           <div class="table-row">
             <div class="align-items-center flex-column">
-              <div class="table-box mb-2" *ngIf="!food.isLoading">{{food.name}}</div>
+              <div class="table-box table-box-food-name mb-2" *ngIf="!food.isLoading">{{food.name}}</div>
               <p-progressSpinner styleClass="w-3rem h-3rem m-3 flex align-items-center" strokeWidth="8"
                 animationDuration="1.5s" *ngIf="food.isLoading"></p-progressSpinner>
               <div class="weight-row" *ngIf="!food.isLoading">{{food.amount}}g</div>

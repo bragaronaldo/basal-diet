@@ -48,6 +48,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   result = '';
   gender = '';
   isLoading = false;
+  isProfileLoading = true;
   errorMessage = '';
 
   isEditing = false;
@@ -89,17 +90,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
   loadProfile(user_id: string) {
     this.userService
-      .getUserProfileByUserId(user_id)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((profile) => {
-        if (profile.length > 0) {
-          this.isEditing = true;
-          if (profile[0].id) this.profileId = profile[0].id;
-          this.loadedProfile = profile[0];
-          this.userForm.patchValue(this.loadedProfile);
-          this.calculateBasalMetabolism()
-          return;
-        }
+    .getUserProfileByUserId(user_id)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((profile) => {
+        this.isProfileLoading = false;
+        setTimeout(() => {
+          if (profile.length > 0) {
+            this.isEditing = true;
+            if (profile[0].id) this.profileId = profile[0].id;
+            this.loadedProfile = profile[0];
+            this.userForm.patchValue(this.loadedProfile);
+            this.calculateBasalMetabolism();
+            return;
+          }
+        }, 50);
+
       });
   }
   calculateBasalMetabolism() {
