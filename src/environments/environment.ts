@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: '',
-  nutritionixAPI: ''
+  apiUrl: 'https://basal-diet-api-production.up.railway.app',
+  nutritionixAPI: 'https://trackapi.nutritionix.com/'
 };

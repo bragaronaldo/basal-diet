@@ -26,22 +26,22 @@
       <div class="grid">
         <div class="col-4">
           <label for="age">Idade</label>
-          <input pInputText pKeyFilter="int" class="w-full" id="age" placeholder="ex: 37" formControlName="age" (ngModelChange)="result = ''">
+          <input pInputText pKeyFilter="int" class="w-full" id="age" placeholder="ex: 37" formControlName="age" (ngModelChange)="result = ''" maxlength="3">
           <div *ngIf="formControls['age'].invalid && formDir.submitted">
             <small class="error-msg">Informe sua idade</small>
           </div>
         </div>
         <div class="col-4">
           <label for="weight">Peso</label>
-          <input pInputText pKeyFilter="num" class="w-full" id="weight" placeholder="ex: 182"
-            formControlName="weight" (ngModelChange)="result = ''"/>
+          <input pInputText pKeyFilter="int" class="w-full" id="weight" placeholder="ex: 182"
+            formControlName="weight" (ngModelChange)="result = ''" maxlength="3"/>
           <div *ngIf="formControls['weight'].invalid && formDir.submitted">
             <small class="error-msg">Informe seu peso</small>
           </div>
         </div>
         <div class="col-4">
           <label for="height">Altura (cm)</label>
-          <input pInputText pKeyFilter="int" class="w-full" id="height" placeholder="ex: 67" formControlName="height" (ngModelChange)="result = ''">
+          <input pInputText pKeyFilter="int" class="w-full" id="height" placeholder="ex: 67" formControlName="height" (ngModelChange)="result = ''" maxlength="3">
           <div *ngIf="formControls['height'].invalid && formDir.submitted">
             <small class="error-msg">Informe sua altura</small>
           </div>
