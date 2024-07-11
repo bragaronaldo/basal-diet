@@ -1,24 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import { OpacityAnimation } from 'src/app/animations/opacity.animation';
 import { UserProfile } from 'src/app/interfaces/UserProfile';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { HeaderService } from 'src/app/services/header.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  animations: [OpacityAnimation]
 })
 export class HeaderComponent implements OnInit {
   constructor(
     private headerService: HeaderService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private router: Router,
+    private authService: AuthService,
+    private localStorageService: LocalStorageService
   ) {}
 
   userData$ = new Observable<UserProfile>();
@@ -71,6 +72,10 @@ export class HeaderComponent implements OnInit {
   }
   logout() {
     this.authService.logout();
+  }
+  editProfile() {
+    const user_id = this.localStorageService.getItem('user_id');
+    this.router.navigate(['profile', user_id]);
   }
 }
 

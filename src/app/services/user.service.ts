@@ -22,4 +22,7 @@ export class UserService {
   getUserProfileByUserId(user_id: string) {
     return this.http.get<UserProfile[]>(`${this.BASE_URL}/user_profiles_by_user_id/?user_id=${user_id}`);
   }
+  updateUserProfile(user: UserProfile): Observable<UserProfile> {
+    return this.http.put<UserProfile>(`${this.BASE_URL}/user_profiles/${user.id}`, user);
+  }
 }

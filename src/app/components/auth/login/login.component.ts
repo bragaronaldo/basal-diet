@@ -71,11 +71,11 @@ export class LoginComponent implements OnInit {
           .getUserProfileByUserId(userData.user.id.toString())
           .subscribe((response) => {
             this.localStorageService.setItem('id', response[0].id);
+            this.localStorageService.setItem('user_id', userData.user.id);
             if (response.length > 0) {
               this.router.navigate(['diet', response[0].id]);
               return;
             }
-
             this.router.navigate(['profile', userData.user.id]);
           });
       }

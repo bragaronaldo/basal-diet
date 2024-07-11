@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { UserDTO, UserAuth } from 'src/app/interfaces/User';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-signup',
@@ -23,7 +24,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private localStorageService: LocalStorageService,
   ) {}
   ngOnInit(): void {
     this.userForm = this.formBuilder.group({
@@ -69,6 +71,7 @@ export class SignupComponent implements OnInit {
         return;
       }
       const user_id = response.user_id;
+      this.localStorageService.setItem('user_id', user_id);
       this.router.navigate(['profile', user_id]);
     });
   }

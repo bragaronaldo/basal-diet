@@ -1,3 +1,4 @@
+import { UserProfile } from './../../interfaces/UserProfile';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   trigger,
@@ -16,7 +17,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { UserProfile } from 'src/app/interfaces/UserProfile';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 @Component({
   selector: 'app-user-profile',
@@ -40,13 +40,17 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 export class UserProfileComponent implements OnInit, OnDestroy {
   userForm!: FormGroup;
   userData!: UserProfile;
-  newUser!: UserProfile;
+  profile!: UserProfile;
+  loadedProfile!: UserProfile;
   userId = 0;
+  profileId = 0;
 
   result = '';
   gender = '';
   isLoading = false;
   errorMessage = '';
+
+  isEditing = false;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -62,6 +66,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.userId = params['id'];
+      this.loadProfile(this.userId.toString());
     });
 
     this.userForm = this.formBuilder.group({
@@ -82,7 +87,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   get formControls() {
     return this.userForm.controls;
   }
-
+  loadProfile(user_id: string) {
+    this.userService
+      .getUserProfileByUserId(user_id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((profile) => {
+        if (profile.length > 0) {
+          this.isEditing = true;
+          if (profile[0].id) this.profileId = profile[0].id;
+          this.loadedProfile = profile[0];
+          this.userForm.patchValue(this.loadedProfile);
+          this.calculateBasalMetabolism()
+          return;
+        }
+      });
+  }
   calculateBasalMetabolism() {
     if (this.userForm.invalid) return;
 
@@ -96,7 +115,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.result = (66 + 13.7 * weight + 5 * height - 6.8 * age).toFixed(2);
     }
 
-    this.newUser = {
+    this.profile = {
       user_id: this.userId,
       name: this.formatTextService.capitalizeFirstLetter(
         this.userForm.get('name')?.value
@@ -111,6 +130,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       basalMetabolicRate: parseFloat(this.result),
       // userImage: this.userForm.get('userImage')?.value,
     };
+
+    if (this.isEditing) this.profile.id = this.profileId;
   }
   createDiet() {
     if (this.result === '') {
@@ -123,8 +144,22 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
 
+    if (this.isEditing) {
+      this.userService
+        .updateUserProfile(this.profile)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((response) => {
+          if (response.id !== undefined) {
+            const id = response.id;
+            this.localStorageService.setItem('id', id);
+            this.router.navigateByUrl(`diet/${id}`);
+          }
+        });
+      return;
+    }
+
     this.userService
-      .createUserProfile(this.newUser)
+      .createUserProfile(this.profile)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((response) => {
         if (response.id !== undefined) {

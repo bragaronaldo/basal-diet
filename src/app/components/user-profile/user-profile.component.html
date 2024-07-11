@@ -4,7 +4,7 @@
       <div class="grid">
         <div class="col-6">
           <label for="first_name">Nome</label>
-          <input type="text" pInputText name="first_name" id="first_name" placeholder="ex: João" formControlName="name">
+          <input type="text" pInputText name="first_name" id="first_name" placeholder="ex: João" formControlName="name" (ngModelChange)="result = ''">
           <div *ngIf="formControls['name'].invalid && formDir.submitted">
             <small id="username-help" class="error-msg">Informe seu nome</small>
           </div>
@@ -12,7 +12,7 @@
         <div class="col-6">
           <label for="last_name">Sobrenome</label>
           <input type="text" pInputText name="last_name" id="last_name" placeholder="ex: Pereira"
-            formControlName="last_name">
+            formControlName="last_name" (ngModelChange)="result = ''">
           <div *ngIf="formControls['last_name'].invalid && formDir.submitted">
             <small id="username-help" class="error-msg">Informe seu sobrenome</small>
           </div>
@@ -22,30 +22,30 @@
       <div class="grid">
         <div class="col-4">
           <label for="age">Idade</label>
-          <input pInputText pKeyFilter="int" class="w-full" id="age" placeholder="ex: 37" formControlName="age">
+          <input pInputText pKeyFilter="int" class="w-full" id="age" placeholder="ex: 37" formControlName="age" (ngModelChange)="result = ''">
           <div *ngIf="formControls['age'].invalid && formDir.submitted">
             <small class="error-msg">Informe sua idade</small>
           </div>
         </div>
         <div class="col-4">
-          <label for="height">Altura (cm)</label>
-          <input pInputText pKeyFilter="int" class="w-full" id="height" placeholder="ex: 67" formControlName="height">
-          <div *ngIf="formControls['height'].invalid && formDir.submitted">
-            <small class="error-msg">Informe sua altura</small>
+          <label for="weight">Peso</label>
+          <input pInputText pKeyFilter="num" class="w-full" id="weight" placeholder="ex: 182"
+            formControlName="weight" (ngModelChange)="result = ''"/>
+          <div *ngIf="formControls['weight'].invalid && formDir.submitted">
+            <small class="error-msg">Informe seu peso</small>
           </div>
         </div>
         <div class="col-4">
-          <label for="weight">Peso</label>
-          <input pInputText pKeyFilter="num" class="w-full" id="weight" placeholder="ex: 182"
-            formControlName="weight" />
-          <div *ngIf="formControls['weight'].invalid && formDir.submitted">
-            <small class="error-msg">Informe seu peso</small>
+          <label for="height">Altura (cm)</label>
+          <input pInputText pKeyFilter="int" class="w-full" id="height" placeholder="ex: 67" formControlName="height" (ngModelChange)="result = ''">
+          <div *ngIf="formControls['height'].invalid && formDir.submitted">
+            <small class="error-msg">Informe sua altura</small>
           </div>
         </div>
       </div>
       <div class="radio-box">
         <div class="radio-btn">
-          <input type="radio" id="male" name="gender" value="male" [(ngModel)]="gender" formControlName="gender">
+          <input type="radio" id="male" name="gender" value="male" [(ngModel)]="gender" formControlName="gender" (ngModelChange)="result = ''">
           <label for="male">Masculino</label>
         </div>
         <div class="radio-btn">
@@ -53,7 +53,7 @@
           <label for="female">Feminino</label>
         </div>
       </div>
-      <div *ngIf="formControls['gender'].invalid && formDir.submitted" class="error-msg flex justify-content-center" style="margin-top: 0.3rem;">
+      <div *ngIf="formControls['gender'].invalid && formDir.submitted" class="error-msg flex justify-content-center" style="margin-top: 0.3rem;" >
         <small>Informe seu gênero</small>
       </div>
       <button class="btn" style="font-size: 0.76rem;">CALCULAR</button>
@@ -73,7 +73,7 @@
       </div>
     </div>
 
-    <button class="create-btn" (click)="createDiet()" *ngIf="!isLoading">Criar Dieta</button>
+    <button class="create-btn" (click)="createDiet()" *ngIf="!isLoading">Dieta</button>
     <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
       *ngIf="isLoading"></p-progressSpinner>
     <div *ngIf="errorMessage" [@box]="errorMessage" class="error-msg flex justify-content-center" style="margin-top: 0.6rem; margin-bottom: 0.6rem;">
