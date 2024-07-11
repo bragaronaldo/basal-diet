@@ -5,111 +5,18 @@ $color-4: #7ed0d9;
 $color-5: #d92b04;
 $border-radius: 6px;
 
-#main {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  // min-height: 95.7vh;
-  height: 100dvh;
-  // margin: 1rem;
-  // flex-direction: column;
-}
-
-#form {
-  display: flex;
-  flex-direction: column;
-  width: 17.5rem;
-  padding: 0.7rem 2rem 0 2rem;
-  border: solid 1px #ffffff;
-  border-radius: $border-radius;
-  background-color: $color-1;
-  color: #fff;
-  border: solid 1px #fff;
-  opacity: 1;
-  // transition: opacity 1s;
-}
-
-// .form-collapsed {
-//   transition: opacity 1s !important;
-//   // height: 9rem;
-//   overflow: hidden;
-//   opacity: 0 !important;
-//   ;
-//   // transform: translateY(-92%);
-// }
-
-// @media (height < 700px) {
-//   #form {
-//       height: 34rem;
-//       &.form-collapsed {
-//         height: 6.65rem;
-//         overflow: hidden;
-//       }
-//   }
-//   #form input {
-//     height: 1.4rem !important;
-//   }
-//   #profile-image {
-//     width: 4rem !important;
-//   }
-//   #form label {
-//     margin: 0.8rem 0 0.2rem -0.2rem !important;
-//   }
-//   .label-radio {
-//     padding-left: 0.5rem;
-//   }
-// }
-
-#form label {
-  // margin: 0.8rem 0 0.25rem -0.2rem;
-  margin: 0.8rem 0 0.25rem -0.2rem;
-}
-
-#form input {
-  width: 100%;
-  background-color: $color-4;
-  color: #1c1c1c;
-  height: 1.9rem;
-  padding: 0.5rem;
-  border: 0;
-  border-radius: 2px;
-  font-size: 1rem;
-  transition: all 0.25s;
-}
-
-#form input:hover {
-  transition: all 0.4s;
-  background-color: $color-2;
-}
-
-#form input:hover::placeholder {
-  transition: all 0.4s;
-  color: #424242;
-}
-
-// #form input:focus {
-//   outline: solid 1px $color-4;
-//   // border: solid 1px $color-4;
-//   background-color: $color-2;
-//   color: #fff;
-// }
-
-#form input:focus::placeholder {
-  transition: all 0.3s;
-  color: #000;
-}
-
-button {
-  align-self: center;
-  cursor: pointer;
-  border: 0;
-  border-radius: $border-radius;
+.main_container {
+  width: 22rem;
+  padding: 1.2rem;
+  border: solid 2px #fff;
+  border-radius: 12px;
 }
 
 .btn,
 .create-btn {
   width: 5rem;
   height: 2rem;
+  border-radius: $border-radius;
   background-color: $color-2;
   color: #fff;
   margin-top: 1.2rem;
@@ -125,76 +32,6 @@ button {
   color: #000;
 }
 
-.fade-in {
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.profile-image {
-  aspect-ratio: 1/1;
-  margin: 0.6rem;
-  width: 6.2rem;
-  border-radius: 50%;
-  object-fit: cover;
-  // transition: all 0.5s;
-  align-self: center;
-  border: solid 1px transparent;
-}
-
-// #profile-image:hover {
-//   cursor: pointer;
-//   transform: scale(1.2);
-// }
-
-#user-image {
-  display: none;
-}
-
-#user-image-label {
-  cursor: pointer;
-  align-self: center;
-  transition: all 0.35s;
-  font-size: 3.8rem;
-}
-
-#user-image-label:hover {
-  color: $color-4;
-  transform: scale(1.3);
-}
-
-#metabolism {
-  margin-top: 1rem;
-}
-
-#basal-metabolism {
-  transition: all 1s;
-  opacity: 0;
-}
-
-#basal-metabolism table tr {
-  color: #fff;
-}
-
-#basal-metabolism table tr th {
-  color: #fff;
-}
-
-#aside {
-  position: absolute;
-  border-right: solid 1px #fff;
-  color: #fff;
-  top: 0;
-  width: 150px;
-  height: 96.5vh;
-  margin-left: 1rem;
-  padding-top: 2rem;
-  transition: all 0.2s;
-}
-
-.label {
-  font-size: 0.92rem;
-}
-
 .basal-diet-box {
   border: solid 2px #fff;
   border-radius: 6px;
@@ -207,73 +44,6 @@ button {
   // border-top: solid 1px #fff;
   background-color: transparent;
   padding: 0.6rem 0 0.6rem 0;
-}
-
-.box-p1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-top: solid 1px #fff;
-  height: 2.6rem;
-  background-color: $color-2;
-}
-
-.box-p2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: solid 1px #fff;
-  height: 2.6rem;
-  background-color: $color-2;
-}
-
-.box-name {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 2.6rem;
-  border-top: solid 1px #fff;
-}
-
-.form-errorMsg {
-  margin-top: -0.2rem !important;
-}
-
-// .upload-image-btn {
-//   border: solid 2px $color-2;
-//   align-self: center;
-//   border-radius: 50%;
-//   padding: 3rem;
-//   position: absolute;
-//   margin: 0.6rem 0 0 0.008rem !important;
-//   // background-color: #0220261b;
-//   background-color:transparent;
-//   // font-size: 3rem;
-//   color: $color-2;
-//   cursor: pointer;
-//   transition: all 0.4s;
-// }
-.upload-image-btn {
-  border: solid 2px $color-2;
-  align-self: center;
-  border-radius: 50%;
-  padding: 1.50rem;
-  position: absolute;
-  margin: 0.6rem 0 0 0.008rem !important;
-  background-color: #0220261b;
-  font-size: 3rem;
-  color: $color-2;
-  cursor: pointer;
-  transition: all 0.4s;
-}
-
-.upload-image-btn:hover {
-  color: $color-4;
-  border: solid 2px $color-4;
-}
-
-.upload-image-btn:focus {
-  background-color: #d92b04;
 }
 
 .radio-box {
@@ -310,13 +80,6 @@ button {
 
 .error-msg {
   color: $color-5;
-}
-
-.main_container {
-  width: 22rem;
-  padding: 1.2rem;
-  border: solid 2px #fff;
-  border-radius: 12px;
 }
 
 .basal {

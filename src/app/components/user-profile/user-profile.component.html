@@ -76,7 +76,7 @@
     <button class="create-btn" (click)="createDiet()" *ngIf="!isLoading">Criar Dieta</button>
     <p-progressSpinner styleClass="w-2rem h-2rem p-3 flex align-items-center" strokeWidth="8" animationDuration="1.5s"
       *ngIf="isLoading"></p-progressSpinner>
-    <div *ngIf="errorMessage" [@box]="errorMessage" class="error-msg flex justify-content-center" style="margin-top: 0.6rem;">
+    <div *ngIf="errorMessage" [@box]="errorMessage" class="error-msg flex justify-content-center" style="margin-top: 0.6rem; margin-bottom: 0.6rem;">
       <small style="font-size: 0.95rem;">{{errorMessage}}</small>
     </div>
   </div>
