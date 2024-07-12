@@ -88,3 +88,21 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
     padding: 0.5rem;
   }
 }
+
+@media (max-width: 450px) {
+  .header-box {
+    border: none;
+  }
+}
+@media (max-width: 426px) {
+  .macro {
+    font-size: 0.76rem;
+    // margin: 0 0.2rem 0 0.2rem;
+  }
+}
+@media (max-width: 388px) {
+  .macro {
+    font-size: 0.7rem;
+    // margin: 0 0.2rem 0 0.2rem;
+  }
+}
