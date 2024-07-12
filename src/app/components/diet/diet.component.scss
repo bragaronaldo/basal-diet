@@ -4,7 +4,7 @@ $color-3: #036873;
 $color-4: #7ed0d9;
 $color-5: #d92b04;
 $border-radius: 6px;
-$font:"Poppins", sans-serif;
+$font: "Poppins", sans-serif;
 $shadow-1: #02202666 0px 15px 30px, #02202666 0px 5px 10px;
 $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgba(0, 0, 0, 0.07) 0px 6px 6px, rgba(0, 0, 0, 0.07) 0px 10px 10px, rgba(0, 0, 0, 0.07) 0px 18px 18px;
 
@@ -12,6 +12,7 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   .p-dialog {
     border: solid 1px $color-1;
   }
+
   .p-dialog .p-dialog-header {
     background-color: $color-1;
   }
@@ -103,38 +104,7 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   width: 32rem;
 }
 
-@media (max-width: 768px) {
-  .modal-table-size {
-    width: 27rem;
-  }
-}
 
-@media (max-width: 540px) {
-  .main-container {
-    grid-template-columns: repeat(auto-fit, minmax(20rem, auto));
-  }
-  .modal-table-size {
-    width: 22rem;
-  }
-}
-
-@media (max-width: 450px) {
-  .modal-table-size {
-    width: 18rem;
-  }
-}
-
-@media (max-width: 348px) {
-  .main-container {
-    grid-template-columns: repeat(auto-fit, minmax(10rem, auto));
-  }
-
-  .macronutrients-box {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.36rem;
-  }
-}
 
 .modal-inputs {
   display: flex;
@@ -178,6 +148,7 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   background-color: $color-2;
   // color: #000;
 }
+
 .add-newFood-btn {
   background-color: $color-2;
   padding: 6px;
@@ -186,9 +157,11 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   border-radius: $border-radius;
   box-shadow: $shadow-2;
 }
+
 .add-newFood-btn:hover {
   background-color: $color-4;
 }
+
 .circle-btn {
   color: #000;
   display: flex;
@@ -205,10 +178,12 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   font-size: 14px;
   box-shadow: $shadow-1;
 }
+
 .table-header {
   display: flex;
   justify-content: space-between;
 }
+
 .table-row {
   display: flex;
   justify-content: center;
@@ -219,12 +194,15 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   border-radius: $border-radius;
   box-shadow: $shadow-2;
 }
+
 .icon-btn {
   background-color: transparent;
 }
+
 .icon-btn:hover {
   color: $color-4;
 }
+
 .weight-row {
   text-align: center;
   background-color: $color-2;
@@ -232,4 +210,67 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   box-shadow: $shadow-1;
 }
 
+@media (max-width: 768px) {
+  .modal-table-size {
+    width: 27rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .main-container {
+    grid-template-columns: repeat(auto-fit, minmax(20rem, auto));
+  }
+
+  .modal-table-size {
+    width: 22rem;
+  }
+
+  .main-container {
+    margin: 0 0.4rem 0 0.4rem;
+  }
+
+  .table-border {
+    padding: 15px;
+  }
+
+  .table-row {
+    padding: 6px;
+  }
+
+  .table-header {
+    gap: 0.3rem !important;
+  }
+}
+
+@media (max-width: 450px) {
+  .modal-table-size {
+    width: 18rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .circle-btn {
+    padding: 26px;
+  }
+}
+
+@media (max-width: 390px) {
+  .table-box {
+    // font-size: 0.65rem;
+    width: 4rem;
+  }
+
+}
+
+@media (max-width: 348px) {
+  .main-container {
+    grid-template-columns: repeat(auto-fit, minmax(10rem, auto));
+  }
+
+  .macronutrients-box {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.36rem;
+  }
+}
 
