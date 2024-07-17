@@ -1,31 +1,57 @@
-<div class="flex justify-content-end my-4 mr-4 gap-2">
-  <button class="p-2" style="border-radius: 4px;"(click)="editProfile()">Editar Perfil</button>
-  <button class="p-2" style="border-radius: 4px;" (click)="logout()">Sair</button>
+<div class="flex justify-content-center gap-2" style="margin-top: 1rem; margin-bottom: 1rem;">
+  <button class="p-2" style="border-radius: 4px; width: 5.4rem;" (click)="editProfile()">Editar Perfil</button>
+  <button class="p-2" style="border-radius: 4px; width: 5.4rem;" (click)="logout()">Sair</button>
 </div>
 
-<div class="header flex justify-content-center" *ngIf="userData$ | async as userData">
-  <div class="header-box">
+<div class="flex justify-content-center">
+  <p-carousel [value]="carousel_pages" [circular]="true" *ngIf="userData$ | async as userData" styleClass="carousel">
+    <ng-template let-carouselpages pTemplate="item">
+      <ng-container *ngIf="carouselpages === 1">
 
-    <p class="macro" style="background-color: #036873; color: #fff;">{{userData.name}}<br>{{userData.last_name}}</p>
-    <p class="macro">G. Basal<br>{{userData.basalMetabolicRate}}</p>
-    <p class="macro">Calorias<br>{{totalCalories}}</p>
-    <p class="macro" (mouseenter)="toggleNutrientValue('showCarbohydrateAmount', true);"
-      (mouseleave)="toggleNutrientValue('showCarbohydrateAmount', false)">
-      Carbo<br>{{showCarbohydrateAmount ? calculateGramKilogram(totalCarbohydrates, userData.weight!) + "g/kg" :
-      totalCarbohydrates}}
-    </p>
-    <p class="macro" (mouseenter)="toggleNutrientValue('showProteinAmount', true);"
-      (mouseleave)="toggleNutrientValue('showProteinAmount', false)">
-      Proteína<br>{{showProteinAmount ? calculateGramKilogram(totalProteins, userData.weight!) + "g/kg" :
-      totalProteins}}
-    </p>
-    <p class="macro" (mouseenter)="toggleNutrientValue('showFatAmount', true);"
-      (mouseleave)="toggleNutrientValue('showFatAmount', false)">
-      Gordura<br>{{showFatAmount ? calculateGramKilogram(totalFats, userData.weight!) + "g/kg" :
-      totalFats}}
-    </p>
-  </div>
-  <div>
-  </div>
+        <div class="flex justify-content-center">
+          <div class="macro-box">
+            <div class="macro-item">
+              <div>{{userData.basalMetabolicRate}}</div>
+              <p style="font-size: 0.92rem; padding-top: 0.1rem;">G Basal</p>
+            </div>
+            <div class="macro-item">
+              <div>{{calculateGramKilogram(totalCalories, userData.weight!)}}</div>
+              <p>kcal</p>
+            </div>
+            <div class="macro-item">
+              <div>{{calculateGramKilogram(totalCarbohydrates, userData.weight!)}}</div>
+              <p>Carbo</p>
+            </div>
+            <div class="macro-item">
+              <div>{{calculateGramKilogram(totalProteins, userData.weight!)}}</div>
+              <p>Prot</p>
+            </div>
+            <div class="macro-item">
+              <div>{{calculateGramKilogram(totalFats, userData.weight!)}}</div>
+              <p>Gord</p>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+      <ng-container *ngIf="carouselpages === 2">
+        <div class="flex justify-content-center">
+          <div class="macro-box">
+            <div class="macro-item">
+              <div>{{calculateGramKilogram(totalCarbohydrates, userData.weight!)}}</div>
+              <p>Carb g/kg</p>
+            </div>
+            <div class="macro-item">
+              <div>{{calculateGramKilogram(totalProteins, userData.weight!)}}</div>
+              <p>Prot g/kg</p>
+            </div>
+            <div class="macro-item">
+              <div>{{calculateGramKilogram(totalFats, userData.weight!)}}</div>
+              <p>Gord g/kg</p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-template>
+  </p-carousel>
 </div>
-

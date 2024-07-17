@@ -1,15 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "primeng/resources/themes/lara-dark-teal/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 $color-1: #022026;
 $color-2: #bf7665;
 $color-3: #036873;
 $color-4: #7ed0d9;
 $color-5: #d92b04;
 $border-radius: 6px;
-
-@import "primeng/resources/themes/lara-dark-teal/theme.css";
-@import "primeng/resources/primeng.css";
-@import "primeicons/primeicons.css";
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
   padding: 0;
@@ -59,6 +60,7 @@ input[type=text], input[type=number], input[type=password], input[type=email]{
 input[type=text]:hover, input[type=number]:hover, input[type=password]:hover, input[type=email]:hover {
   transition: all 0.4s;
   background-color: $color-2;
+  color: #000 !important;
 }
 
 input[type=text]:hover::placeholder, input[type=number]:hover::placeholder, input[type=password]:hover::placeholder, input[type=email]:hover::placeholder {
@@ -68,8 +70,9 @@ input[type=text]:hover::placeholder, input[type=number]:hover::placeholder, inpu
 
 input[type=text]:focus, input[type=number]:focus, input[type=email]:focus, input[type=password]:focus {
   outline: solid 1px $color-4;
+  // outline: none;
   background-color: $color-2 !important;
-  color: #fff;
+  color: #fff !important;
 }
 
 input[type=text]:focus::placeholder, input[type=number]:focus::placeholder, input[type=password]:focus::placeholder, input[type=email]:focus::placeholder {

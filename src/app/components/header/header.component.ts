@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { UserProfile } from 'src/app/interfaces/UserProfile';
@@ -19,7 +19,8 @@ export class HeaderComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private renderer: Renderer2, private el: ElementRef
   ) {}
 
   userData$ = new Observable<UserProfile>();
@@ -33,6 +34,8 @@ export class HeaderComponent implements OnInit {
   showCarbohydrateAmount = false;
   showProteinAmount = false;
   showFatAmount = false;
+
+  carousel_pages = [1, 2]
 
   caloriesValue = this.headerService.totalCalories.subscribe((response) => {
     this.totalCalories = response;
@@ -56,6 +59,7 @@ export class HeaderComponent implements OnInit {
       this.getUserData(this.id);
     });
   }
+  show = false;
   getUserData(id: string) {
     this.userData$ = this.userService.getUserProfile(id).pipe(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

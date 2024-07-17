@@ -1,12 +1,16 @@
+$border-radius: 6px;
+$font: "Poppins", sans-serif;
+$shadow-1: #02202666 0px 15px 30px, #02202666 0px 5px 10px;
+$shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgba(0, 0, 0, 0.07) 0px 6px 6px, rgba(0, 0, 0, 0.07) 0px 10px 10px, rgba(0, 0, 0, 0.07) 0px 18px 18px;
+
 $color-1: #022026;
 $color-2: #bf7665;
 $color-3: #036873;
 $color-4: #7ed0d9;
 $color-5: #d92b04;
-$border-radius: 6px;
-$font: "Poppins", sans-serif;
-$shadow-1: #02202666 0px 15px 30px, #02202666 0px 5px 10px;
-$shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgba(0, 0, 0, 0.07) 0px 6px 6px, rgba(0, 0, 0, 0.07) 0px 10px 10px, rgba(0, 0, 0, 0.07) 0px 18px 18px;
+$dialog-font-color: #fff;
+$food_font_color: #000;
+$food_font_color2: #5e5e5e;
 
 :host ::ng-deep {
   .p-dialog {
@@ -15,15 +19,19 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
 
   .p-dialog .p-dialog-header {
     background-color: $color-1;
+    color: $dialog-font-color;
   }
 
   .p-dialog .p-dialog-content {
     background-color: $color-1;
+    color: $dialog-font-color;
   }
 
   .p-inputtext {
     background-color: $color-4;
-    color: #000;
+    color: #000 !important;
+    // background-color: $color-2;
+    color: $dialog-font-color;
     transition: all 0.4s;
     border-radius: 3px;
     padding: 0.43rem;
@@ -32,13 +40,15 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   .p-inputtext:enabled:focus {
     border: solid 1px $color-4 !important;
     background-color: $color-2;
-    color: #fff;
+    color: #fff !important;
+    // color: #000;
     box-shadow: none;
   }
 
   .p-inputtext:hover {
     box-shadow: none;
     background-color: $color-2;
+    // background-color: $color-4;
     color: #fff;
   }
 
@@ -71,6 +81,10 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   .p-inputtext:enabled:hover {
     border-color: transparent;
   }
+
+  .p-icon {
+    color: $dialog-font-color;
+  }
 }
 
 .auto-complete-input {
@@ -96,15 +110,12 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   justify-content: center;
   align-items: center;
   align-items: flex-start;
-  gap: 2rem;
   margin: 0 2rem 2rem 2rem;
 }
 
 .modal-table-size {
   width: 32rem;
 }
-
-
 
 .modal-inputs {
   display: flex;
@@ -121,93 +132,84 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   box-shadow: $shadow-2;
 }
 
-.table-border {
-  border: solid 2px $color-3;
-  padding: 21px;
-  border-radius: 20px;
-}
-
-.table-box {
-  display: flex;
-  justify-content: center;
-  padding: 1px;
-  text-align: center;
-  align-items: center;
-  width: 80px;
-  height: 50px;
-  overflow: hidden;
-  font-size: 12px;
-  font-family: $font;
-  border-radius: $border-radius;
-  background-color: $color-3;
-  color: #fff;
-  box-shadow: $shadow-1;
-}
-
-.table-box-food-name {
-  background-color: $color-2;
-  // color: #000;
-}
-
-.add-newFood-btn {
-  background-color: $color-2;
-  padding: 6px;
-  margin-top: 18px;
-  border-radius: 50%;
-  border-radius: $border-radius;
-  box-shadow: $shadow-2;
-}
-
-.add-newFood-btn:hover {
-  background-color: $color-4;
-}
-
-.circle-btn {
-  color: #000;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  width: 16px;
-  height: 16px;
-  padding: 30px;
+.meal-table-box {
+  flex-direction: column;
   background-color: #fff;
-  border-radius: 50%;
-  margin: auto;
-  font-family: $font;
-  font-size: 14px;
-  box-shadow: $shadow-1;
-}
-
-.table-header {
+  border-radius: 12px;
+  padding: 16px;
   display: flex;
-  justify-content: space-between;
+
+  h3 {
+    color: $food_font_color;
+  }
 }
 
-.table-row {
+.food-container {
+  h4 {
+    color: $food_font_color;
+  }
+
+  .food-details {
+    display: flex;
+    padding: 0 12px 6px 12px;
+    justify-content: space-between;
+
+    p {
+      color: $food_font_color2;
+      font-size: 0.76rem;
+    }
+  }
+}
+
+.border-bottom {
+  border-bottom: solid 1px #d8d8d8;
+  width: 95%;
+  margin-bottom: 12px;
+}
+
+.new-food-btn {
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+}
+
+.icon-btn-food,
+.icon-btn-meal {
+  text-align: center;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $color-3;
-  margin-top: 8px;
-  padding: 10px;
-  border-radius: $border-radius;
-  box-shadow: $shadow-2;
+  width: 1.6rem;
+  height: 1.6rem;
+
+  button {
+    background-color: transparent;
+    color: $food_font_color;
+    font-weight: 900;
+    font-size: 0.88rem;
+  }
 }
 
-.icon-btn {
-  background-color: transparent;
+.icon-btn-meal {
+  background-color: $color-2 !important;
+
+  button {
+    color: #fff;
+    font-weight: normal;
+  }
 }
 
-.icon-btn:hover {
-  color: $color-4;
+.p-meal {
+  color: #000;
+  font-size: 0.9rem;
 }
 
-.weight-row {
-  text-align: center;
-  background-color: $color-2;
-  border-radius: $border-radius;
-  box-shadow: $shadow-1;
+.p-all {
+  border-bottom: solid 1px #cecece;
+  width: 94%;
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.6rem;
 }
 
 @media (max-width: 768px) {
@@ -218,7 +220,7 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
 
 @media (max-width: 540px) {
   .main-container {
-    grid-template-columns: repeat(auto-fit, minmax(20rem, auto));
+    grid-template-columns: repeat(auto-fit, minmax(26rem, auto));
   }
 
   .modal-table-size {
@@ -228,49 +230,20 @@ $shadow-2: rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 3px 3px, rgb
   .main-container {
     margin: 0 0.4rem 0 0.4rem;
   }
-
-  .table-border {
-    padding: 15px;
-  }
-
-  .table-row {
-    padding: 6px;
-  }
-
-  .table-header {
-    gap: 0.3rem !important;
-  }
 }
+
 
 @media (max-width: 450px) {
   .modal-table-size {
     width: 18rem;
   }
-}
-
-@media (max-width: 430px) {
-  .circle-btn {
-    padding: 26px;
+  .main-container {
+    grid-template-columns: repeat(auto-fit, minmax(23rem, auto));
   }
-}
-
-@media (max-width: 390px) {
-  .table-box {
-    // font-size: 0.65rem;
-    width: 4rem;
-  }
-
 }
 
 @media (max-width: 348px) {
   .main-container {
     grid-template-columns: repeat(auto-fit, minmax(10rem, auto));
   }
-
-  .macronutrients-box {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.36rem;
-  }
 }
-

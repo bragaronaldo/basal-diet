@@ -5,13 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TableModule } from 'primeng/table';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
-import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -24,6 +22,7 @@ import { InterceptorService } from './interceptor/interceptor.service';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { DietComponent } from './components/diet/diet.component';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { CarouselModule } from 'primeng/carousel';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,17 +39,16 @@ import { KeyFilterModule } from 'primeng/keyfilter';
     AppRoutingModule,
     RadioButtonModule,
     FormsModule,
-    TableModule,
     DialogModule,
     ButtonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MessageModule,
     InputTextModule,
     FontAwesomeModule,
     AutoCompleteModule,
     ProgressSpinnerModule,
     KeyFilterModule,
+    CarouselModule
   ],
   providers: [
     provideAnimations(),
