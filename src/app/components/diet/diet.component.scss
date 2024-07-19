@@ -156,7 +156,6 @@ $food_font_color2: #5e5e5e;
 
     p {
       color: $food_font_color2;
-      font-size: 0.76rem;
     }
   }
 }
@@ -237,8 +236,17 @@ $food_font_color2: #5e5e5e;
   .modal-table-size {
     width: 18rem;
   }
+
   .main-container {
     grid-template-columns: repeat(auto-fit, minmax(23rem, auto));
+  }
+
+  .food-container {
+    .food-details {
+      p {
+        font-size: 0.86rem;
+      }
+    }
   }
 }
 
