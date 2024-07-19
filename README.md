@@ -44,24 +44,10 @@ Para acessar o app, clique no link a seguir: [Basal Diet App](https://basal-diet
    - O servidor será iniciado por padrão em `http://localhost:4200`.
    - A aplicação reiniciará automaticamente sempre que houver uma mudança no código do projeto.
   
-### Utilizando o JSON Server
+### Backend do Projeto
 
-Atualmente, as requisições estão sendo processadas utilizando o JSON Server, uma ferramenta que permite simular uma API RESTful de forma simples e eficiente. Para instalar use o comando:
-
-```bash
-npm install json-server
-```
-
-Para iniciar o JSON Server localmente, utilize o seguinte comando na pasta do projeto:
-
-```bash
-json-server --watch db.json
-```
-
-## Migração para Django em Progresso
-
-Está em andamento o processo de migração para o Django, uma estrutura robusta e flexível para desenvolvimento web em Python.
-
+O backend foi desenvolvido utilizando o Django Rest Framework e os dados são armazenados no MySQL.
+Link repositório [Basal Diet API](https://github.com/bragaronaldo/basal-diet-api)
 
 ## Criação de Dietas
 ### Formulário Inicial
@@ -70,15 +56,15 @@ Preencha um formulário simples com seu nome, peso, altura e idade para realizar
 
 ### Página de Dieta
 
-Ao clicar em "Criar Dieta", você será direcionado para uma nova página que exibirá as calorias totais somando todas as refeições.
+Ao clicar em "Dieta", você será direcionado para uma nova página que exibirá as calorias totais somando todas as refeições.
 
-![1](https://github.com/bragaronaldo/basal-diet/assets/88466880/fd73dfe4-2ca1-4461-a5b5-0bdc2195e2a9)
+![basal](https://github.com/user-attachments/assets/e70efa9b-bf19-4732-b1bd-bf6d1d1658e4)
 
 ### Gestão de Refeições
 
 Inicie a criação da sua dieta clicando no botão "Nova Refeição". Dentro da tabela de refeição, você pode adicionar, editar e excluir alimentos.
 
-![2](https://github.com/bragaronaldo/basal-diet/assets/88466880/50a15abc-3654-4d23-9ac1-81c0240e8644)
+![addmeal](https://github.com/user-attachments/assets/04db2d1c-a52c-404a-ae6c-c5d38d0dbb21)
 
 ### Informações Detalhadas
 
@@ -88,11 +74,11 @@ Cada tabela de refeição exibe o total de macronutrientes e calorias específic
 
 Adicione quantas tabelas de refeição forem necessárias. Além disso, você pode editar e excluir o nome das tabelas de refeição para uma experiência personalizada.
 
-![3](https://github.com/bragaronaldo/basal-diet/assets/88466880/b3bff6d7-51db-4398-ac69-c46a9faa20a9)
+![addfood](https://github.com/user-attachments/assets/f4731564-a064-4d20-8b68-3fb99642b67c)
 
-Quando você passa o mouse sobre o valor total de um macronutriente, o valor em gramas por quilo é exibido. Por exemplo, a recomendação diária de consumo de proteína é de 1,6 g/kg a 2 g/kg.
+No header do aplicativo, é exibido o total somado de calorias, proteínas, carboidratos e gorduras de todas as refeições. Ao deslizar para o lado, é apresentada a quantidade em gramas por quilo.. Por exemplo, a recomendação diária de consumo de proteína é de 1,6 g/kg a 2 g/kg.
 
-![4](https://github.com/bragaronaldo/basal-diet/assets/88466880/7504a447-48c0-4c79-a674-5834f76b1cae)
+![total](https://github.com/user-attachments/assets/c5dbb7b6-3041-429e-940d-58c1e079a72b)
 
 Este fluxo de criação de dietas proporciona uma jornada intuitiva, desde o preenchimento do formulário até a gestão detalhada das refeições, garantindo controle total sobre as calorias e macronutrientes consumidos.
 
