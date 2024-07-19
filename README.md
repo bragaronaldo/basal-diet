@@ -2,6 +2,8 @@
 
 O Basal Diet é um aplicativo desenvolvido em Angular que simplifica a criação e consulta de dietas personalizadas. Ele segue um fluxo intuitivo, calculando o gasto basal do usuário antes de permitir a criação detalhada de refeições.
 
+Para acessar o app, clique no link a seguir: [Basal Diet App](https://basal-diet-production.up.railway.app/)
+
 ## Funcionalidades Principais
 
 - **Cálculo do Gasto Basal:**
