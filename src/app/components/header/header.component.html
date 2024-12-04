@@ -1,5 +1,5 @@
 <div class="flex justify-content-center gap-2" style="margin-top: 1rem; margin-bottom: 1rem;">
-  <button class="p-2" style="border-radius: 4px; width: 5.4rem;" (click)="editProfile()">Editar Perfil</button>
+  <button class="p-2" style="border-radius: 4px; width: 6rem;" (click)="editProfile()">Editar Perfil</button>
   <button class="p-2" style="border-radius: 4px; width: 5.4rem;" (click)="logout()">Sair</button>
 </div>
 
@@ -15,19 +15,19 @@
               <p style="font-size: 0.92rem; padding-top: 0.1rem;">G Basal</p>
             </div>
             <div class="macro-item">
-              <div>{{calculateGramKilogram(totalCalories, userData.weight!)}}</div>
+              <div>{{removeDecimalPlaces(totalCalories)}}</div>
               <p>kcal</p>
             </div>
             <div class="macro-item">
-              <div>{{calculateGramKilogram(totalCarbohydrates, userData.weight!)}}</div>
+              <div>{{removeDecimalPlaces(totalCarbohydrates)}}</div>
               <p>Carbo</p>
             </div>
             <div class="macro-item">
-              <div>{{calculateGramKilogram(totalProteins, userData.weight!)}}</div>
+              <div>{{removeDecimalPlaces(totalProteins)}}</div>
               <p>Prot</p>
             </div>
             <div class="macro-item">
-              <div>{{calculateGramKilogram(totalFats, userData.weight!)}}</div>
+              <div>{{removeDecimalPlaces(totalFats)}}</div>
               <p>Gord</p>
             </div>
           </div>

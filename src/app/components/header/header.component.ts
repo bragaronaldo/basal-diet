@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { UserProfile } from 'src/app/interfaces/UserProfile';
@@ -19,8 +19,7 @@ export class HeaderComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private localStorageService: LocalStorageService,
-    private renderer: Renderer2, private el: ElementRef
+    private localStorageService: LocalStorageService
   ) {}
 
   userData$ = new Observable<UserProfile>();
@@ -35,7 +34,7 @@ export class HeaderComponent implements OnInit {
   showProteinAmount = false;
   showFatAmount = false;
 
-  carousel_pages = [1, 2]
+  carousel_pages = [1, 2];
 
   caloriesValue = this.headerService.totalCalories.subscribe((response) => {
     this.totalCalories = response;
@@ -59,27 +58,32 @@ export class HeaderComponent implements OnInit {
       this.getUserData(this.id);
     });
   }
-  show = false;
   getUserData(id: string) {
     this.userData$ = this.userService.getUserProfile(id).pipe(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       map((userData: any) => userData[0])
     );
   }
-  calculateGramKilogram(macro: string , weight: number) {
+  calculateGramKilogram(macro: string, weight: number) {
     const macroValue = Number(macro);
     const response = macroValue / weight;
     return response.toFixed(2);
   }
-  toggleNutrientValue(nutrient: 'showCarbohydrateAmount' | 'showProteinAmount' | 'showFatAmount', value: boolean) {
-    this[nutrient] = value;
+  removeDecimalPlaces(value: string) {
+    return Number(value).toFixed(0);
   }
-  logout() {
-    this.authService.logout();
+  toggleNutrientValue(
+    nutrient: 'showCarbohydrateAmount' | 'showProteinAmount' | 'showFatAmount',
+    value: boolean
+  ) {
+    this[nutrient] = value;
   }
   editProfile() {
     const user_id = this.localStorageService.getItem('user_id');
     this.router.navigate(['profile', user_id]);
+  }
+  logout() {
+    this.authService.logout();
   }
 }
 
